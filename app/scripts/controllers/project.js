@@ -8,7 +8,7 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-  .controller('AboutCtrl', function () {
+  .controller('ProjectCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

@@ -126,6 +126,9 @@ body {
     background: #3F0D3A;
     color: white;
     text-align: center;
+    &.cms {
+      background: #8cb128;
+    }
 }
 
 .paddingtmp{
