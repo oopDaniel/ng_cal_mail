@@ -6,5 +6,10 @@
 </section>
 <hr class="hr">
 <section>
-  <div ng-repeat="pj in project | filter: filtText"></div>
+  <div class="project" ng-repeat="pj in project | filter: filtText">
+    <h4>{{pj.name}}</h4>
+    <div class="details">
+
+    </div>
+  </div>
 </section>
