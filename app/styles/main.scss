@@ -98,26 +98,14 @@ body {
 $theme: #3F0D3A;
 $theme2: #8cb128;
 
-
-.nav-tabs > li, .nav-pills > li {
-    float:none;
+.nav-tabs, .nav-pills {
+    text-align:center;
+    > li {
+          float:none;
     display:inline-block;
     *display:inline; /* ie7 fix */
      zoom:1; /* hasLayout ie7 trigger */
-}
-
-.nav-tabs, .nav-pills {
-    text-align:center;
-}
-
-
-
-.box {
-    background: white;
-    display:inline-block;
-    text-align: center;
-    vertical-align: middle;
-    margin:0 auto;
+    }
 }
 
 .icon-centered {
@@ -131,7 +119,6 @@ $theme2: #8cb128;
     color: white;
     text-align: center;
     &.cms {
-
       background: $theme2;
     }
 }
@@ -142,6 +129,9 @@ $theme2: #8cb128;
   max-width:100%;
   background: rgba(255,255,255,0.1);
 }
+.input-label {
+  padding-top:0.1em;
+}
 
 .section {
   padding: 0.2em;
@@ -150,32 +140,24 @@ $theme2: #8cb128;
   }
 }
 
-.input-label {
-  padding-top:0.1em;
-}
-
-.my-radio {
-    -webkit-appearance: checkbox; /* Chrome, Safari, Opera */
-    -moz-appearance: checkbox;    /* Firefox */
-    -ms-appearance: checkbox;     /* not currently supported */
-}
-
 .flex {
   display: -webkit-flex;
   display: flex;
-}
-.flex1 {
-  -webkit-flex: 1;
-  flex: 1;
-  background: rgba(1,1,1,0.2);
-  border-style: solid;
-  text-align: center;
-  &:hover{
-    background: rgba(1,1,1,0.5);
+  .flex1 {
+    -webkit-flex: 1;
+    flex: 1;
+    background: rgba(1,1,1,0.2);
+    border-style: solid;
+    text-align: center;
+    &:hover{
+      background: rgba(1,1,1,0.5);
+    }
+    &:active{
+      background: $theme;
+      opacity: 0.9;
+    }
   }
 }
-
-
 
 .table {
   background: white;
@@ -197,4 +179,8 @@ $theme2: #8cb128;
       color: $theme2;
     }
   }
+}
+
+.jumbotron{
+  padding-top: 0;
 }
