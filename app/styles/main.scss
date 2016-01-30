@@ -95,6 +95,9 @@ body {
 
 
 //--------------------------------------------
+$theme: #3F0D3A;
+$theme2: #8cb128;
+
 
 .nav-tabs > li, .nav-pills > li {
     float:none;
@@ -124,11 +127,12 @@ body {
 }
 
 .hd-requirement {
-    background: #3F0D3A;
+    background: $theme;
     color: white;
     text-align: center;
     &.cms {
-      background: #8cb128;
+
+      background: $theme2;
     }
 }
 
@@ -168,5 +172,29 @@ body {
   text-align: center;
   &:hover{
     background: rgba(1,1,1,0.5);
+  }
+}
+
+
+
+.table {
+  background: white;
+  .caption {
+    text-align: center;
+  }
+  th {
+    text-align: center;
+  }
+  td {
+    font-size: 3em;
+    color: $theme;
+  }
+  sub {
+    font-size: 0.5em;
+  }
+  &.cms {
+    td {
+      color: $theme2;
+    }
   }
 }

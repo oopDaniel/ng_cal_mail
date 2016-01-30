@@ -8,161 +8,175 @@
             <a href="#nvr" data-toggle="tab">NVR</a></li>
           <li><a href="#cms" data-toggle="tab">CMS</a></li>
         </ul>
-        <span>Calculation - {NVR}</span>
       </div>
     </div>
 
-    <div class="row box">
-      <div class="col-xs-6">
-        <div>Total Storage</div>
+    <div class="row">
+<!--       <div class="col-xs-6">
+        <div><h5>Total Storage</h5></div>
         <div class="box-text">9,967 GB</div>
       </div>
       <div class="col-xs-6">
-        <div>Total Bandwidth</div>
+        <div><h5>Total Bandwidth</h5></div>
         <div class="box-text">67.5 Mbps</div>
-      </div>
+      </div> -->
+      <table class="table table-hover table-responsive">
+        <caption class="caption">Calculation - {NVR}</caption>
+        <thead>
+          <tr>
+            <th>Total Storage</th>
+            <th>Total Bandwidth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9967<sub>GB</sub></td>
+            <td>67.5<sub>Mbps</sub></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="tab-content">
-  <div class="tab-pane fade in active" id="nvr">
+    <div class="tab-pane fade in active" id="nvr">
 
-    <div class="row customization">
-      <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
-        <section class="col-xs-12 col-centered section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
-              <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-11">
-              <div class="row form-group">
-                <label for="num_cameras" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Number of cameras</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Enter the number"
-                    ng-model="(Need2SetUp)" name="num_cameras" maxlength="5"/>
+      <div class="row customization">
+        <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
+          <section class="col-xs-12 col-centered section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-1">
+                <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-11">
+                <div class="row form-group">
+                  <label for="num_cameras" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Number of cameras</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the number"
+                      ng-model="(Need2SetUp)" name="num_cameras" maxlength="5"/>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                      <input type="text" class="form-control input" placeholder="Click me!"
+                        ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
+                  </div>
                 </div>
               </div>
-              <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+            </div>
+          </section>
+          <section class="col-xs-12 col-centered section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-1">
+                <i class="fa fa-database fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-11">
+                <div class="row form-group">
+                  <label for="num_rdays" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording days</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the days"
+                      ng-model="(Need2SetUp3)" name="num_rdays" maxlength="3"/>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="num_rhours" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording hours a day</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the hours"
+                      ng-model="(Need2SetUp3)" name="num_rhours" maxlength="2"/>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
                     <input type="text" class="form-control input" placeholder="Click me!"
                       ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="col-xs-12 col-centered section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
-              <i class="fa fa-database fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-11">
-              <div class="row form-group">
-                <label for="num_rdays" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording days</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Enter the days"
-                    ng-model="(Need2SetUp3)" name="num_rdays" maxlength="3"/>
-                </div>
-              </div>
-              <div class="row form-group">
-                <label for="num_rhours" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording hours a day</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Enter the hours"
-                    ng-model="(Need2SetUp3)" name="num_rhours" maxlength="2"/>
-                </div>
-              </div>
-              <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Click me!"
-                    ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="col-xs-12 col-centered section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
-              <i class="fa fa-hdd-o fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-11">
-              <div class="row form-group">
-                <label for="RAID" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">RAID type</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                  <div class="flex" id="RAID">
-                    <div class="flex1">0</div>
-                    <div class="flex1">1</div>
-                    <div class="flex1">5</div>
-                    <div class="flex1">10</div>
-                  </div>
-                </div>
-              </div>
-              <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                  <div class="flex" id="RAID">
-                    <div class="flex1">1</div>
-                    <div class="flex1">2</div>
-                    <div class="flex1">3</div>
-                    <div class="flex1">4</div>
-                    <div class="flex1">6</div>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
+          <section class="col-xs-12 col-centered section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-1">
+                <i class="fa fa-hdd-o fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-11">
+                <div class="row form-group">
+                  <label for="RAID" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">RAID type</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <div class="flex" id="RAID">
+                      <div class="flex1">0</div>
+                      <div class="flex1">1</div>
+                      <div class="flex1">5</div>
+                      <div class="flex1">10</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <div class="flex" id="RAID">
+                      <div class="flex1">1</div>
+                      <div class="flex1">2</div>
+                      <div class="flex1">3</div>
+                      <div class="flex1">4</div>
+                      <div class="flex1">6</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
+
+      <div class="row hd-requirement">
+        <h4>Minimin Hardware Requirement</h4>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1">
+            <i class="fa fa-cubes fa-3x"></i></div>
+          <div class="col-xs-9">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Model</label>
+              <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
+            </div>
           </div>
         </section>
-      </form>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1">
+            <i class="fa fa-tachometer fa-3x"></i></div>
+          <div class="col-xs-9">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">OS</label>
+              <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">CPU</label>
+              <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">RAM</label>
+              <div class="col-xs-6 col-xs-offset-1">8 GB</div>
+            </div>
+          </div>
+        </section>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1">
+            <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Network</label>
+              <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">HDDs</label>
+              <div class="col-xs-6 col-xs-offset-1">4TB x 8</div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
-    <div class="row hd-requirement">
-      <h4>Minimin Hardware Requirement</h4>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
-          <i class="fa fa-cubes fa-3x"></i></div>
-        <div class="col-xs-9">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">Model</label>
-            <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
-          </div>
-        </div>
-      </section>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
-          <i class="fa fa-tachometer fa-3x"></i></div>
-        <div class="col-xs-9">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">OS</label>
-            <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">CPU</label>
-            <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">RAM</label>
-            <div class="col-xs-6 col-xs-offset-1">8 GB</div>
-          </div>
-        </div>
-      </section>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
-          <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
-        </div>
-        <div class="col-xs-9">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">Network</label>
-            <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-            <div class="col-xs-6 col-xs-offset-1">4TB x 8</div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
-
-<!-- ---------------------------------------- -->
+<!-- //---------------------------------------- -->
 
     <div class="tab-pane fade" id="cms">
       <div class="row customization">
