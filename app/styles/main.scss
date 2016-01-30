@@ -93,10 +93,11 @@ body {
   }
 }
 
+//------------------------------------------------------------
 
-//--------------------------------------------
-$theme: #3F0D3A;
-$theme2: #8cb128;
+
+$theme_color: #3F0D3A;
+$theme_color2: #8cb128;
 
 .nav-tabs, .nav-pills {
     text-align:center;
@@ -115,20 +116,35 @@ $theme2: #8cb128;
 }
 
 .hd-requirement {
-    background: $theme;
+    background: $theme_color;
     color: white;
     text-align: center;
-    &.cms {
-      background: $theme2;
+    &.cmsBG {
+      background: $theme_color2;
     }
 }
 
-.input{
+.input {
   width:100%;
   min-width:70%;
   max-width:100%;
   background: rgba(255,255,255,0.1);
+  border: 0;
+  border-bottom:0.2em solid $theme_color;
+  &.cmsBdr {
+     border-bottom:0.2em solid $theme_color2;
+  }
 }
+
+.filter {
+  text-align: center;
+  > input {
+    @extend .input;
+    min-width:70%;
+    max-width:80%;
+  }
+}
+
 .input-label {
   padding-top:0.1em;
 }
@@ -153,7 +169,11 @@ $theme2: #8cb128;
       background: rgba(1,1,1,0.5);
     }
     &:active{
-      background: $theme;
+      background: $theme_color;
+      opacity: 0.9;
+    }
+    &.cmsFlex:active{
+      background: $theme_color2;
       opacity: 0.9;
     }
   }
@@ -169,18 +189,22 @@ $theme2: #8cb128;
   }
   td {
     font-size: 3em;
-    color: $theme;
+    color: $theme_color;
   }
   sub {
     font-size: 0.5em;
   }
-  &.cms {
+  &.cmsTB {
     td {
-      color: $theme2;
+      color: $theme_color2;
     }
   }
 }
 
-.jumbotron{
+.jumbotron {
   padding-top: 0;
+}
+
+.hr {
+  margin-top:0;
 }
