@@ -28,68 +28,90 @@
   <div class="tab-pane fade in active" id="nvr">
 
     <div class="row customization">
-      <div class="col-xs-12 col-centered">
-        <div class="row">
-          <div class="col-xs-12 col-sm-1 col-sm-push-1">
-            <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
-          <div class="col-xs-12 col-sm-11">
-            <div class="row">
-              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Number of cameras</div>
-              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                <div class="input-group">
-                  <!-- check "max" / maxlength="5" | size="5"-->
+      <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
+        <section class="col-xs-12 col-centered section">
+          <div class="row">
+            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+              <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
+            <div class="col-xs-12 col-sm-11">
+              <div class="row form-group">
+                <label for="num_cameras" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Number of cameras</label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the number"
-                  ng-model="(Need2SetUp)" name="num_cameras" maxlength="5"/>
+                    ng-model="(Need2SetUp)" name="num_cameras" maxlength="5"/>
                 </div>
               </div>
-              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Bit rate per camera<sub>(Mbps)</sub></div>
-              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                <div class="input-group">
-                  <!--  -->
-                  <input type="text" class="form-control input" placeholder="Click me!"
-                  ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
+              <div class="row form-group">
+                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Click me!"
+                      ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-  <p style="padding:3em"></p>
-      <div class="col-xs-12 col-centered">
-        <div class="row">
-          <div class="col-xs-12 col-sm-1 col-sm-push-1">
-            <i class="fa fa-database fa-3x icon-centered"></i></div>
-          <div class="col-xs-12 col-sm-11">
-            <div class="row">
-              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Recording days</div>
-              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                <div class="input-group">
-                  <!-- check "max" / maxlength="5" | size="5"-->
+        </section>
+        <section class="col-xs-12 col-centered section">
+          <div class="row">
+            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+              <i class="fa fa-database fa-3x icon-centered"></i></div>
+            <div class="col-xs-12 col-sm-11">
+              <div class="row form-group">
+                <label for="num_rdays" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording days</label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the days"
-                  ng-model="(Need2SetUp3)" name="num_rdays" maxlength="3"/>
+                    ng-model="(Need2SetUp3)" name="num_rdays" maxlength="3"/>
                 </div>
               </div>
-              <div class="col-xs-6 col-sm-3 col-sm-offset-3">ecording hours a day</div>
-              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                <div class="input-group">
-                  <!-- check "max" / maxlength="5" | size="5"-->
+              <div class="row form-group">
+                <label for="num_rhours" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording hours a day</label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the hours"
-                  ng-model="(Need2SetUp3)" name="num_rhours" maxlength="3"/>
+                    ng-model="(Need2SetUp3)" name="num_rhours" maxlength="2"/>
                 </div>
               </div>
-              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Motion recording<sub>(%)</sub></div>
-              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
-                <div class="input-group">
-                  <!--  -->
+              <div class="row form-group">
+                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Click me!"
-                  ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
+                    ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
                 </div>
               </div>
             </div>
-
           </div>
-        </div>
-      </div>
+        </section>
+        <section class="col-xs-12 col-centered section">
+          <div class="row">
+            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+              <i class="fa fa-hdd-o fa-3x icon-centered"></i></div>
+            <div class="col-xs-12 col-sm-11">
+              <div class="row form-group">
+                <label for="RAID" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">RAID type</label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                  <div class="flex" id="RAID">
+                    <div class="flex1">0</div>
+                    <div class="flex1">1</div>
+                    <div class="flex1">5</div>
+                    <div class="flex1">10</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-group">
+                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
+                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                  <div class="flex" id="RAID">
+                    <div class="flex1">1</div>
+                    <div class="flex1">2</div>
+                    <div class="flex1">3</div>
+                    <div class="flex1">4</div>
+                    <div class="flex1">6</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
   <p style="padding:3em"></p>
       <div class="col-xs-12 col-centered">
         <div class="row">
@@ -146,6 +168,7 @@
           </div>
         </div>
       </div>
+    </form>
     </div>
 
   </div>

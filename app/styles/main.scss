@@ -149,3 +149,29 @@ body {
 .input-group {
   padding:0.5em 0;
 }
+
+.section {
+  padding: 2em;
+}
+
+.input-label {
+  padding-top:0.1em;
+}
+
+.my-radio {
+    -webkit-appearance: checkbox; /* Chrome, Safari, Opera */
+    -moz-appearance: checkbox;    /* Firefox */
+    -ms-appearance: checkbox;     /* not currently supported */
+}
+
+.flex {
+  display: -webkit-flex;
+  display: flex;
+}
+.flex1 {
+  -webkit-flex: 1;
+  flex: 1;
+  background: rgba(1,1,1,0.2);
+  border-style: solid;
+  text-align: center;
+}
