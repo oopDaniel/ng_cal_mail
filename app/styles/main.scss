@@ -120,6 +120,7 @@ body {
 .icon-centered {
     display: table;
     margin: 0 auto;
+    padding:0 0 0.5em;
 }
 
 .hd-requirement {
@@ -131,14 +132,6 @@ body {
     }
 }
 
-.paddingtmp {
-  padding: 1em;
-}
-
-.align-left {
-  text-align: left;
-}
-
 .input{
   width:100%;
   min-width:70%;
@@ -146,12 +139,11 @@ body {
   background: rgba(255,255,255,0.1);
 }
 
-.input-group {
-  padding:0.5em 0;
-}
-
 .section {
-  padding: 2em;
+  padding: 0.2em;
+  &.section-require {
+    text-align: left;
+  }
 }
 
 .input-label {
@@ -174,4 +166,7 @@ body {
   background: rgba(1,1,1,0.2);
   border-style: solid;
   text-align: center;
+  &:hover{
+    background: rgba(1,1,1,0.5);
+  }
 }
