@@ -24,7 +24,7 @@
     </div>
   </div>
 
-<div class="tab-content">
+  <div class="tab-content">
   <div class="tab-pane fade in active" id="nvr">
 
     <div class="row customization">
@@ -111,7 +111,7 @@
             </div>
           </div>
         </section>
-      </from>
+      </form>
     </div>
 
     <div class="row hd-requirement">
@@ -131,12 +131,16 @@
           <i class="fa fa-tachometer fa-3x"></i></div>
         <div class="col-xs-9">
           <div class="row">
-            <div class="col-xs-2 col-xs-offset-2">OS</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">Windows 7 64bit</div>
-            <div class="col-xs-2 col-xs-offset-2">CPU</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">Intel Core i5</div>
-            <div class="col-xs-2 col-xs-offset-2">RAM</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">8 GB</div>
+            <label class="col-xs-2 col-xs-offset-2">OS</label>
+            <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+          </div>
+          <div class="row">
+            <label class="col-xs-2 col-xs-offset-2">CPU</label>
+            <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
+          </div>
+          <div class="row">
+            <label class="col-xs-2 col-xs-offset-2">RAM</label>
+            <div class="col-xs-6 col-xs-offset-1">8 GB</div>
           </div>
         </div>
       </section>
@@ -146,98 +150,121 @@
         </div>
         <div class="col-xs-9">
           <div class="row">
-            <div class="col-xs-2 col-xs-offset-2">Network</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">1000 Mbps BASE-T x 2</div>
-            <div class="col-xs-2 col-xs-offset-2">HDDs</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">4TB x 8</div>
+            <label class="col-xs-2 col-xs-offset-2">Network</label>
+            <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
+          </div>
+          <div class="row">
+            <label class="col-xs-2 col-xs-offset-2">HDDs</label>
+            <div class="col-xs-6 col-xs-offset-1">4TB x 8</div>
           </div>
         </div>
       </section>
     </div>
   </div>
 
+<!-- ---------------------------------------- -->
 
-<div class="tab-pane fade" id="cms">
+    <div class="tab-pane fade" id="cms">
+      <div class="row customization">
+        <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
+          <section class="col-xs-12 col-centered section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-1">
+                <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-11">
+                <div class="row form-group">
+                  <label for="num_cameras" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Number of cameras</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the number"
+                      ng-model="(Need2SetUp)" name="num_cameras" maxlength="5"/>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                      <input type="text" class="form-control input" placeholder="Click me!"
+                        ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="col-xs-12 col-centered section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-1">
+                <i class="fa fa-user fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-11">
+                <div class="row form-group">
+                  <label for="local-client" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Local client</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <div class="flex" id="local-client">
+                      <div class="flex1">Yes</div>
+                      <div class="flex1">No</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="remote-user" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Concurrent remote users(max. 10)</label>
+                  <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the number"
+                      ng-model="(Need2SetUp)" name="remote-user" maxlength="2"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
 
-  <div class="row customization">
-    <div class="col-xs-12 col-centered">
-      <div class="row">
-        <div class="col-xs-12 col-sm-1 col-sm-push-1">
-          <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
-        <div class="col-xs-12 col-sm-11">
-          <div class="row">
-            <div class="col-xs-8 col-sm-5 col-sm-offset-3">Number of cameras</div>
-            <div class="col-xs-4">16</div>
-            <div class="col-xs-8 col-sm-5 col-sm-offset-3">Bit rate per camera<sub>(Mbps)</sub></div>
-            <div class="col-xs-4">4</div>
+      <div class="row hd-requirement cms">
+        <h4>Minimin Hardware Requirement</h4>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1">
+            <i class="fa fa-cubes fa-3x"></i></div>
+          <div class="col-xs-9">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Model</label>
+              <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
+            </div>
           </div>
-        </div>
+        </section>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1">
+            <i class="fa fa-tachometer fa-3x"></i></div>
+          <div class="col-xs-9">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">OS</label>
+              <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">CPU</label>
+              <div class="col-xs-6 col-xs-offset-1">Intel Core i7</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">RAM</label>
+              <div class="col-xs-6 col-xs-offset-1">8 GB</div>
+            </div>
+          </div>
+        </section>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1">
+            <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Network</label>
+              <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">HDDs</label>
+              <div class="col-xs-6 col-xs-offset-1">1TB x 1</div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-<p style="padding:3em"></p>
-    <div class="col-xs-12 col-centered">
-      <div class="row">
-        <div class="col-xs-12 col-sm-1 col-sm-push-1">
-          <i class="fa fa-user fa-3x icon-centered"></i></div>
-        <div class="col-xs-12 col-sm-11">
-          <div class="row">
-            <div class="col-xs-8 col-sm-5 col-sm-offset-3">Local client</div>
-            <div class="col-xs-4">Yes | No</div>
-            <div class="col-xs-8 col-sm-5 col-sm-offset-3">Concurrent remote users(max. 10)</div>
-            <div class="col-xs-4">10</div>
-          </div>
-        </div>
-      </div>
-    </div>
-<p style="padding:3em"></p>
-<p style="padding:1em"></p>
-    <div class="row hd-requirement cms">
-      <h4>Minimin Hardware Requirement</h4>
-      <div class="row paddingtmp">
-        <div class="col-xs-1 col-xs-offset-1">
-          <i class="fa fa-cubes fa-3x"></i></div>
-        <div class="col-xs-9">
-          <div class="row">
-            <div class="col-xs-2 col-xs-offset-2">Model</div>
-             <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
-          </div>
-        </div>
-      </div>
-      <div class="row paddingtmp">
-        <div class="col-xs-1 col-xs-offset-1">
-          <i class="fa fa-tachometer fa-3x"></i></div>
-        <div class="col-xs-9">
-          <div class="row">
-            <div class="col-xs-2 col-xs-offset-2">OS</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">Windows 7 64bit</div>
-            <div class="col-xs-2 col-xs-offset-2">CPU</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">Intel Core i7</div>
-            <div class="col-xs-2 col-xs-offset-2">RAM</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">8 GB</div>
-          </div>
-        </div>
-      </div>
-      <div class="row paddingtmp">
-        <div class="col-xs-1 col-xs-offset-1">
-          <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
-        </div>
-        <div class="col-xs-9">
-          <div class="row">
-            <div class="col-xs-2 col-xs-offset-2">Network</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">1000 Mbps BASE-T x 2</div>
-            <div class="col-xs-2 col-xs-offset-2">HDDs</div>
-            <div class="col-xs-6 col-xs-offset-1 align-left">1TB x 1</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-</div>
-
 
   </div>
-</div>
 </div>
 
 
