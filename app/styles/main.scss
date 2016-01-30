@@ -138,3 +138,14 @@ body {
 .align-left {
   text-align: left;
 }
+
+.input{
+  width:100%;
+  min-width:70%;
+  max-width:100%;
+  background: rgba(255,255,255,0.1);
+}
+
+.input-group {
+  padding:0.5em 0;
+}

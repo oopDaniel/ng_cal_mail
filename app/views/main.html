@@ -22,13 +22,6 @@
         <div class="box-text">67.5 Mbps</div>
       </div>
     </div>
-
-  <!--   <p class="lead">
-      <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-      Always a pleasure scaffolding your apps.
-    </p>
-    <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p> -->
-
   </div>
 
 <div class="tab-content">
@@ -41,10 +34,22 @@
             <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
           <div class="col-xs-12 col-sm-11">
             <div class="row">
-              <div class="col-xs-8 col-sm-5 col-sm-offset-3">Number of cameras</div>
-              <div class="col-xs-4">16</div>
-              <div class="col-xs-8 col-sm-5 col-sm-offset-3">Bit rate per camera<sub>(Mbps)</sub></div>
-              <div class="col-xs-4">4</div>
+              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Number of cameras</div>
+              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <div class="input-group">
+                  <!-- check "max" / maxlength="5" | size="5"-->
+                  <input type="text" class="form-control input" placeholder="Enter the number"
+                  ng-model="(Need2SetUp)" name="num_cameras" maxlength="5"/>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Bit rate per camera<sub>(Mbps)</sub></div>
+              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <div class="input-group">
+                  <!--  -->
+                  <input type="text" class="form-control input" placeholder="Click me!"
+                  ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -56,13 +61,32 @@
             <i class="fa fa-database fa-3x icon-centered"></i></div>
           <div class="col-xs-12 col-sm-11">
             <div class="row">
-              <div class="col-xs-8 col-sm-5 col-sm-offset-3">Recording days</div>
-              <div class="col-xs-4">30</div>
-              <div class="col-xs-8 col-sm-5 col-sm-offset-3">Recording hours a day</div>
-              <div class="col-xs-4">14</div>
-              <div class="col-xs-8 col-sm-5 col-sm-offset-3">Motion recording<sub>(%)</sub></div>
-              <div class="col-xs-4">50</div>
+              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Recording days</div>
+              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <div class="input-group">
+                  <!-- check "max" / maxlength="5" | size="5"-->
+                  <input type="text" class="form-control input" placeholder="Enter the days"
+                  ng-model="(Need2SetUp3)" name="num_rdays" maxlength="3"/>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-sm-offset-3">ecording hours a day</div>
+              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <div class="input-group">
+                  <!-- check "max" / maxlength="5" | size="5"-->
+                  <input type="text" class="form-control input" placeholder="Enter the hours"
+                  ng-model="(Need2SetUp3)" name="num_rhours" maxlength="3"/>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-sm-offset-3">Motion recording<sub>(%)</sub></div>
+              <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <div class="input-group">
+                  <!--  -->
+                  <input type="text" class="form-control input" placeholder="Click me!"
+                  ng-model="(Need2SetUp2)" name="bitrate_per" onclick="alert('HI!');"/>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -81,8 +105,7 @@
           </div>
         </div>
       </div>
-  <p style="padding:3em"></p>
-  <p style="padding:1em"></p>
+  <p style="padding:10em"></p>
       <div class="row hd-requirement">
         <h4>Minimin Hardware Requirement</h4>
         <div class="row paddingtmp">
