@@ -209,3 +209,10 @@ $theme_color2: #8cb128;
 .hr {
   margin-top:0;
 }
+
+.details {
+  color: lighten(grey, 10%);
+  max-width:80%;
+  border-bottom:.2em ridge;
+  padding: .2em
+}
