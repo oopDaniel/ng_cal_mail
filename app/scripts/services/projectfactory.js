@@ -8,8 +8,8 @@
  * Service in the calculatorApp.
  */
 angular.module('calculatorApp')
-  .service('projectFactory', function() {
-    var projects = [
+    .service('projectFactory', function() {
+        var projects = [
                     {
                       name:'project X',
                       totalStorage:789,
@@ -196,12 +196,12 @@ angular.module('calculatorApp')
                     }
                   ];
 
-    this.getProjects = function() {
-        return projects;
-    };
+        this.getProjects = function() {
+            return projects;
+        };
 
-    this.getProject = function(index) {
-        return index;
-    };
+        this.getProject = function(index) {
+            return projects[index];
+        };
   });
 

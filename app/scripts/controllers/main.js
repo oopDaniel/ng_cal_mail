@@ -8,10 +8,16 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-  .controller('MainCtrl', function () {
+    .controller('MainCtrl', [ '$scope', function ($scope) {
+        $scope.tab = 1;
+
+
+
+
+
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-  });
+  }]);

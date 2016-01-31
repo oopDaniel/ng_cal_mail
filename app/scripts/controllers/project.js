@@ -8,10 +8,8 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-  .controller('ProjectCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('ProjectCtrl', ['$scope', 'projectFactory',
+    function ($scope, projectFactory) {
+        $scope.filtText = '';
+        $scope.projects = projectFactory.getProjects();
+  }]);
