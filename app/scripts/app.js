@@ -42,19 +42,3 @@ angular
       });
       $urlRouterProvider.otherwise('/');
   });
-  // .config(function ($routeProvider) {
-  //   $routeProvider
-  //     .when('/', {
-  //       templateUrl: 'views/main.html',
-  //       controller: 'MainCtrl',
-  //       controllerAs: 'main'
-  //     })
-  //     .when('/project', {
-  //       templateUrl: 'views/project.html',
-  //       controller: 'ProjectCtrl',
-  //       controllerAs: 'project'
-  //     })
-  //     .otherwise({
-  //       redirectTo: '/'
-  //     });
-  // });

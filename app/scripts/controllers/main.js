@@ -9,7 +9,7 @@
  */
 angular.module('calculatorApp')
     .controller('MainCtrl', [ '$scope', function ($scope) {
-        $scope.tab = 1;
+        $scope.onNVR = true;
 
 
 

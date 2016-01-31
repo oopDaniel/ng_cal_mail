@@ -99,6 +99,11 @@ body {
 $theme_color: #3F0D3A;
 $theme_color2: #8cb128;
 
+// padding for container
+.in-content {
+  padding:3em;
+}
+
 .nav-tabs, .nav-pills {
     text-align:center;
     > li {
@@ -108,6 +113,8 @@ $theme_color2: #8cb128;
      zoom:1; /* hasLayout ie7 trigger */
     }
 }
+
+
 
 .icon-centered {
     display: table;
@@ -217,6 +224,13 @@ $theme_color2: #8cb128;
   padding: .2em
 }
 
-.in-content {
-  padding:3em;
-}
+.btnNVR:active > a {
+    background-color: $theme_color;
+  }
+.btnCMS:active > a {
+    background-color: $theme_color2;
+  }
+
+
+
+
