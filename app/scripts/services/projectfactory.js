@@ -11,25 +11,25 @@ angular.module('calculatorApp')
   .service('projectFactory', function() {
     var projects = [
                     {
-                      name:"project X",
+                      name:'project X',
                       totalStorage:789,
                       totalBandwidth:500,
-                      user:"andy",
+                      user:'andy',
                       createTime:1450221938631,
                       lastUpdate:1452221938631,
                       NVR:{
                           count:2,
                           data:[
                             {
-                              item_name:"park",
+                              itemName:'park',
                               storage:30,
                               bandwidth:100,
                               cameras:10,
-                              bit_rate:5,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"M",
-                                resolution:"1920x1080",
+                              bitRate:5,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'M',
+                                resolution:'1920x1080',
                                 FPS:30
                                 },
                               rDays:2,
@@ -39,15 +39,15 @@ angular.module('calculatorApp')
                               HDDsize:3
                             },
                             {
-                              item_name:"room",
+                              itemName:'room',
                               storage:30,
                               bandwidth:100,
                               cameras:8,
-                              bit_rate:4,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"M",
-                                resolution:"1920x1080",
+                              bitRate:4,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'M',
+                                resolution:'1920x1080',
                                 FPS:60
                                 },
                               rDays:5,
@@ -62,67 +62,67 @@ angular.module('calculatorApp')
                           count:3,
                           data:[
                             {
-                              item_name:"building",
+                              itemName:'building',
                               cameras:15,
-                              bit_rate:5,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"M",
-                                resolution:"1024x768",
+                              bitRate:5,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'M',
+                                resolution:'1024x768',
                                 FPS:60
                                 },
                               local:true,
-                              remote_users:10
+                              remoteUsers:10
                             },
                             {
-                              item_name:"R&D dep.",
+                              itemName:'R&D dep.',
                               cameras:5,
-                              bit_rate:10,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"M",
-                                resolution:"800x600",
+                              bitRate:10,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'M',
+                                resolution:'800x600',
                                 FPS:60
                                 },
                               local:false,
-                              remote_users:2
+                              remoteUsers:2
                             },
                             {
-                              item_name:"sales dep.",
+                              itemName:'sales dep.',
                               cameras:4,
-                              bit_rate:8,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"M",
-                                resolution:"800x600",
+                              bitRate:8,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'M',
+                                resolution:'800x600',
                                 FPS:30
                                 },
                               local:false,
-                              remote_users:3
+                              remoteUsers:3
                             }
                           ]
                       }
                     },
                     {
-                      name:"Plan B",
+                      name:'Plan B',
                       totalStorage:9527,
                       totalBandwidth:1234,
-                      user:"john123",
+                      user:'john123',
                       createTime:1454221938631,
                       lastUpdate:1454221940631,
                       NVR:{
                           count:1,
                           data:[
                           {
-                            item_name:"GitHub",
+                            itemName:'GitHub',
                             storage:500,
                             bandwidth:1000,
                             cameras:8,
-                            bit_rate:5,
-                            bit_rate_data: {
-                              codec:"H.264",
-                              quality:"H",
-                              resolution:"1920x1080",
+                            bitRate:5,
+                            bitRateData: {
+                              codec:'H.264',
+                              quality:'H',
+                              resolution:'1920x1080',
                               FPS:60
                               },
                             rDays:20,
@@ -136,39 +136,39 @@ angular.module('calculatorApp')
                           count:2,
                           data:[
                             {
-                              item_name:"toilet",
+                              itemName:'toilet',
                               cameras:4,
-                              bit_rate:10,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"H",
-                                resolution:"1024x768",
+                              bitRate:10,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'H',
+                                resolution:'1024x768',
                                 FPS:60
                                 },
                               local:true,
-                              remote_users:10
+                              remoteUsers:10
                             },
                             {
-                              item_name:"living room",
+                              itemName:'living room',
                               cameras:4,
-                              bit_rate:5,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"M",
-                                resolution:"800x600",
+                              bitRate:5,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'M',
+                                resolution:'800x600',
                                 FPS:30
                                 },
                               local:false,
-                              remote_users:2
+                              remoteUsers:2
                             }
                           ]
                       }
                     },
                     {
-                      name:"Seeing is believing",
+                      name:'Seeing is believing',
                       totalStorage:9527,
                       totalBandwidth:1234,
-                      user:"bob",
+                      user:'bob',
                       createTime:1412221938631,
                       lastUpdate:1416221940631,
                       NVR:{
@@ -179,17 +179,17 @@ angular.module('calculatorApp')
                           count:1,
                           data:[
                             {
-                              item_name:"my home",
+                              itemName:'my home',
                               cameras:8,
-                              bit_rate:20,
-                              bit_rate_data: {
-                                codec:"H.264",
-                                quality:"H",
-                                resolution:"1920x1080",
+                              bitRate:20,
+                              bitRateData: {
+                                codec:'H.264',
+                                quality:'H',
+                                resolution:'1920x1080',
                                 FPS:60
                                 },
                               local:true,
-                              remote_users:2
+                              remoteUsers:2
                             }
                           ]
                       }
@@ -198,8 +198,10 @@ angular.module('calculatorApp')
 
     this.getProjects = function() {
         return projects;
-    }
+    };
 
     this.getProject = function(index) {
         return index;
-    }
+    };
+  });
+
