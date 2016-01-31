@@ -166,8 +166,8 @@ angular.module('calculatorApp')
                     },
                     {
                       name:'Seeing is believing',
-                      totalStorage:9527,
-                      totalBandwidth:1234,
+                      totalStorage:5566,
+                      totalBandwidth:678,
                       user:'bob',
                       createTime:1412221938631,
                       lastUpdate:1416221940631,

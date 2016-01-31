@@ -1,15 +1,20 @@
 <section>
   <h3>Project list</h3>
   <div class="filter">
-    <input type="text" class="form-control" placeholder="Type to filter by project name" ng-model="filtText" maxlength="10">
+    <input type="text" class="form-control" placeholder="Type to filter by project name" ng-model="filtText.name" maxlength="10">
   </div>
 </section>
 <hr class="hr">
 <section>
-  <div class="project" ng-repeat="pj in projects | filter: filtText">
+  <div class="project" ng-repeat="pj in projects | orderBy: 'name' | filter: filtText">
     <h4>{{pj.name}}</h4>
     <div class="details">
-
+      <span ng-show="pj.NVR.data.length">NVR: {{pj.NVR.count}}</span>
+      <span ng-show="pj.NVR.data.length && pj.CMS.data.length">, </span>
+      <span ng-show="pj.CMS.data.length">CMS: {{pj.CMS.count}}</span>
+      <br>Total storage: {{pj.totalStorage}}
+      <br>Total bandwidth: {{pj.totalBandwidth}}
+      <hr>
     </div>
   </div>
 </section>
