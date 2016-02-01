@@ -12,4 +12,24 @@ angular.module('calculatorApp')
     function ($scope, projectFactory) {
         $scope.filtText = '';
         $scope.projects = projectFactory.getProjects();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    this.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
   }]);
