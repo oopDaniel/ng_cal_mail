@@ -34,22 +34,22 @@
 
     <div class="row customization">
       <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
-        <section class="col-xs-12 col-centered section">
+        <section class="col-xs-12 section">
           <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+            <div class="col-xs-12 col-sm-1 col-sm-push-2">
               <i class="fa fa-camera-retro fa-3x icon-centered"></i>
             </div>
-            <div class="col-xs-12 col-sm-11">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <div class="row form-group">
-                <label for="num_cameras" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Number of cameras</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the number"
                     ng-model="(Need2SetUp)" name="num_cameras" id="num_cameras" maxlength="5"/>
                 </div>
               </div>
               <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input" placeholder="Click me!"
                       ng-model="(Need2SetUp2)" name="bitrate_per" id="bitrate_per" onclick="alert('HI!');"/>
                 </div>
@@ -57,44 +57,44 @@
             </div>
           </div>
         </section>
-        <section class="col-xs-12 col-centered section">
+        <section class="col-xs-12 section">
           <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+            <div class="col-xs-12 col-sm-1 col-sm-push-2">
               <i class="fa fa-database fa-3x icon-centered"></i>
             </div>
-            <div class="col-xs-12 col-sm-11">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <div class="row form-group">
-                <label for="num_rdays" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording days</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording days</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the days"
                     ng-model="(Need2SetUp3)" name="num_rdays" id="num_rdays" maxlength="3"/>
                 </div>
               </div>
               <div class="row form-group">
-                <label for="num_rhours" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Recording hours a day</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="num_rhours" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording hours a day</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the hours"
                     ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
                 </div>
               </div>
               <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Click me!" ng-model="(Need2SetUp2)" name="bitrate_per" id="bitrate_per" onclick="alert('HI!');"/>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <section class="col-xs-12 col-centered section">
+        <section class="col-xs-12 section">
           <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+            <div class="col-xs-12 col-sm-1 col-sm-push-2">
               <i class="fa fa-hdd-o fa-3x icon-centered"></i>
             </div>
-            <div class="col-xs-12 col-sm-11">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <div class="row form-group">
-                <label for="RAID" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">RAID type</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID type</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <div class="flex" id="RAID">
                     <div class="flex1">0</div>
                     <div class="flex1">1</div>
@@ -104,8 +104,8 @@
                 </div>
               </div>
               <div class="row form-group">
-                <label for="HDDsize" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <div class="flex" id="RAID">
                     <div class="flex1">1</div>
                     <div class="flex1">2</div>
@@ -129,7 +129,7 @@
         <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">Model</label>
-            <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
+            <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
           </div>
         </div>
       </section>
@@ -172,21 +172,21 @@
   <div class="tab-pane fade" id="cms">
     <div class="row customization">
       <form class="form-horizontal" name="CMSForm" ng-submit="submitCMS()" novalidate="">
-        <section class="col-xs-12 col-centered section">
+        <section class="col-xs-12 section">
           <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+            <div class="col-xs-12 col-sm-1 col-sm-push-2">
               <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-11">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <div class="row form-group">
-                <label for="num_cameras_cms" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Number of cameras</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
                     ng-model="(Need2SetUp)" name="num_cameras_cms" id="num_cameras_cms" maxlength="5"/>
                 </div>
               </div>
               <div class="row form-group">
-                <label for="bitrate_per_cms" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="bitrate_per_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input cmsBdr" placeholder="Click me!"
                       ng-model="(Need2SetUp2)" name="bitrate_per_cms" id="bitrate_per_cms" onclick="alert('HI!');"/>
                 </div>
@@ -194,14 +194,14 @@
             </div>
           </div>
         </section>
-        <section class="col-xs-12 col-centered section">
+        <section class="col-xs-12 section">
           <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-1">
+            <div class="col-xs-12 col-sm-1 col-sm-push-2">
               <i class="fa fa-user fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-11">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
               <div class="row form-group">
-                <label for="local-client" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Local client</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local client</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <div class="flex" id="local-client">
                     <div class="flex1 cmsFlex">Yes</div>
                     <div class="flex1 cmsFlex">No</div>
@@ -209,8 +209,8 @@
                 </div>
               </div>
               <div class="row form-group">
-                <label for="remote-user" class="col-xs-6 col-sm-3 col-sm-offset-3 input-label">Concurrent remote users(max. 10)</label>
-                <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+                <label for="remote-user" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Concurrent remote users(max. 10)</label>
+                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
                     ng-model="(Need2SetUp)" name="remote-user" id="remote-user" maxlength="2"/>
                 </div>
@@ -224,19 +224,19 @@
     <div class="row hd-requirement cmsBG">
       <h4>Minimin Hardware Requirement</h4>
       <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
           <i class="fa fa-cubes fa-3x"></i></div>
-        <div class="col-xs-9">
+        <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">Model</label>
-            <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
+            <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
           </div>
         </div>
       </section>
       <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
           <i class="fa fa-tachometer fa-3x"></i></div>
-        <div class="col-xs-9">
+        <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">OS</label>
             <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
@@ -252,10 +252,10 @@
         </div>
       </section>
       <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
           <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
         </div>
-        <div class="col-xs-9">
+        <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">Network</label>
             <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>

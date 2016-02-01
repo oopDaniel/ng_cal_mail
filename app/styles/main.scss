@@ -125,6 +125,10 @@ $font_detail_color: lighten(grey, 10%);
 }
 
 .hd-requirement {
+    @media screen and (min-width: 800px) {
+      width:70%;
+      margin: 2em auto;
+    }
     background: $theme_color;
     color: white;
     text-align: center;
