@@ -20,8 +20,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{NVRObj.storage = NVRObj.bandwidth * NVRObj.rDays * NVRObj.motion / 100}}<sub>GB</sub></td>
-          <td>{{NVRObj.bandwidth = NVRObj.cameras * NVRObj.bitRate}}<sub>Mbps</sub></td>
+          <td>{{NVRObj.storage = NVRObj.bandwidth * NVRObj.rDays * NVRObj.motion / 100 | number}}<sub>GB</sub></td>
+          <td>{{NVRObj.bandwidth = NVRObj.cameras * NVRObj.bitRate | number}}<sub>Mbps</sub></td>
         </tr>
       </tbody>
     </table>
@@ -29,7 +29,6 @@
 </div>
 </div>
 </div>
-
 <div class="tab-content">
   <div id="nvr" class="tab-pane fade in active">
 
@@ -45,14 +44,14 @@
                 <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the number"
-                    ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5"/>
+                    ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                 </div>
               </div>
               <div class="row form-group">
                 <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input" placeholder="Click me!"
-                      ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3"/>
+                      ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                 </div>
               </div>
             </div>
@@ -73,7 +72,7 @@
                           ng-change="selectDays()"
                           ng-options="opt.name for opt in rDaysArr track by opt.name">
                   </select>
-                  <div ng-if="otherDuration">
+                  <div ng-if="showOtherDuration">
                       <input type="text" class="form-control input" placeholder="Enter the days"
                     ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                   </div>
@@ -117,12 +116,22 @@
               <div class="row form-group">
                 <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <div class="flex" id="HDD">
-                    <div class="flex1">1</div>
-                    <div class="flex1">2</div>
-                    <div class="flex1">3</div>
-                    <div class="flex1">4</div>
-                    <div class="flex1">6</div>
+                  <div class="flex">
+                    <div class="flex1" ng-click="selectHDD(0)" ng-class="{selected:setHDD[0]}">1TB</div>
+                    <div class="flex1" ng-click="selectHDD(1)" ng-class="{selected:setHDD[1]}">2TB</div>
+                    <div class="flex1" ng-click="selectHDD(2)" ng-class="{selected:setHDD[2]}">3TB</div>
+                  </div>
+                  <div class="flex">
+                    <div class="flex1" ng-click="selectHDD(3)" ng-class="{selected:setHDD[3]}">4TB</div>
+                    <div class="flex1" ng-click="selectHDD(4)" ng-class="{selected:setHDD[4]}">6TB</div>
+                    <div class="flex1" ng-click="selectHDD(5)" ng-class="{selected:setHDD[5]}">Other</div>
+                  </div>
+                  <div ng-if="showOtherHDD">
+                    <div class="input-group">
+                      <input type="text" class="form-control input" placeholder="Enter the size"
+                    ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                      <div class="input-group-addon my-addon">TB</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -173,7 +182,7 @@
           </div>
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-            <div class="col-xs-6 col-xs-offset-1">{{NVRObj.HDDsize}}TB x {{
+            <div class="col-xs-6 col-xs-offset-1" ng-model="minHDD">{{minHDD}}={{NVRObj.HDDsize}}TB x {{
               NVRObj.storage / NVRObj.HDDsize / 1024 < 1 ? 1 :
               NVRObj.storage / NVRObj.HDDsize / 1024 | number:0}}</div>
           </div>

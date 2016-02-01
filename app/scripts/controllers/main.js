@@ -12,8 +12,8 @@ angular.module('calculatorApp')
         //$scope.onNVR = true;
         $scope.NVRObj={
           itemName:'',
-          storage:0,
-          bandwidth:0,
+          storage:960,
+          bandwidth:64,
           cameras:16,
           bitRate:4,
           bitRateData: {
@@ -37,6 +37,22 @@ angular.module('calculatorApp')
             $scope.setRAID[index] = true;
         };
 
+        $scope.setHDD = new Array(6);
+        $scope.showOtherHDD = false;
+        var HDDArr = [1,2,3,4,6];
+        $scope.selectHDD = function(index) {
+            $scope.showOtherHDD =
+              5 === index ? true : false;
+            $scope.setHDD.fill(false);
+            $scope.setHDD[index] = true;
+            if ( 5 === index ) {
+                $scope.showOtherHDD = true;
+            } else {
+                $scope.showOtherHDD = false;
+                $scope.NVRObj.HDDsize = HDDArr[index];
+            }
+        };
+
 
         $scope.rDaysArr = [
             {name:'1 day'},
@@ -52,17 +68,18 @@ angular.module('calculatorApp')
         // set the default value for the combo box
         $scope.rDays = {name:'30 days (1 month)'};
         // display the textarea for other duration
-        $scope.otherDuration = false;
-        //
+        $scope.showOtherDuration = false;
+
         $scope.selectDays = function() {
             var tmp = parseInt($scope.rDays.name);
             if ( isNaN(tmp) ) {
-                $scope.otherDuration = true;
+                $scope.showOtherDuration = true;
             } else {
-                $scope.otherDuration = false;
+                $scope.showOtherDuration = false;
                 $scope.NVRObj.rDays = tmp;
             }
         };
+        console.log($scope.minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024);
 
 
 

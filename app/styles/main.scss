@@ -137,10 +137,14 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
+.my-addon {
+  background: rgba(255,255,255,0.1);
+  border: 0;
+  border-bottom:0.2em solid $theme_color;
+}
+
 .input {
-  width:100%;
-  min-width:70%;
-  max-width:100%;
+  @extend .my-addon;
   background: rgba(255,255,255,0.1);
   border: 0;
   border-bottom:0.2em solid $theme_color;
@@ -266,7 +270,7 @@ $font_detail_color: lighten(grey, 10%);
     border-radius:50%;
     width:10px;
     height:10px;
-    &:active {
+    &:active, &:hover {
       width:13px;
       height:13px;
     }
@@ -281,7 +285,8 @@ $font_detail_color: lighten(grey, 10%);
     background:lighten($font_detail_color, 20%);
     left:10px;
   }
-  &:active::-webkit-slider-thumb:after{
+  &:active::-webkit-slider-thumb:after,
+  &:hover::-webkit-slider-thumb:after{
     left:13px;
   }
 }
