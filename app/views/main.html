@@ -1,29 +1,32 @@
 <div class="jumbotron">
 
-  <div class="row row-centered">
-    <div class="col-md-8 col-md-offset-2 col-centered">
+  <div class="row">
+    <div class="col-md-12">
       <ul class="nav nav-pills">
         <li class="active" ng-class="{'btnNVR':onNVR}" ng-focus="onNVR=true"><a href="#nvr" data-toggle="tab">NVR</a></li>
         <li ng-class="{'btnCMS':!onNVR}" ng-focus="onNVR=false"><a href="#cms" data-toggle="tab">CMS</a></li>
       </ul>
     </div>
+  <div class="row">
+  <div class="table-showdigit col-xs-12 col-md-6 col-md-offset-3">
+    <table class="table table-hover table-responsive">
+      <caption class="caption">Calculation - NVR</caption>
+      <thead>
+        <tr>
+          <th>Total Storage</th>
+          <th>Total Bandwidth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>9,967<sub>GB</sub></td>
+          <td>67.5<sub>Mbps</sub></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <table class="table table-hover table-responsive">
-    <caption class="caption">Calculation - NVR</caption>
-    <thead>
-      <tr>
-        <th>Total Storage</th>
-        <th>Total Bandwidth</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>9,967<sub>GB</sub></td>
-        <td>67.5<sub>Mbps</sub></td>
-      </tr>
-    </tbody>
-  </table>
+</div>
+</div>
 </div>
 
 <div class="tab-content">
@@ -121,9 +124,9 @@
     <div class="row hd-requirement">
       <h4>Minimin Hardware Requirement</h4>
       <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
           <i class="fa fa-cubes fa-3x"></i></div>
-        <div class="col-xs-9">
+        <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">Model</label>
             <div class="col-xs-6 col-xs-offset-1 align-left">NVR-5016-08HR</div>
@@ -131,9 +134,9 @@
         </div>
       </section>
       <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
           <i class="fa fa-tachometer fa-3x"></i></div>
-        <div class="col-xs-9">
+        <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">OS</label>
             <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
@@ -149,10 +152,10 @@
         </div>
       </section>
       <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
           <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
         </div>
-        <div class="col-xs-9">
+        <div class="col-xs-9 col-sm-8">
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">Network</label>
             <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>

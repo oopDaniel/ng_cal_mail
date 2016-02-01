@@ -98,10 +98,12 @@ body {
 
 $theme_color: #3F0D3A;
 $theme_color2: #8cb128;
+$table_bgcolor: white;
+$font_detail_color: lighten(grey, 10%);
 
 // padding for container
 .in-content {
-  padding:3em;
+  padding: 3em;
 }
 
 .nav-tabs, .nav-pills {
@@ -186,29 +188,26 @@ $theme_color2: #8cb128;
   }
 }
 
-.table {
-  background: white;
-  box-shadow:2px 2px 2px rgba(20%,20%,40%,0.6),4px 4px 6px rgba(20%,20%,40%,0.4),6px 6px 12px rgba(20%,20%,40%,0.4);
-  .caption {
-    text-align: center;
-  }
-  th {
-    text-align: center;
-  }
-  td {
-    font-size: 3em;
-    color: $theme_color;
-  }
-  sub {
-    font-size: 0.5em;
-  }
-  &.cmsTB {
+.table-showdigit {
+  .table {
+    background: $table_bgcolor;
+    box-shadow:2px 2px 2px rgba(20%,20%,40%,0.6),4px 4px 6px rgba(20%,20%,40%,0.4),6px 6px 12px rgba(20%,20%,40%,0.4);
+    .caption, th {
+      text-align: center;
+    }
+
     td {
-      color: $theme_color2;
+      font-size: 3em;
+      color: $theme_color;
+      &.cmsTB {
+        color: $theme_color2;
+      }
+    }
+    sub {
+      font-size: 0.5em;
     }
   }
 }
-
 .jumbotron {
   padding-top: 0;
 }
@@ -218,7 +217,7 @@ $theme_color2: #8cb128;
 }
 
 .details {
-  color: lighten(grey, 10%);
+  color: $font_detail_color;
   max-width:80%;
   border-bottom:.2em ridge;
   padding: .2em
@@ -230,7 +229,6 @@ $theme_color2: #8cb128;
 .btnCMS:active > a {
     background-color: $theme_color2;
   }
-
 
 
 
