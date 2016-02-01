@@ -236,13 +236,53 @@ $font_detail_color: lighten(grey, 10%);
     background-color: $theme_color2;
   }
 
+
+// --------- for range bar ------------------
+
+
+@mixin pseudoRange {
+  position: absolute;
+  top: 3px;
+  width: 2000px;
+  height: 4px;
+  content:"";
+  pointer-events: none;
+  transition:.2s;
+}
+
 .rangebar {
   -webkit-appearance: none;
   outline : none;
-  ::-webkit-slider-thumb {
+  width:10em;
+  height:1em;
+  background:none;
+  overflow:hidden;
+  top:-1%;
+  &::-webkit-slider-thumb {
     position: relative;
     transition:.2s;
     -webkit-appearance: none;
+    background:$theme_color;
+    border-radius:50%;
+    width:10px;
+    height:10px;
+    &:active {
+      width:13px;
+      height:13px;
+    }
+  }
+  &::-webkit-slider-thumb:before{
+      @include pseudoRange;
+      background: $theme_color;
+      left:-1200px;
+  }
+  &::-webkit-slider-thumb:after{
+    @include pseudoRange;
+    background:lighten($font_detail_color, 20%);
+    left:10px;
+  }
+  &:active::-webkit-slider-thumb:after{
+    left:13px;
   }
 }
 
