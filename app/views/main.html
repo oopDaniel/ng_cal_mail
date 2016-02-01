@@ -67,8 +67,16 @@
               <div class="row form-group">
                 <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording days</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Enter the days"
-                    ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/>
+                  <!-- <input type="text" class="form-control input" placeholder="Enter the days"
+                    ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/> -->
+                  <select ng-model="rDays"
+                          ng-change="selectDays()"
+                          ng-options="opt.name for opt in rDaysArr track by opt.name">
+                  </select>
+                  <div ng-if="otherDuration">
+                      <input type="text" class="form-control input" placeholder="Enter the days"
+                    ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                  </div>
                 </div>
               </div>
               <!-- <div class="row form-group">
@@ -81,7 +89,7 @@
               <div class="row form-group">
                 <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Click me!" ng-model="NVRObj.motion" name="motion" id="motion" maxlength="3" max="100"/>
+                  <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
                 </div>
               </div>
             </div>

@@ -236,6 +236,15 @@ $font_detail_color: lighten(grey, 10%);
     background-color: $theme_color2;
   }
 
+.rangebar {
+  -webkit-appearance: none;
+  outline : none;
+  ::-webkit-slider-thumb {
+    position: relative;
+    transition:.2s;
+    -webkit-appearance: none;
+  }
+}
 
 
 
