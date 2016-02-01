@@ -181,13 +181,15 @@ $font_detail_color: lighten(grey, 10%);
     &:hover{
       background: rgba(1,1,1,0.5);
     }
-    &:active{
-      background: $theme_color;
-      opacity: 0.9;
-    }
     &.cmsFlex:active{
       background: $theme_color2;
       opacity: 0.9;
+    }
+    &.selected {
+      background: $theme_color;
+      opacity: 0.9;
+      color:white;
+      border-color: lighten(black, 10%);
     }
   }
 }
@@ -233,6 +235,8 @@ $font_detail_color: lighten(grey, 10%);
 .btnCMS:active > a {
     background-color: $theme_color2;
   }
+
+
 
 
 

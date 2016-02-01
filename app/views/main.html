@@ -97,10 +97,10 @@
                 <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID type</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <div class="flex" id="RAID">
-                    <div class="flex1">Non</div><!-- non -->
-                    <div class="flex1">1</div><!-- x/2 -->
-                    <div class="flex1">5</div><!-- x-1 -->
-                    <div class="flex1">6</div><!-- x-2 -->
+                    <div class="flex1" ng-click="selectRAID(0)" ng-class="{selected:setRAID[0]}">Non</div><!-- non -->
+                    <div class="flex1" ng-click="selectRAID(1)" ng-class="{selected:setRAID[1]}">1</div><!-- x/2 -->
+                    <div class="flex1" ng-click="selectRAID(2)" ng-class="{selected:setRAID[2]}">5</div><!-- x-1 -->
+                    <div class="flex1" ng-click="selectRAID(3)" ng-class="{selected:setRAID[3]}">6</div><!-- x-2 -->
                     <!-- consider to add an expansible option here! -->
                   </div>
                 </div>
@@ -108,7 +108,7 @@
               <div class="row form-group">
                 <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <div class="flex" id="RAID">
+                  <div class="flex" id="HDD">
                     <div class="flex1">1</div>
                     <div class="flex1">2</div>
                     <div class="flex1">3</div>

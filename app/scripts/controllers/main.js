@@ -28,6 +28,13 @@ angular.module('calculatorApp')
           HDDsize:3
         };
 
+        // for checking whether should the class be applied
+        $scope.setRAID = new Array(4);
+
+      $scope.selectRAID = function(index) {
+        $scope.setRAID.fill(false);
+        $scope.setRAID[index] = true;
+      };
 
 
 
