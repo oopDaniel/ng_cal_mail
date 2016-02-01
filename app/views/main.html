@@ -1,3 +1,4 @@
+<div ng-controller="MainCtrl">
 <div class="jumbotron">
 
   <div class="row">
@@ -19,8 +20,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>9,967<sub>GB</sub></td>
-          <td>67.5<sub>Mbps</sub></td>
+          <td>{{NVRObj.storage = NVRObj.bandwidth * NVRObj.rDays * NVRObj.motion / 100}}<sub>GB</sub></td>
+          <td>{{NVRObj.bandwidth = NVRObj.cameras * NVRObj.bitRate}}<sub>Mbps</sub></td>
         </tr>
       </tbody>
     </table>
@@ -44,14 +45,14 @@
                 <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the number"
-                    ng-model="(Need2SetUp)" name="num_cameras" id="num_cameras" maxlength="5"/>
+                    ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5"/>
                 </div>
               </div>
               <div class="row form-group">
                 <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input" placeholder="Click me!"
-                      ng-model="(Need2SetUp2)" name="bitrate_per" id="bitrate_per" onclick="alert('HI!');"/>
+                      ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3"/>
                 </div>
               </div>
             </div>
@@ -67,20 +68,20 @@
                 <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording days</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the days"
-                    ng-model="(Need2SetUp3)" name="num_rdays" id="num_rdays" maxlength="3"/>
+                    ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/>
                 </div>
               </div>
-              <div class="row form-group">
+              <!-- <div class="row form-group">
                 <label for="num_rhours" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording hours a day</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <input type="text" class="form-control input" placeholder="Enter the hours"
                     ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
                 </div>
-              </div>
+              </div> -->
               <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
+                <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Click me!" ng-model="(Need2SetUp2)" name="bitrate_per" id="bitrate_per" onclick="alert('HI!');"/>
+                  <input type="text" class="form-control input" placeholder="Click me!" ng-model="NVRObj.motion" name="motion" id="motion" maxlength="3" max="100"/>
                 </div>
               </div>
             </div>
@@ -96,10 +97,11 @@
                 <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID type</label>
                 <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                   <div class="flex" id="RAID">
-                    <div class="flex1">0</div>
-                    <div class="flex1">1</div>
-                    <div class="flex1">5</div>
-                    <div class="flex1">10</div>
+                    <div class="flex1">Non</div><!-- non -->
+                    <div class="flex1">1</div><!-- x/2 -->
+                    <div class="flex1">5</div><!-- x-1 -->
+                    <div class="flex1">6</div><!-- x-2 -->
+                    <!-- consider to add an expansible option here! -->
                   </div>
                 </div>
               </div>
@@ -162,7 +164,9 @@
           </div>
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-            <div class="col-xs-6 col-xs-offset-1">4TB x 8</div>
+            <div class="col-xs-6 col-xs-offset-1">{{NVRObj.HDDsize}}TB x {{
+              NVRObj.storage / NVRObj.HDDsize / 1024 < 1 ? 1 :
+              NVRObj.storage / NVRObj.HDDsize / 1024 | number:0}}</div>
           </div>
         </div>
       </section>
@@ -268,6 +272,7 @@
       </section>
     </div>
   </div>
+</div>
 </div>
 
 
