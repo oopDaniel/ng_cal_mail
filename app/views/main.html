@@ -20,8 +20,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{NVRObj.storage = NVRObj.bandwidth * NVRObj.rDays * NVRObj.motion / 100 | number}}<sub>GB</sub></td>
-          <td>{{NVRObj.bandwidth = NVRObj.cameras * NVRObj.bitRate | number}}<sub>Mbps</sub></td>
+          <td>{{getStorage() | number}}<sub>GB</sub></td>
+          <td>{{getBandwidth() | number}}<sub>Mbps</sub></td>
         </tr>
       </tbody>
     </table>
@@ -182,15 +182,13 @@
           </div>
           <div class="row">
             <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-            <div class="col-xs-6 col-xs-offset-1" ng-model="minHDD">{{minHDD}}={{NVRObj.HDDsize}}TB x {{
-              NVRObj.storage / NVRObj.HDDsize / 1024 < 1 ? 1 :
-              NVRObj.storage / NVRObj.HDDsize / 1024 | number:0}}</div>
+            <div class="col-xs-6 col-xs-offset-1" ng-model="minHDD">{{NVRObj.HDDsize}}TB x {{ getMinHDD() | number:0}}</div>
           </div>
         </div>
       </section>
     </div>
   </div>
-
+<button ng-click="showlog()">123</button>
   <div class="tab-pane fade" id="cms">
     <div class="row customization">
       <form class="form-horizontal" name="CMSForm" ng-submit="submitCMS()" novalidate="">

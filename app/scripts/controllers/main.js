@@ -9,7 +9,6 @@
  */
 angular.module('calculatorApp')
     .controller('MainCtrl', [ '$scope', function ($scope) {
-        //$scope.onNVR = true;
         $scope.NVRObj={
           itemName:'',
           storage:960,
@@ -30,7 +29,6 @@ angular.module('calculatorApp')
 
         // for checking whether should the class be applied
         $scope.setRAID = new Array(4);
-
         // click a type of RAID
         $scope.selectRAID = function(index) {
             $scope.setRAID.fill(false);
@@ -39,10 +37,8 @@ angular.module('calculatorApp')
 
         $scope.setHDD = new Array(6);
         $scope.showOtherHDD = false;
-        var HDDArr = [1,2,3,4,6];
+        var HDDArr = [1,2,3,4,6];       // HDD size indicator
         $scope.selectHDD = function(index) {
-            $scope.showOtherHDD =
-              5 === index ? true : false;
             $scope.setHDD.fill(false);
             $scope.setHDD[index] = true;
             if ( 5 === index ) {
@@ -52,6 +48,22 @@ angular.module('calculatorApp')
                 $scope.NVRObj.HDDsize = HDDArr[index];
             }
         };
+
+        $scope.getBandwidth = function() {
+            return $scope.NVRObj.bandwidth =
+                $scope.NVRObj.cameras * $scope.NVRObj.bitRate;
+        };
+        $scope.getStorage = function() {
+            return $scope.NVRObj.storage =
+                $scope.NVRObj.bandwidth * $scope.NVRObj.rDays *
+                $scope.NVRObj.motion / 100;
+        };
+        $scope.getMinHDD = function() {
+            var minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024;
+            minHDD = ( minHDD < 1 ) ? 1 : minHDD;
+            return minHDD;
+        };
+
 
 
         $scope.rDaysArr = [
@@ -79,8 +91,18 @@ angular.module('calculatorApp')
                 $scope.NVRObj.rDays = tmp;
             }
         };
-        console.log($scope.minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024);
 
+        $scope.minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024;
+        $scope.showlog = function() {
+            console.log('storage:'+$scope.NVRObj.storage);
+            console.log('size:'+$scope.NVRObj.HDDsize);
+            console.log('total:'+$scope.minHDD);
+        };
+
+        $scope.$watch('minHDD', function() {
+            $scope.minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024;
+            console.log('total:'+$scope.minHDD);
+        }, true);
 
 
 
