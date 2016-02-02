@@ -266,7 +266,7 @@ $font_detail_color: lighten(grey, 10%);
   @include add_padding(1em);
 }
 
-.rangebar {
+@mixin rangebar {
   -webkit-appearance: none;
   outline : none;
   width:10em;
@@ -278,7 +278,6 @@ $font_detail_color: lighten(grey, 10%);
     position: relative;
     transition:.2s;
     -webkit-appearance: none;
-    background:$theme_color;
     border-radius:50%;
     width:10px;
     height:10px;
@@ -289,7 +288,6 @@ $font_detail_color: lighten(grey, 10%);
   }
   &::-webkit-slider-thumb:before{
       @include pseudoRange;
-      background: $theme_color;
       left:-1200px;
   }
   &::-webkit-slider-thumb:after{
@@ -301,8 +299,59 @@ $font_detail_color: lighten(grey, 10%);
   &:hover::-webkit-slider-thumb:after{
     left:13px;
   }
+  &::-moz-range-track{
+    height:4px;
+    background:lighten($font_detail_color, 20%);
+    border:none;
+  }
+  &::-moz-range-thumb{
+    width:10px;
+    height:10px;
+    border:none;
+    border-radius: 50%;
+    &:active, &:hover {
+      width:13px;
+      height:13px;
+    }
+  }
+  &::-moz-range-progress {
+    height:4px;
+  }
+  &::-moz-focus-outer{
+    border:none;
+  }
+
 }
 
-
+.rangebar {
+  @include rangebar;
+  &::-webkit-slider-thumb {
+    background:$theme_color;
+  }
+  &::-webkit-slider-thumb:before {
+    background:$theme_color;
+  }
+  &::-moz-range-thumb {
+    background:$theme_color;
+  }
+  &::-moz-range-progress {
+    background:$theme_color;
+  }
+}
+.rangebar-cms {
+  @include rangebar;
+  &::-webkit-slider-thumb {
+    background:$theme_color2;
+  }
+  &::-webkit-slider-thumb:before {
+    background:$theme_color2;
+  }
+  &::-moz-range-thumb {
+    background:$theme_color2;
+  }
+  &::-moz-range-progress {
+    background:$theme_color2;
+  }
+}
 
 
