@@ -52,35 +52,6 @@ angular.module('calculatorApp')
             $scope.onNVR = toNVR;
         };
 
-        // for checking whether should the class be applied
-        $scope.settingRAID = new Array(4);
-        $scope.settingRAID[2] = true;       // Default RAID type
-        // when clicking the type of RAID
-        $scope.selectRAID = function(index) {
-            $scope.settingRAID.fill(false);
-            $scope.settingRAID[index] = true;
-            if ( index < 2 ) {
-                $scope.NVRObj.RAID = index;
-            } else {
-                $scope.NVRObj.RAID = 2 === index ? 5 : 6;
-            }
-        };
-
-        $scope.settingHDD = new Array(6);
-        $scope.settingHDD[2] = true;        // Default HDD size
-        $scope.showOtherHDD = false;
-        var HDDArr = [1,2,3,4,6];       // HDD size indicator
-        $scope.selectHDD = function(index) {
-            $scope.settingHDD.fill(false);
-            $scope.settingHDD[index] = true;
-            if ( 5 === index ) {
-                $scope.showOtherHDD = true;
-            } else {
-                $scope.showOtherHDD = false;
-                $scope.NVRObj.HDDsize = HDDArr[index];
-            }
-        };
-
         $scope.getBandwidth = function() {
             $scope.bandwidthDisplay = $scope.onNVR ?
               $scope.NVRObj.cameras * $scope.NVRObj.bitRate :
@@ -110,7 +81,7 @@ angular.module('calculatorApp')
             var minHDD = $scope.storageDisplay / $scope.NVRObj.HDDsize / 1024;
             minHDD = minHDD === (minHDD | 0) ?  // Ceiling
                 minHDD : ( minHDD | 0 ) + 1;
-            switch ( $scope.NVRObj.RAID ) {
+            switch ( $scope.NVRObj.RAID ) { // RAID Rule
                 case 1:
                     minHDD *= 2;
                     break;
@@ -125,9 +96,34 @@ angular.module('calculatorApp')
             return minHDD;
         };
 
-        // $scope.test=function(){
-        //   console.log()
-        // }
+        // for checking whether should the class be applied
+        $scope.settingRAID = new Array(4);
+        $scope.settingRAID[2] = true;       // Default RAID type
+        // when clicking the type of RAID
+        $scope.selectRAID = function(index) {
+            $scope.settingRAID.fill(false);
+            $scope.settingRAID[index] = true;
+            if ( index < 2 ) {
+                $scope.NVRObj.RAID = index;
+            } else {
+                $scope.NVRObj.RAID = 2 === index ? 5 : 6;
+            }
+        };
+
+        $scope.settingHDD = new Array(6);
+        $scope.settingHDD[2] = true;        // Default HDD size
+        $scope.showOtherHDD = false;
+        var HDDArr = [1,2,3,4,6];       // HDD size indicator
+        $scope.selectHDD = function(index) {
+            $scope.settingHDD.fill(false);
+            $scope.settingHDD[index] = true;
+            if ( 5 === index ) {
+                $scope.showOtherHDD = true;
+            } else {
+                $scope.showOtherHDD = false;
+                $scope.NVRObj.HDDsize = HDDArr[index];
+            }
+        };
 
         $scope.rDaysArr = [
             {name:'1 day'},
@@ -157,7 +153,11 @@ angular.module('calculatorApp')
 
         // ------------  CMS  ------------ \\
 
-        // $scope.get
+        $scope.isLocal = true;
+        $scope.selectLocal = function(onLocal) {
+            $scope.isLocal = onLocal;
+        };
+
 
 
     this.awesomeThings = [

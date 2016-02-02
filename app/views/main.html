@@ -220,8 +220,8 @@
                   <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local Client</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div class="flex" id="local-client">
-                      <div class="flex1 cmsFlex">Yes</div>
-                      <div class="flex1 cmsFlex">No</div>
+                      <div class="flex1 cmsFlex" ng-click="selectLocal(true)" ng-class="{selected:isLocal}">Yes</div>
+                      <div class="flex1 cmsFlex" ng-click="selectLocal(false)" ng-class="{selected:!isLocal}">No</div>
                     </div>
                   </div>
                 </div>
