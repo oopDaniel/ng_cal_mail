@@ -101,9 +101,16 @@ $theme_color2: #8cb128;
 $table_bgcolor: white;
 $font_detail_color: lighten(grey, 10%);
 
+@mixin add_padding($h: 2em, $w:0) {
+  padding: $h $w;
+}
+
 // padding for container
 .in-content {
-  padding: 3em;
+  @include add_padding(3em);
+}
+.hidden-input {
+  @include add_padding(1.5em);
 }
 
 .nav-tabs, .nav-pills {
@@ -233,15 +240,16 @@ $font_detail_color: lighten(grey, 10%);
   padding: .2em
 }
 
-.btnNVR:active > a {
-    background-color: $theme_color;
-  }
-.btnCMS:active > a {
-    background-color: $theme_color2;
-  }
+// .btnNVR:active > a {
+//     background-color: $theme_color;
+//   }
+// .btnCMS:active > a {
+//     background-color: $theme_color2;
+//   }
 
 
-// --------- for range bar ------------------
+
+// --------- for Range bar ------------------
 
 
 @mixin pseudoRange {
@@ -252,6 +260,10 @@ $font_detail_color: lighten(grey, 10%);
   content:"";
   pointer-events: none;
   transition:.2s;
+}
+
+.range-div {
+  @include add_padding(1em);
 }
 
 .rangebar {
