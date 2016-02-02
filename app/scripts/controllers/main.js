@@ -94,7 +94,7 @@ angular.module('calculatorApp')
             return $scope.storageDisplay;
         };
         $scope.getMinHDD = function() {
-            var minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024;
+            var minHDD = $scope.storageDisplay / $scope.NVRObj.HDDsize / 1024;
             minHDD = minHDD === (minHDD | 0) ?  // Ceiling
                 minHDD : ( minHDD | 0 ) + 1;
             switch ( $scope.NVRObj.RAID ) {
@@ -112,6 +112,9 @@ angular.module('calculatorApp')
             return minHDD;
         };
 
+        // $scope.test=function(){
+        //   console.log()
+        // }
 
         $scope.rDaysArr = [
             {name:'1 day'},
