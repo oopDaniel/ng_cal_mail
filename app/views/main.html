@@ -19,8 +19,8 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{getStorage() | number}}<sub>GB</sub></td>
-                <td>{{getBandwidth() | number}}<sub>Mbps</sub></td>
+                <td class="greyMinus">{{getStorage() | storageFilter}}<sub>{{storageUnit}}</sub></td>
+                <td>{{getBandwidth() | storageFilter}}<sub>{{bandwidthUnit}}</sub></td>
               </tr>
             </tbody>
           </table>
@@ -63,7 +63,7 @@
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording Days</label>
+                  <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Estimated Recording Days</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <!-- <input type="text" class="form-control input" placeholder="Enter the days"
                       ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/> -->

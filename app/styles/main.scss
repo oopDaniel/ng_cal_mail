@@ -216,7 +216,10 @@ $font_detail_color: lighten(grey, 10%);
       color: $theme_color;
     }
     &.cmsTB td{
-        color: $theme_color2;
+      color: $theme_color2;
+      &.greyMinus {
+        color: $font_detail_color;
+      }
     }
     sub {
       font-size: 0.5em;

@@ -12,6 +12,8 @@ angular.module('calculatorApp')
         $scope.onNVR = true;  // else on CMS
         $scope.storageDisplay = 0;
         $scope.bandwidthDisplay = 0;
+        $scope.storageUnit = 'GB';
+        $scope.bandwidthUnit = 'Mbps';
         $scope.NVRObj={
           itemName:'',
           storage:960,
@@ -83,14 +85,25 @@ angular.module('calculatorApp')
             $scope.bandwidthDisplay = $scope.onNVR ?
               $scope.NVRObj.cameras * $scope.NVRObj.bitRate :
               $scope.CMSObj.cameras * $scope.CMSObj.bitRate * $scope.CMSObj.remoteUsers;
+            if ( $scope.bandwidthDisplay > 1024 * 1024 * 10 )
+                $scope.bandwidthUnit = 'Tbps';
+            else if ( $scope.bandwidthDisplay > 10240)
+                $scope.bandwidthUnit = 'Gbps';
+            else
+                $scope.bandwidthUnit = 'Mbps';
             return $scope.bandwidthDisplay;
 
         };
         $scope.getStorage = function() {
             $scope.storageDisplay = $scope.onNVR ?
               $scope.bandwidthDisplay * $scope.NVRObj.rDays *
-              $scope.NVRObj.motion / 100 :
-              '-';
+              $scope.NVRObj.motion / 100 : 0;
+            if ( $scope.storageDisplay > 1024 * 1024 * 10 )
+                $scope.storageUnit = 'PB';
+            else if ( $scope.storageDisplay > 10240)
+                $scope.storageUnit = 'TB';
+            else
+                $scope.storageUnit = 'GB';
             return $scope.storageDisplay;
         };
         $scope.getMinHDD = function() {
