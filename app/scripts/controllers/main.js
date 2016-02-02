@@ -45,6 +45,7 @@ angular.module('calculatorApp')
           remoteUsers:10
         };
 
+        // for switch tab
         $scope.whereami = function(toNVR) {
             $scope.onNVR = toNVR;
         };

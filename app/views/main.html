@@ -40,14 +40,14 @@
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
+                  <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of Cameras</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input" placeholder="Enter the number"
                       ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                   </div>
                 </div>
                 <div class="row form-group">
-                  <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                  <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit Rate per Camera <sub>(Mbps)</sub></label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                       <input type="text" class="form-control input" placeholder="Click me!"
                         ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
@@ -63,7 +63,7 @@
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording days</label>
+                  <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording Days</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <!-- <input type="text" class="form-control input" placeholder="Enter the days"
                       ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/> -->
@@ -86,7 +86,7 @@
                   </div>
                 </div> -->
                 <div class="row form-group range-div">
-                  <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
+                  <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion Recording <sub>(%)</sub></label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
                     <span class="percentage">{{NVRObj.motion}}%</span>
@@ -102,7 +102,7 @@
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID type</label>
+                  <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID Type</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div class="flex" id="RAID">
                       <div class="flex1" ng-click="selectRAID(0)" ng-class="{selected:settingRAID[0]}">Non</div><!-- non -->
@@ -114,7 +114,7 @@
                   </div>
                 </div>
                 <div class="row form-group">
-                  <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
+                  <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD Size</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div class="flex">
                       <div class="flex1" ng-click="selectHDD(0)" ng-class="{selected:settingHDD[0]}">1TB</div>
@@ -195,14 +195,14 @@
                 <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
+                  <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of Cameras</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
                       ng-model="CMSObj.cameras" name="num_cameras_cms" id="num_cameras_cms" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                   </div>
                 </div>
                 <div class="row form-group">
-                  <label for="bitrate_per_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                  <label for="bitrate_per_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit Rate per Camera <sub>(Mbps)</sub></label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                       <input type="text" class="form-control input cmsBdr" placeholder="Click me!"
                         ng-model="CMSObj.bitRate" name="bitrate_per_cms" id="bitrate_per_cms" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
@@ -217,7 +217,7 @@
                 <i class="fa fa-user fa-3x icon-centered"></i></div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local client</label>
+                  <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local Client</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div class="flex" id="local-client">
                       <div class="flex1 cmsFlex">Yes</div>
@@ -226,7 +226,7 @@
                   </div>
                 </div>
                 <div class="row form-group">
-                  <label for="remote-user" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Concurrent remote <span class="unbreak">users(max. 10)</span></label>
+                  <label for="remote-user" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Concurrent Remote Users</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
                       ng-model="CMSObj.remoteUsers" name="remote-user" id="remote-user" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
