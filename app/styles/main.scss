@@ -214,9 +214,9 @@ $font_detail_color: lighten(grey, 10%);
     td {
       font-size: 3em;
       color: $theme_color;
-      &.cmsTB {
+    }
+    &.cmsTB td{
         color: $theme_color2;
-      }
     }
     sub {
       font-size: 0.5em;
@@ -236,6 +236,10 @@ $font_detail_color: lighten(grey, 10%);
   max-width:80%;
   border-bottom:.2em ridge;
   padding: .2em
+}
+
+.unbreak {
+  white-space: nowrap;
 }
 
 // .btnNVR:active > a {

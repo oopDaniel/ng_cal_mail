@@ -9,6 +9,9 @@
  */
 angular.module('calculatorApp')
     .controller('MainCtrl', [ '$scope', function ($scope) {
+        $scope.onNVR = true;  // else on CMS
+        $scope.storageDisplay = 0;
+        $scope.bandwidthDisplay = 0;
         $scope.NVRObj={
           itemName:'',
           storage:960,
@@ -26,27 +29,47 @@ angular.module('calculatorApp')
           RAID:5,
           HDDsize:3
         };
-
-        // for checking whether should the class be applied
-        $scope.setRAID = new Array(4);
-        $scope.setRAID[2] = true;       // Default RAID type
-        // when clicking the type of RAID
-        $scope.selectRAID = function(index) {
-            $scope.setRAID.fill(false);
-            $scope.setRAID[index] = true;
-            if ( index < 2 )
-                $scope.NVRObj.RAID = index;
-            else
-                $scope.NVRObj.RAID = 2 === index ? 5 : 6;
+        $scope.CMSObj={
+          itemName:'',
+          storage:'-',
+          bandwidth:64,
+          cameras:16,
+          bitRate:4,
+          bitRateData: {
+            codec:'H.264',
+            quality:'M',
+            resolution:'1920x1080',
+            FPS:30
+            },
+          local:true,
+          remoteUsers:10
         };
 
-        $scope.setHDD = new Array(6);
-        $scope.setHDD[2] = true;        // Default HDD size
+        $scope.whereami = function(toNVR) {
+            $scope.onNVR = toNVR;
+        };
+
+        // for checking whether should the class be applied
+        $scope.settingRAID = new Array(4);
+        $scope.settingRAID[2] = true;       // Default RAID type
+        // when clicking the type of RAID
+        $scope.selectRAID = function(index) {
+            $scope.settingRAID.fill(false);
+            $scope.settingRAID[index] = true;
+            if ( index < 2 ) {
+                $scope.NVRObj.RAID = index;
+            } else {
+                $scope.NVRObj.RAID = 2 === index ? 5 : 6;
+            }
+        };
+
+        $scope.settingHDD = new Array(6);
+        $scope.settingHDD[2] = true;        // Default HDD size
         $scope.showOtherHDD = false;
         var HDDArr = [1,2,3,4,6];       // HDD size indicator
         $scope.selectHDD = function(index) {
-            $scope.setHDD.fill(false);
-            $scope.setHDD[index] = true;
+            $scope.settingHDD.fill(false);
+            $scope.settingHDD[index] = true;
             if ( 5 === index ) {
                 $scope.showOtherHDD = true;
             } else {
@@ -56,14 +79,18 @@ angular.module('calculatorApp')
         };
 
         $scope.getBandwidth = function() {
-            $scope.NVRObj.bandwidth =
-                $scope.NVRObj.cameras * $scope.NVRObj.bitRate;
-            return $scope.NVRObj.bandwidth;
+            $scope.bandwidthDisplay = $scope.onNVR ?
+              $scope.NVRObj.cameras * $scope.NVRObj.bitRate :
+              $scope.CMSObj.cameras * $scope.CMSObj.bitRate * $scope.CMSObj.remoteUsers;
+            return $scope.bandwidthDisplay;
+
         };
         $scope.getStorage = function() {
-            $scope.NVRObj.storage = $scope.NVRObj.bandwidth *
-                $scope.NVRObj.rDays * $scope.NVRObj.motion / 100;
-            return $scope.NVRObj.storage;
+            $scope.storageDisplay = $scope.onNVR ?
+              $scope.bandwidthDisplay * $scope.NVRObj.rDays *
+              $scope.NVRObj.motion / 100 :
+              '-';
+            return $scope.storageDisplay;
         };
         $scope.getMinHDD = function() {
             var minHDD = $scope.NVRObj.storage / $scope.NVRObj.HDDsize / 1024;
@@ -103,14 +130,17 @@ angular.module('calculatorApp')
 
         $scope.selectDays = function() {
             var tmp = parseInt($scope.rDays.name);
-            if ( isNaN(tmp) ) {
+            if ( isNaN(tmp) )
                 $scope.showOtherDuration = true;
-            } else {
+            else
                 $scope.showOtherDuration = false;
                 $scope.NVRObj.rDays = tmp;
-            }
         };
 
+
+        // ------------  CMS  ------------ \\
+
+        // $scope.get
 
 
     this.awesomeThings = [
