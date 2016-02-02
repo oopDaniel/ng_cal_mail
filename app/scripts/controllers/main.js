@@ -14,6 +14,7 @@ angular.module('calculatorApp')
         $scope.bandwidthDisplay = 0;
         $scope.storageUnit = 'GB';
         $scope.bandwidthUnit = 'Mbps';
+        $scope.modelSets = 1;
         $scope.NVRObj={
           itemName:'',
           storage:960,
@@ -78,9 +79,7 @@ angular.module('calculatorApp')
             return $scope.storageDisplay;
         };
         $scope.getMinHDD = function() {
-            var minHDD = $scope.storageDisplay / $scope.NVRObj.HDDsize / 1024;
-            minHDD = minHDD === (minHDD | 0) ?  // Ceiling
-                minHDD : ( minHDD | 0 ) + 1;
+            var minHDD = Math.ceil( $scope.storageDisplay / $scope.NVRObj.HDDsize / 1024 );
             switch ( $scope.NVRObj.RAID ) { // RAID Rule
                 case 1:
                     minHDD *= 2;
@@ -93,7 +92,8 @@ angular.module('calculatorApp')
                     break;
                 default:
             }
-            return minHDD;
+            $scope.modelSets = Math.ceil( minHDD / 8 );
+            return minHDD > 8 ? 8 : minHDD;
         };
 
         // for checking whether should the class be applied
