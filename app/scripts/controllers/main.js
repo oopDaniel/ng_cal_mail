@@ -29,7 +29,8 @@ angular.module('calculatorApp')
 
         // for checking whether should the class be applied
         $scope.setRAID = new Array(4);
-        // click a type of RAID
+        $scope.setRAID[2] = true;       // Default RAID type
+        // when clicking the type of RAID
         $scope.selectRAID = function(index) {
             $scope.setRAID.fill(false);
             $scope.setRAID[index] = true;
@@ -40,6 +41,7 @@ angular.module('calculatorApp')
         };
 
         $scope.setHDD = new Array(6);
+        $scope.setHDD[2] = true;        // Default HDD size
         $scope.showOtherHDD = false;
         var HDDArr = [1,2,3,4,6];       // HDD size indicator
         $scope.selectHDD = function(index) {

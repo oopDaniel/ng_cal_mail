@@ -1,292 +1,292 @@
 <div ng-controller="MainCtrl">
-<div class="jumbotron">
-
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-pills">
-        <li class="active" ng-class="{'btnNVR':onNVR}" ng-focus="onNVR=true"><a href="#nvr" data-toggle="tab">NVR</a></li>
-        <li ng-class="{'btnCMS':!onNVR}" ng-focus="onNVR=false"><a href="#cms" data-toggle="tab">CMS</a></li>
-      </ul>
-    </div>
-  <div class="row">
-  <div class="table-showdigit col-xs-12 col-md-6 col-md-offset-3">
-    <table class="table table-hover table-responsive">
-      <caption class="caption">Calculation - NVR</caption>
-      <thead>
-        <tr>
-          <th>Total Storage</th>
-          <th>Total Bandwidth</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{getStorage() | number}}<sub>GB</sub></td>
-          <td>{{getBandwidth() | number}}<sub>Mbps</sub></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-</div>
-<div class="tab-content">
-  <div id="nvr" class="tab-pane fade in active">
-
-    <div class="row customization">
-      <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
-        <section class="col-xs-12 section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-2">
-              <i class="fa fa-camera-retro fa-3x icon-centered"></i>
-            </div>
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-              <div class="row form-group">
-                <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Enter the number"
-                    ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                </div>
-              </div>
-              <div class="row form-group">
-                <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="text" class="form-control input" placeholder="Click me!"
-                      ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="col-xs-12 section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-2">
-              <i class="fa fa-database fa-3x icon-centered"></i>
-            </div>
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-              <div class="row form-group">
-                <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording days</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <!-- <input type="text" class="form-control input" placeholder="Enter the days"
-                    ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/> -->
-                  <select ng-model="rDays" class="input form-control"
-                          ng-change="selectDays()"
-                          ng-options="opt.name for opt in rDaysArr track by opt.name">
-                  </select>
-                  <div ng-if="showOtherDuration" class="hidden-input input-group">
-                    <input type="text" class="form-control input" placeholder="Enter the days"
-                  ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                    <div class="input-group-addon my-addon">Days</div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="row form-group">
-                <label for="num_rhours" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording hours a day</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input" placeholder="Enter the hours"
-                    ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
-                </div>
-              </div> -->
-              <div class="row form-group range-div">
-                <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
-                  <span class="percentage">{{NVRObj.motion}}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="col-xs-12 section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-2">
-              <i class="fa fa-hdd-o fa-3x icon-centered"></i>
-            </div>
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-              <div class="row form-group">
-                <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID type</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <div class="flex" id="RAID">
-                    <div class="flex1" ng-click="selectRAID(0)" ng-class="{selected:setRAID[0]}">Non</div><!-- non -->
-                    <div class="flex1" ng-click="selectRAID(1)" ng-class="{selected:setRAID[1]}">1</div><!-- x/2 -->
-                    <div class="flex1" ng-click="selectRAID(2)" ng-class="{selected:setRAID[2]}">5</div><!-- x-1 -->
-                    <div class="flex1" ng-click="selectRAID(3)" ng-class="{selected:setRAID[3]}">6</div><!-- x-2 -->
-                    <!-- consider to add an expansible option here! -->
-                  </div>
-                </div>
-              </div>
-              <div class="row form-group">
-                <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <div class="flex">
-                    <div class="flex1" ng-click="selectHDD(0)" ng-class="{selected:setHDD[0]}">1TB</div>
-                    <div class="flex1" ng-click="selectHDD(1)" ng-class="{selected:setHDD[1]}">2TB</div>
-                    <div class="flex1" ng-click="selectHDD(2)" ng-class="{selected:setHDD[2]}">3TB</div>
-                  </div>
-                  <div class="flex">
-                    <div class="flex1" ng-click="selectHDD(3)" ng-class="{selected:setHDD[3]}">4TB</div>
-                    <div class="flex1" ng-click="selectHDD(4)" ng-class="{selected:setHDD[4]}">6TB</div>
-                    <div class="flex1" ng-click="selectHDD(5)" ng-class="{selected:setHDD[5]}">Other</div>
-                  </div>
-                  <div ng-if="showOtherHDD" class="hidden-input input-group">
-                    <input type="text" class="form-control input" placeholder="Enter the size"
-                  ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                    <div class="input-group-addon my-addon">TB</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </form>
-    </div>
-
-    <div class="row hd-requirement">
-      <h4>Minimin Hardware Requirement</h4>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-          <i class="fa fa-cubes fa-3x"></i></div>
-        <div class="col-xs-9 col-sm-8">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">Model</label>
-            <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
-          </div>
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills">
+          <li class="active" ng-class="{'btnNVR':onNVR}" ng-focus="onNVR=true"><a href="#nvr" data-toggle="tab">NVR</a></li>
+          <li ng-class="{'btnCMS':!onNVR}" ng-focus="onNVR=false"><a href="#cms" data-toggle="tab">CMS</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="table-showdigit col-xs-12 col-md-6 col-md-offset-3">
+          <table class="table table-hover table-responsive">
+            <caption class="caption">Calculation - NVR</caption>
+            <thead>
+              <tr>
+                <th>Total Storage</th>
+                <th>Total Bandwidth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{getStorage() | number}}<sub>GB</sub></td>
+                <td>{{getBandwidth() | number}}<sub>Mbps</sub></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </section>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-          <i class="fa fa-tachometer fa-3x"></i></div>
-        <div class="col-xs-9 col-sm-8">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">OS</label>
-            <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">CPU</label>
-            <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">RAM</label>
-            <div class="col-xs-6 col-xs-offset-1">8 GB</div>
-          </div>
-        </div>
-      </section>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-          <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
-        </div>
-        <div class="col-xs-9 col-sm-8">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">Network</label>
-            <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-            <div class="col-xs-6 col-xs-offset-1" ng-model="minHDD">{{NVRObj.HDDsize}}TB x {{ getMinHDD() | number:0}}</div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   </div>
-  <div class="tab-pane fade" id="cms">
-    <div class="row customization">
-      <form class="form-horizontal" name="CMSForm" ng-submit="submitCMS()" novalidate="">
-        <section class="col-xs-12 section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-2">
-              <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-              <div class="row form-group">
-                <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
-                    ng-model="(Need2SetUp)" name="num_cameras_cms" id="num_cameras_cms" maxlength="5"/>
-                </div>
+
+  <div class="tab-content">
+    <div id="nvr" class="tab-pane fade in active">
+
+      <div class="row customization">
+        <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
+          <section class="col-xs-12 section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-2">
+                <i class="fa fa-camera-retro fa-3x icon-centered"></i>
               </div>
-              <div class="row form-group">
-                <label for="bitrate_per_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="text" class="form-control input cmsBdr" placeholder="Click me!"
-                      ng-model="(Need2SetUp2)" name="bitrate_per_cms" id="bitrate_per_cms" onclick="alert('HI!');"/>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="row form-group">
+                  <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the number"
+                      ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="col-xs-12 section">
-          <div class="row">
-            <div class="col-xs-12 col-sm-1 col-sm-push-2">
-              <i class="fa fa-user fa-3x icon-centered"></i></div>
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-              <div class="row form-group">
-                <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local client</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <div class="flex" id="local-client">
-                    <div class="flex1 cmsFlex">Yes</div>
-                    <div class="flex1 cmsFlex">No</div>
+                <div class="row form-group">
+                  <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                      <input type="text" class="form-control input" placeholder="Click me!"
+                        ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                   </div>
                 </div>
               </div>
-              <div class="row form-group">
-                <label for="remote-user" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Concurrent remote users(max. 10)</label>
-                <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                  <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
-                    ng-model="(Need2SetUp)" name="remote-user" id="remote-user" maxlength="2"/>
+            </div>
+          </section>
+          <section class="col-xs-12 section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-2">
+                <i class="fa fa-database fa-3x icon-centered"></i>
+              </div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="row form-group">
+                  <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording days</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <!-- <input type="text" class="form-control input" placeholder="Enter the days"
+                      ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/> -->
+                    <select ng-model="rDays" class="input form-control"
+                            ng-change="selectDays()"
+                            ng-options="opt.name for opt in rDaysArr track by opt.name">
+                    </select>
+                    <div ng-if="showOtherDuration" class="hidden-input input-group">
+                      <input type="text" class="form-control input" placeholder="Enter the days"
+                    ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                      <div class="input-group-addon my-addon">Days</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row form-group">
+                  <label for="num_rhours" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording hours a day</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input type="text" class="form-control input" placeholder="Enter the hours"
+                      ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
+                  </div>
+                </div> -->
+                <div class="row form-group range-div">
+                  <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion recording<sub>(%)</sub></label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
+                    <span class="percentage">{{NVRObj.motion}}%</span>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
+          <section class="col-xs-12 section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-2">
+                <i class="fa fa-hdd-o fa-3x icon-centered"></i>
+              </div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="row form-group">
+                  <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID type</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <div class="flex" id="RAID">
+                      <div class="flex1" ng-click="selectRAID(0)" ng-class="{selected:setRAID[0]}">Non</div><!-- non -->
+                      <div class="flex1" ng-click="selectRAID(1)" ng-class="{selected:setRAID[1]}">1</div><!-- x/2 -->
+                      <div class="flex1" ng-click="selectRAID(2)" ng-class="{selected:setRAID[2]}">5</div><!-- x-1 -->
+                      <div class="flex1" ng-click="selectRAID(3)" ng-class="{selected:setRAID[3]}">6</div><!-- x-2 -->
+                      <!-- consider to add an expansible option here! -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD size<sub>(TB)</sub></label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <div class="flex">
+                      <div class="flex1" ng-click="selectHDD(0)" ng-class="{selected:setHDD[0]}">1TB</div>
+                      <div class="flex1" ng-click="selectHDD(1)" ng-class="{selected:setHDD[1]}">2TB</div>
+                      <div class="flex1" ng-click="selectHDD(2)" ng-class="{selected:setHDD[2]}">3TB</div>
+                    </div>
+                    <div class="flex">
+                      <div class="flex1" ng-click="selectHDD(3)" ng-class="{selected:setHDD[3]}">4TB</div>
+                      <div class="flex1" ng-click="selectHDD(4)" ng-class="{selected:setHDD[4]}">6TB</div>
+                      <div class="flex1" ng-click="selectHDD(5)" ng-class="{selected:setHDD[5]}">Other</div>
+                    </div>
+                    <div ng-if="showOtherHDD" class="hidden-input input-group">
+                      <input type="text" class="form-control input" placeholder="Enter the size"
+                    ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                      <div class="input-group-addon my-addon">TB</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
+
+      <div class="row hd-requirement">
+        <h4>Minimin Hardware Requirement</h4>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+            <i class="fa fa-cubes fa-3x"></i></div>
+          <div class="col-xs-9 col-sm-8">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Model</label>
+              <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
+            </div>
           </div>
         </section>
-      </form>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+            <i class="fa fa-tachometer fa-3x"></i></div>
+          <div class="col-xs-9 col-sm-8">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">OS</label>
+              <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">CPU</label>
+              <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">RAM</label>
+              <div class="col-xs-6 col-xs-offset-1">8 GB</div>
+            </div>
+          </div>
+        </section>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+            <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
+          </div>
+          <div class="col-xs-9 col-sm-8">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Network</label>
+              <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">HDDs</label>
+              <div class="col-xs-6 col-xs-offset-1" ng-model="minHDD">{{NVRObj.HDDsize}}TB x {{ getMinHDD() | number:0}}</div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
+    <div id="cms" class="tab-pane fade">
+      <div class="row customization">
+        <form class="form-horizontal" name="CMSForm" ng-submit="submitCMS()" novalidate="">
+          <section class="col-xs-12 section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-2">
+                <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="row form-group">
+                  <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of cameras</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
+                      ng-model="(Need2SetUp)" name="num_cameras_cms" id="num_cameras_cms" maxlength="5"/>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="bitrate_per_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit rate per camera<sub>(Mbps)</sub></label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                      <input type="text" class="form-control input cmsBdr" placeholder="Click me!"
+                        ng-model="(Need2SetUp2)" name="bitrate_per_cms" id="bitrate_per_cms" onclick="alert('HI!');"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="col-xs-12 section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-2">
+                <i class="fa fa-user fa-3x icon-centered"></i></div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="row form-group">
+                  <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local client</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <div class="flex" id="local-client">
+                      <div class="flex1 cmsFlex">Yes</div>
+                      <div class="flex1 cmsFlex">No</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <label for="remote-user" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Concurrent remote users(max. 10)</label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
+                      ng-model="(Need2SetUp)" name="remote-user" id="remote-user" maxlength="2"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
 
-    <div class="row hd-requirement cmsBG">
-      <h4>Minimin Hardware Requirement</h4>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-          <i class="fa fa-cubes fa-3x"></i></div>
-        <div class="col-xs-9 col-sm-8">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">Model</label>
-            <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
+      <div class="row hd-requirement cmsBG">
+        <h4>Minimin Hardware Requirement</h4>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+            <i class="fa fa-cubes fa-3x"></i></div>
+          <div class="col-xs-9 col-sm-8">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Model</label>
+              <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
+            </div>
           </div>
-        </div>
-      </section>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-          <i class="fa fa-tachometer fa-3x"></i></div>
-        <div class="col-xs-9 col-sm-8">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">OS</label>
-            <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+        </section>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+            <i class="fa fa-tachometer fa-3x"></i></div>
+          <div class="col-xs-9 col-sm-8">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">OS</label>
+              <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">CPU</label>
+              <div class="col-xs-6 col-xs-offset-1">Intel Core i7</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">RAM</label>
+              <div class="col-xs-6 col-xs-offset-1">8 GB</div>
+            </div>
           </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">CPU</label>
-            <div class="col-xs-6 col-xs-offset-1">Intel Core i7</div>
+        </section>
+        <section class="row section section-require">
+          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+            <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
           </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">RAM</label>
-            <div class="col-xs-6 col-xs-offset-1">8 GB</div>
+          <div class="col-xs-9 col-sm-8">
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">Network</label>
+              <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 col-xs-offset-2">HDDs</label>
+              <div class="col-xs-6 col-xs-offset-1">1TB x 1</div>
+            </div>
           </div>
-        </div>
-      </section>
-      <section class="row section section-require">
-        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-          <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
-        </div>
-        <div class="col-xs-9 col-sm-8">
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">Network</label>
-            <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
-          </div>
-          <div class="row">
-            <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-            <div class="col-xs-6 col-xs-offset-1">1TB x 1</div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 

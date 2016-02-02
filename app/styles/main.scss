@@ -107,7 +107,7 @@ $font_detail_color: lighten(grey, 10%);
 
 // padding for container
 .in-content {
-  @include add_padding(3em);
+  @include add_padding(3em,3em);
 }
 .hidden-input {
   @include add_padding(1.5em);
@@ -148,13 +148,11 @@ $font_detail_color: lighten(grey, 10%);
   background: rgba(255,255,255,0.1);
   border: 0;
   border-bottom:0.2em solid $theme_color;
+  font-size: 1.1em;
 }
 
 .input {
   @extend .my-addon;
-  background: rgba(255,255,255,0.1);
-  border: 0;
-  border-bottom:0.2em solid $theme_color;
   &.cmsBdr {
      border-bottom:0.2em solid $theme_color2;
   }
