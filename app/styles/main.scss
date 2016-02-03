@@ -104,7 +104,9 @@ $font_detail_color: lighten(grey, 10%);
 @mixin add_padding($h: 2em, $w:0) {
   padding: $h $w;
 }
-
+@mixin add_indent($i: 1em) {
+  text-indent: $i;
+}
 // padding for container
 .in-content {
   @include add_padding(3em,3em);
@@ -112,6 +114,11 @@ $font_detail_color: lighten(grey, 10%);
 .hidden-input {
   @include add_padding(1.5em);
 }
+.sub-label-indent {
+  @include add_indent;
+}
+
+
 
 .nav-tabs, .nav-pills {
     text-align:center;
@@ -199,6 +206,7 @@ $font_detail_color: lighten(grey, 10%);
         background: $theme_color2;
       }
     }
+
   }
 }
 
@@ -248,6 +256,34 @@ $font_detail_color: lighten(grey, 10%);
 //   }
 
 
+.estdays {
+  @extend .input;
+  background:$theme_color;
+  color:white;
+}
+
+.estDaysPanel{
+  height:45vh;
+}
+.estDaysPanel.ng-enter {
+  transition:0.3s linear all;
+  opacity: 0;
+}
+.estDaysPanel.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.estDaysPanel.ng-leave {
+  transition:0.3s linear all;
+  opacity: 1;
+}
+.estDaysPanel.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+
+.estDayItem {
+  padding:6vh 0;
+}
 
 // --------- for Range bar ------------------
 
@@ -262,9 +298,7 @@ $font_detail_color: lighten(grey, 10%);
   transition:.2s;
 }
 
-.range-div {
-  @include add_padding(1em);
-}
+
 
 @mixin rangebar {
   -webkit-appearance: none;
@@ -355,3 +389,6 @@ $font_detail_color: lighten(grey, 10%);
 }
 
 
+.range-div {
+  @include add_padding(1em,0);
+}

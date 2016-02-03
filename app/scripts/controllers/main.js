@@ -125,6 +125,11 @@ angular.module('calculatorApp')
             }
         };
 
+        // ---------  Bit Rate Panel --------- \\
+
+        $scope.onEstDays = false;
+
+
         $scope.rDaysArr = [
             {name:'1 day'},
             {name:'2 days'},
@@ -149,7 +154,6 @@ angular.module('calculatorApp')
                 $scope.showOtherDuration = false;
                 $scope.NVRObj.rDays = tmp;
         };
-
 
         // ------------  CMS  ------------ \\
 

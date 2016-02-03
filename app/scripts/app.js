@@ -11,7 +11,8 @@
 angular
   .module('calculatorApp', [
     'ui.router',
-    'ngResource'
+    'ngResource',
+    'ngAnimate'
   ])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider

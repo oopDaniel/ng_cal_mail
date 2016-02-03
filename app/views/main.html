@@ -62,22 +62,18 @@
                 <i class="fa fa-database fa-3x icon-centered"></i>
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
                 <div class="row form-group">
                   <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Estimated Recording Days</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <!-- <input type="text" class="form-control input" placeholder="Enter the days"
                       ng-model="NVRObj.rDays" name="num_rdays" id="num_rdays" maxlength="3"/> -->
-                    <select ng-model="rDays" class="input form-control"
-                            ng-change="selectDays()"
-                            ng-options="opt.name for opt in rDaysArr track by opt.name">
-                    </select>
-                    <div ng-if="showOtherDuration" class="hidden-input input-group">
-                      <input type="text" class="form-control input" placeholder="Enter the days"
-                    ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                      <div class="input-group-addon my-addon">Days</div>
+                    <div class="input form-control estdays">
+                      <div ng-click="onEstDays=!onEstDays">4</div>
                     </div>
-                  </div>
+                  </div><div class="col-sm-2"></div>
                 </div>
+
                 <!-- <div class="row form-group">
                   <label for="num_rhours" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Recording hours a day</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
@@ -85,15 +81,43 @@
                       ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
                   </div>
                 </div> -->
-                <div class="row form-group range-div">
-                  <label for="motion" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Motion Recording <sub>(%)</sub></label>
-                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
-                    <span class="percentage">{{NVRObj.motion}}%</span>
-                  </div>
-                </div>
+
               </div>
             </div>
+            <div class="estDaysPanel row" ng-if="onEstDays">
+                  <div class="col-xs-6 col-sm-2 col-sm-offset-3">4 Days</div>
+                  <div class="col-xs-6">
+                    <div class="row">
+                      <section class="estDayItem">
+                        <label for="rDays" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording Days</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <select id="rDays" ng-model="rDays" class="input form-control" ng-change="selectDays()" ng-options="opt.name for opt in rDaysArr track by opt.name">
+                          </select>
+                          <!-- <div ng-if="showOtherDuration" class="hidden-input input-group">
+                            <input type="text" class="form-control input" placeholder="Enter the days" ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                            <div class="input-group-addon my-addon">Days</div>
+                          </div> -->
+                        </div>
+                        </section>
+                        <section class="estDayItem">
+                        <label for="motion" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Motion Recording <sub>(%)</sub></label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <div class="range-div">
+                            <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
+                            <span class="percentage">{{NVRObj.motion}}%</span>
+                          </div>
+                        </div>
+                        </section>
+                        <section class="estDayItem">
+                        <label for="num_rhours" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording hours a day</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <input type="text" class="form-control input" placeholder="Enter the hours" ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
+                        </div>
+                        </section>
+                    </div>
+                  </div>
+
+                </div>
           </section>
           <section class="col-xs-12 section">
             <div class="row">
