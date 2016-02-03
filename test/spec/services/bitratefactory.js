@@ -11,8 +11,8 @@ describe('Service: bitrateFactory', function () {
     bitrateFactory = _bitrateFactory_;
   }));
 
-  it('should do something', function () {
-    expect(!!bitrateFactory).toBe(true);
-  });
+  // it('should do something', function () {
+  //   expect(!!bitrateFactory).toBe(true);
+  // });
 
 });

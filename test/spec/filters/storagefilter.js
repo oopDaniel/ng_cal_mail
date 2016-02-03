@@ -11,9 +11,9 @@ describe('Filter: storageFilter', function () {
     storageFilter = $filter('storageFilter');
   }));
 
-  it('should return the input prefixed with "storageFilter filter:"', function () {
-    var text = 'angularjs';
-    expect(storageFilter(text)).toBe('storageFilter filter: ' + text);
-  });
+  // it('should return the input prefixed with "storageFilter filter:"', function () {
+  //   var text = 'angularjs';
+  //   expect(storageFilter(text)).toBe('storageFilter filter: ' + text);
+  // });
 
 });

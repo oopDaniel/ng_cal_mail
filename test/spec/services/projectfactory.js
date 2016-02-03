@@ -11,8 +11,8 @@ describe('Service: projectFactory', function () {
     projectFactory = _projectFactory_;
   }));
 
-  it('should do something', function () {
-    expect(!!projectFactory).toBe(true);
-  });
+  // it('should do something', function () {
+  //   expect(!!projectFactory).toBe(true);
+  // });
 
 });
