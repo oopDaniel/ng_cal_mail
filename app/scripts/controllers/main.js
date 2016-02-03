@@ -28,6 +28,7 @@ angular.module('calculatorApp')
             FPS:30
             },
           rDays:30,
+          rHours:16,
           motion:50,
           RAID:5,
           HDDsize:3
@@ -142,7 +143,7 @@ angular.module('calculatorApp')
             {name:'Other duration'}
         ];
         // set the default value for the combo box
-        $scope.rDays = {name:'30 days (1 month)'};
+        $scope.rDays = $scope.rDaysArr[5];
         // display the textarea for other duration
         $scope.showOtherDuration = false;
 
@@ -150,9 +151,10 @@ angular.module('calculatorApp')
             var tmp = parseInt($scope.rDays.name);
             if ( isNaN(tmp) )
                 $scope.showOtherDuration = true;
-            else
+            else {
                 $scope.showOtherDuration = false;
                 $scope.NVRObj.rDays = tmp;
+            }
         };
 
         // ------------  CMS  ------------ \\

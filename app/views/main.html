@@ -91,12 +91,12 @@
                       <section class="estDayItem">
                         <label for="rDays" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording Days</label>
                         <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                          <select id="rDays" ng-model="rDays" class="input form-control" ng-change="selectDays()" ng-options="opt.name for opt in rDaysArr track by opt.name">
+                          <select  ng-model="$parent.rDays" class="input form-control" ng-change="selectDays()" ng-options="opt.name for opt in rDaysArr track by opt.name">
                           </select>
-                          <!-- <div ng-if="showOtherDuration" class="hidden-input input-group">
+                          <div ng-if="$parent.showOtherDuration" class="hidden-input input-group">
                             <input type="text" class="form-control input" placeholder="Enter the days" ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                             <div class="input-group-addon my-addon">Days</div>
-                          </div> -->
+                          </div>
                         </div>
                         </section>
                         <section class="estDayItem">
@@ -111,7 +111,7 @@
                         <section class="estDayItem">
                         <label for="num_rhours" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording hours a day</label>
                         <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                          <input type="text" class="form-control input" placeholder="Enter the hours" ng-model="(Need2SetUp3)" name="num_rhours" id="num_rhours" maxlength="2"/>
+                          <input type="text" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2"/>
                         </div>
                         </section>
                     </div>
