@@ -136,7 +136,7 @@ angular.module('calculatorApp')
 
         // ------------  Panel ------------ \\
 
-        $scope.onEstDays = $scope.onBitRate = false;
+        $scope.onEstDays = $scope.onBitRate = $scope.onCMSBitRate = false;
 
         $scope.rDaysArr = [
             {name:'1 day'},

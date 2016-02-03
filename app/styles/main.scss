@@ -269,6 +269,10 @@ $font_detail_color: lighten(grey, 10%);
   background:$theme_color;
   color:white;
 }
+.estdaysCMS {
+  @extend .estdays;
+  background:$theme_color2;
+}
 
 .bigDays{
   @extend .unbreak;
