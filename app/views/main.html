@@ -49,11 +49,47 @@
                 <div class="row form-group">
                   <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit Rate per Camera <sub>(Mbps)</sub></label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                      <input type="text" class="form-control input" placeholder="Click me!"
-                        ng-model="NVRObj.bitRate" name="bitrate_per" id="bitrate_per" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                  </div>
+                    <div class="input form-control" ng-click="onBitRate=!onBitRate" ng-class="{estdays:onBitRate}">{{getBitRate()}}</div>
+                  </div><div class="col-sm-2"></div>
                 </div>
+
               </div>
+            </div>
+            <div class="estDaysPanel row" ng-if="onBitRate">
+                  <div class="col-xs-6 col-sm-2 col-sm-offset-3 col-sm-pull-1 bigDays vcenter">{{getBitRate()}}<sub>Mbps</sub>
+                  </div>
+                  <div class="col-xs-5 col-sm-6 vcenter">
+                    <div class="row">
+                      <section class="estDayItem">
+                        <label for="codec" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Codec</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <select id="codec" ng-model="$parent.NVRObj.bitRateData.codec" class="input form-control" ng-options="opt as opt for opt in codecList">
+                          </select>
+                        </div>
+                      </section>
+                      <section class="estDayItem">
+                        <label for="quality" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Quality</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <select id="quality" ng-model="$parent.NVRObj.bitRateData.quality" class="input form-control" ng-options="opt as opt for opt in qList">
+                          </select>
+                        </div>
+                      </section>
+                      <section class="estDayItem">
+                        <label for="rs" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Resolution</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <select id="rs" ng-model="$parent.NVRObj.bitRateData.resolution" class="input form-control" ng-options="opt as opt for opt in RSList">
+                          </select>
+                        </div>
+                      </section>
+                      <section class="estDayItem">
+                        <label for="fps" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">FPS</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <select id="fps" ng-model="$parent.NVRObj.bitRateData.FPS" class="input form-control" ng-options="opt as opt for opt in FPSList">
+                          </select>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
             </div>
           </section>
           <section class="col-xs-12 section">
@@ -81,7 +117,7 @@
               </div>
             </div>
             <div class="estDaysPanel row" ng-if="onEstDays">
-                  <div class="col-xs-6 col-sm-2 col-sm-offset-3 col-sm-pull-1 bigDays vcenter">{{getEstDays()}}<sub>days</sub>
+                  <div class="col-xs-6 col-sm-2 col-sm-offset-3 col-sm-pull-1 bigDays vcenter">{{getEstDays()}}<sub>{{getEstDays()>1?'days':'day'}}</sub>
                   </div>
                   <div class="col-xs-5 col-sm-6 vcenter">
                     <div class="row">
@@ -113,8 +149,7 @@
                         </section>
                     </div>
                   </div>
-
-                </div>
+            </div>
           </section>
           <section class="col-xs-12 section">
             <div class="row">

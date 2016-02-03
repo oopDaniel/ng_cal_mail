@@ -277,10 +277,16 @@ $font_detail_color: lighten(grey, 10%);
   @media screen and (max-width: 415px) and (min-width: 321px) {
     font-size:4em;
   }
+  sub:before {
+      content:' ';
+    }
   @media screen and (min-width: 700px) {
     sub:before {
       content:' ';
     }
+  }
+  sub {
+    font-size:0.7em;
   }
 }
 

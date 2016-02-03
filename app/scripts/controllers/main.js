@@ -8,7 +8,7 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', function ($scope) {
+    .controller('MainCtrl', [ '$scope', 'bitrateFactory', function ($scope, bitrateFactory) {
         $scope.onNVR = true;  // else on CMS
         $scope.storageDisplay = 0;
         $scope.bandwidthDisplay = 0;
@@ -24,8 +24,8 @@ angular.module('calculatorApp')
           bitRate:4,
           bitRateData: {
             codec:'H.264',
-            quality:'M',
-            resolution:'1920x1080',
+            quality:'Medium',
+            resolution:'Full HD (1920 x 1080)',
             FPS:30
             },
           rDays:30,
@@ -42,8 +42,8 @@ angular.module('calculatorApp')
           bitRate:4,
           bitRateData: {
             codec:'H.264',
-            quality:'M',
-            resolution:'1920x1080',
+            quality:'Medium',
+            resolution:'Full HD (1920 x 1080)',
             FPS:30
             },
           local:true,
@@ -64,8 +64,8 @@ angular.module('calculatorApp')
         };
         $scope.getBandwidth = function() {
             $scope.bandwidthDisplay = $scope.onNVR ?
-              $scope.NVRObj.cameras * $scope.NVRObj.bitRate :
-              $scope.CMSObj.cameras * $scope.CMSObj.bitRate * $scope.CMSObj.remoteUsers;
+              $scope.NVRObj.cameras * $scope.getBitRate() :
+              $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
             if ( $scope.bandwidthDisplay > 1024 * 1024 * 10 )
                 $scope.bandwidthUnit = 'Tbps';
             else if ( $scope.bandwidthDisplay > 10240)
@@ -134,10 +134,9 @@ angular.module('calculatorApp')
             }
         };
 
-        // ---------  Bit Rate Panel --------- \\
+        // ------------  Panel ------------ \\
 
-        $scope.onEstDays = false;
-
+        $scope.onEstDays = $scope.onBitRate = false;
 
         $scope.rDaysArr = [
             {name:'1 day'},
@@ -163,6 +162,23 @@ angular.module('calculatorApp')
                 $scope.showOtherDuration = false;
                 $scope.NVRObj.rDays = tmp;
             }
+        };
+
+        // ----------  Bit Rate ---------- \\
+
+        $scope.codecList = bitrateFactory.getCodecList();
+        $scope.qList = bitrateFactory.getQList();
+        $scope.RSList = bitrateFactory.getRsList();
+        $scope.FPSList = bitrateFactory.getFPSList();
+        $scope.getBitRate = function() {
+            var bitRate = $scope.onNVR ?
+                bitrateFactory.getBitrate(
+                    $scope.RSList.indexOf( $scope.NVRObj.bitRateData.resolution ),
+                    $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS )) :
+                bitrateFactory.getBitrate(
+                    $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
+                    $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ))
+            return bitRate;
         };
 
         // ------------  CMS  ------------ \\
