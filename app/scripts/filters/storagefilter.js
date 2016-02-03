@@ -20,6 +20,6 @@ angular.module('calculatorApp')
             else
                 return input === (input|0) ? // filter the decimal numbers
                     $filter('number')(input) :
-                    $filter('number')(input, 2);
+                    $filter('number')(input, 1);
         };
   }]);
