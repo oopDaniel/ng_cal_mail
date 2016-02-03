@@ -15,9 +15,11 @@ angular.module('calculatorApp')
                 return '- ';
             else if ( input > 1024 * 1024 * 10 )
                 return $filter('number')(input / 1024 / 1024, 1);
+            else if ( input > 10240 )
+                return $filter('number')(input / 1024, 1);
             else
-                return input > 10240 ?
-                    $filter('number')(input / 1024, 1) :
-                    $filter('number')(input);
+                return input === (input|0) ? // filter the decimal numbers
+                    $filter('number')(input) :
+                    $filter('number')(input, 2);
         };
   }]);

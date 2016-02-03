@@ -15,6 +15,7 @@ angular.module('calculatorApp')
         $scope.storageUnit = 'GB';
         $scope.bandwidthUnit = 'Mbps';
         $scope.modelSets = 1;
+        $scope.estDays = 4;
         $scope.NVRObj={
           itemName:'',
           storage:960,
@@ -53,7 +54,14 @@ angular.module('calculatorApp')
         $scope.whereami = function(toNVR) {
             $scope.onNVR = toNVR;
         };
-
+        $scope.getEstDays = function() {
+            $scope.NVRObj.rHours = $scope.NVRObj.rHours > 24 ?
+              24 : $scope.NVRObj.rHours;
+            $scope.estDays = $scope.NVRObj.rDays *
+              $scope.NVRObj.motion / 100 *
+              $scope.NVRObj.rHours / 24;
+            return Math.ceil($scope.estDays);
+        };
         $scope.getBandwidth = function() {
             $scope.bandwidthDisplay = $scope.onNVR ?
               $scope.NVRObj.cameras * $scope.NVRObj.bitRate :
@@ -65,12 +73,12 @@ angular.module('calculatorApp')
             else
                 $scope.bandwidthUnit = 'Mbps';
             return $scope.bandwidthDisplay;
-
         };
         $scope.getStorage = function() {
             $scope.storageDisplay = $scope.onNVR ?
-              $scope.bandwidthDisplay * $scope.NVRObj.rDays *
-              $scope.NVRObj.motion / 100 : 0;
+              $scope.bandwidthDisplay * 0.125 // to MB/s
+              * 60 * 60 * 24 / 1024 // to GB/day
+              * $scope.getEstDays() : 0;
             if ( $scope.storageDisplay > 1024 * 1024 * 10 )
                 $scope.storageUnit = 'PB';
             else if ( $scope.storageDisplay > 10240)
