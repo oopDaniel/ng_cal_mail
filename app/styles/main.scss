@@ -101,24 +101,33 @@ $theme_color2: #8cb128;
 $table_bgcolor: white;
 $font_detail_color: lighten(grey, 10%);
 
-@mixin add_padding($h: 2em, $w:0) {
-  padding: $h $w;
+@mixin add_padding($h: 2em, $w:0, $b:0) {
+  padding: $h $w $b;
 }
-@mixin add_indent($i: 1em) {
-  text-indent: $i;
+
+.unbreak{
+  white-space: nowrap;
 }
+
 // padding for container
 .in-content {
   @include add_padding(3em,3em);
 }
 .hidden-input {
-  @include add_padding(1.5em);
+  @include add_padding(1em,0,1em);
 }
 .sub-label-indent {
-  @include add_indent;
+  text-indent:1em;
+  @media screen and (max-width: 500px) {
+    text-indent:0;
+  }
 }
 
-
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
 
 .nav-tabs, .nav-pills {
     text-align:center;
@@ -257,13 +266,48 @@ $font_detail_color: lighten(grey, 10%);
 
 
 .estdays {
-  @extend .input;
   background:$theme_color;
   color:white;
 }
 
+.bigDays{
+  @extend .unbreak;
+  text-align: center;
+  font-size:3em;
+  @media screen and (max-width: 415px) and (min-width: 321px) {
+    font-size:4em;
+  }
+  @media screen and (min-width: 700px) {
+    sub:before {
+      content:' ';
+    }
+  }
+}
+
 .estDaysPanel{
-  height:45vh;
+  height:38vh;
+  background:white;
+  @media screen and (max-width: 320px) {
+    padding-top: 0;
+    margin-top:0;
+    height:80vh;
+  }
+  @media screen and (max-width: 415px) and (min-width: 321px) {
+    margin-top:0;
+    padding-top: 0;
+    height:60vh;
+  }
+}
+.estDayItem {
+  padding:5vh 0;
+  @media screen and (max-width: 320px) {
+    padding:5vh 0;
+    margin-bottom: 14vh;
+  }
+  @media screen and (max-width: 415px) and (min-width: 321px) {
+    padding:5vh 0;
+    margin-bottom: 8vh;
+  }
 }
 .estDaysPanel.ng-enter {
   transition:0.3s linear all;
@@ -281,9 +325,7 @@ $font_detail_color: lighten(grey, 10%);
 }
 
 
-.estDayItem {
-  padding:6vh 0;
-}
+
 
 // --------- for Range bar ------------------
 
