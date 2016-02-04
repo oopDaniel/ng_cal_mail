@@ -42,8 +42,8 @@
                 <div class="row form-group">
                   <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of Cameras</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="text" class="form-control input" placeholder="Enter the number"
-                      ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                    <input type="tel" class="form-control input" placeholder="Enter the number" pattern="\d{2,5}"
+                      ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')" required/>
                   </div>
                 </div>
                 <div class="row form-group">
@@ -118,7 +118,7 @@
                           <select ng-model="$parent.rDays" class="input form-control" ng-change="selectDays()" ng-options="opt.name for opt in rDaysArr track by opt.name">
                           </select>
                           <div ng-if="$parent.showOtherDuration" class="hidden-input input-group">
-                            <input type="text" class="form-control input" placeholder="Enter the days" ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                            <input type="tel" class="form-control input" placeholder="Enter the days" ng-model="NVRObj.rDays" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                             <div class="input-group-addon my-addon">Days</div>
                           </div>
                         </div>
@@ -135,7 +135,7 @@
                         <section class="panelItem">
                         <label for="num_rhours" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording hours a day</label>
                         <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                          <input type="text" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2"/>
+                          <input type="tel" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                         </div>
                         </section>
                     </div>
@@ -155,7 +155,7 @@
                       <div class="flex1" ng-click="selectRAID(0)" ng-class="{selected:settingRAID[0]}">Non</div><!-- non -->
                       <div class="flex1" ng-click="selectRAID(1)" ng-class="{selected:settingRAID[1]}">1</div><!-- x/2 -->
                       <div class="flex1" ng-click="selectRAID(2)" ng-class="{selected:settingRAID[2]}">5</div><!-- x-1 -->
-                      <div class="flex1" ng-click="selectRAID(3)" ng-class="{selected:settingRAID[3]}">6</div><!-- x-2 -->
+                      <div class="flex1" ng-click="selectRAID(3)" ng-class="{selected:settingRAID[3]}">10</div><!-- x-2 -->
                       <!-- consider to add an expansible option here! -->
                     </div>
                   </div>
@@ -174,7 +174,7 @@
                       <div class="flex1" ng-click="selectHDD(5)" ng-class="{selected:settingHDD[5]}">Other</div>
                     </div>
                     <div ng-if="showOtherHDD" class="hidden-input input-group">
-                      <input type="text" class="form-control input" placeholder="Enter the size"
+                      <input type="tel" class="form-control input" placeholder="Enter the size"
                     ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                       <div class="input-group-addon my-addon">TB</div>
                     </div>
@@ -244,8 +244,8 @@
                 <div class="row form-group">
                   <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of Cameras</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="text" class="form-control input cmsBdr" placeholder="Enter the number"
-                      ng-model="CMSObj.cameras" name="num_cameras_cms" id="num_cameras_cms" maxlength="3" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                    <input type="tel" class="form-control input cmsBdr" placeholder="Enter the number"
+                      ng-model="CMSObj.cameras" name="num_cameras_cms" id="num_cameras_cms" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')" required/>
                   </div>
                 </div>
                 <div class="row form-group">

@@ -55,36 +55,27 @@ angular.module('calculatorApp')
             $scope.onNVR = toNVR;
         };
         $scope.getEstDays = function() {
-            $scope.NVRObj.rHours = $scope.NVRObj.rHours > 24 ?
-              24 : $scope.NVRObj.rHours;
+            validCheck('hours');
             $scope.estDays = $scope.NVRObj.rDays *
               $scope.NVRObj.motion / 100 *
               $scope.NVRObj.rHours / 24;
             return Math.ceil($scope.estDays);
         };
         $scope.getBandwidth = function() {
-            $scope.bandwidthDisplay = $scope.onNVR ?
-              $scope.NVRObj.cameras * $scope.getBitRate() :
-              $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
-            if ( $scope.bandwidthDisplay > 1024 * 1024 * 10 )
-                $scope.bandwidthUnit = 'Tbps';
-            else if ( $scope.bandwidthDisplay > 10240)
-                $scope.bandwidthUnit = 'Gbps';
-            else
-                $scope.bandwidthUnit = 'Mbps';
+            if ( $scope.onNVR ) {
+                $scope.bandwidthDisplay = $scope.NVRObj.cameras * $scope.getBitRate();
+            } else {
+                // validCheck('cmsCameras');
+                $scope.bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
+            }
+            validCheck('bandwidthUnit');
             return $scope.bandwidthDisplay;
         };
         $scope.getStorage = function() {
             $scope.storageDisplay = $scope.onNVR ?
               $scope.bandwidthDisplay * 0.125 * // to MB/s
               60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
-              // to GB/day
-            if ( $scope.storageDisplay > 1024 * 1024 * 10 )
-                $scope.storageUnit = 'PB';
-            else if ( $scope.storageDisplay > 10240)
-                $scope.storageUnit = 'TB';
-            else
-                $scope.storageUnit = 'GB';
+            validCheck('storageUnit');
             return $scope.storageDisplay;
         };
         $scope.getMinHDD = function() {
@@ -131,6 +122,37 @@ angular.module('calculatorApp')
             } else {
                 $scope.showOtherHDD = false;
                 $scope.NVRObj.HDDsize = HDDArr[index];
+            }
+        };
+
+        var validCheck = function(index) {
+            switch ( index ) {
+                // case 'cmsCameras':  // At most 128
+                //     // $scope.CMSObj.cameras = $scope.CMSObj.cameras > 128 ?
+                //     //     128 : $scope.CMSObj.cameras;
+                //     break;
+                case 'storageUnit':
+                    if ( $scope.storageDisplay > 1024 * 1024 * 10 )
+                        $scope.storageUnit = 'PB';
+                    else if ( $scope.storageDisplay > 10240)
+                        $scope.storageUnit = 'TB';
+                    else
+                        $scope.storageUnit = 'GB';
+                    break;
+                case 'bandwidthUnit':
+                    if ( $scope.bandwidthDisplay > 1024 * 1024 * 10 )
+                        $scope.bandwidthUnit = 'Tbps';
+                    else if ( $scope.bandwidthDisplay > 10240)
+                        $scope.bandwidthUnit = 'Gbps';
+                    else
+                        $scope.bandwidthUnit = 'Mbps';
+                    break;
+                case 'hours':
+                    $scope.NVRObj.rHours = $scope.NVRObj.rHours > 24 ?
+                        24 : $scope.NVRObj.rHours;
+
+                    break;
+                default:
             }
         };
 
