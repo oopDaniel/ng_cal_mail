@@ -88,7 +88,7 @@ angular.module('calculatorApp')
                 case 5:
                     minHDD += 1;
                     break;
-                case 6:
+                case 10:
                     minHDD += 2;
                     break;
                 default:
