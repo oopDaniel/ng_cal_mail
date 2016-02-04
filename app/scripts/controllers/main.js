@@ -143,6 +143,14 @@ angular.module('calculatorApp')
             }
         };
 
+
+        $scope.rdaysEmpty = $scope.hddEmpty = false;
+        $scope.required = function() {
+            $scope.rdaysEmpty = $scope.showOtherDuration && '' === $scope.NVRObj.rDays;
+            $scope.hddEmpty = $scope.showOtherHDD && '' === $scope.NVRObj.HDDsize;
+        }
+
+
         // ------------  Panel ------------ \\
 
         $scope.onEstDays = $scope.onBitRate = $scope.onCMSBitRate = false;
