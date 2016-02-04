@@ -20,7 +20,8 @@ angular.module('calculatorApp')
             else if ( input === (input|0) )
                 return $filter('number')(input);
             else {
-                var tmpNum = $filter('number')(input, 2);
+                // the last digit is zero
+                var tmpNum = $filter('number')(input, 1);
                 var tmpStr = tmpNum.toString();
                 var s = tmpStr.slice( tmpStr.length - 1, tmpStr.length);
                 return s === '0' ? $filter('number')(input, 1) : tmpNum;

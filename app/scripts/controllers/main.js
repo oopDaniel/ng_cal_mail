@@ -76,9 +76,9 @@ angular.module('calculatorApp')
         };
         $scope.getStorage = function() {
             $scope.storageDisplay = $scope.onNVR ?
-              $scope.bandwidthDisplay * 0.125 // to MB/s
-              * 60 * 60 * 24 / 1024 // to GB/day
-              * $scope.getEstDays() : 0;
+              $scope.bandwidthDisplay * 0.125 * // to MB/s
+              60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
+              // to GB/day
             if ( $scope.storageDisplay > 1024 * 1024 * 10 )
                 $scope.storageUnit = 'PB';
             else if ( $scope.storageDisplay > 10240)
@@ -177,7 +177,7 @@ angular.module('calculatorApp')
                     $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS )) :
                 bitrateFactory.getBitrate(
                     $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
-                    $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ))
+                    $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ));
             return bitRate;
         };
 

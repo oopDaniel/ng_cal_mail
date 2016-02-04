@@ -146,10 +146,15 @@ $font_detail_color: lighten(grey, 10%);
     margin: 0 auto;
     padding:0 0 0.5em;
 }
-
+.customization {
+  @media screen and (min-width: 800px) {
+    width:68vw;
+    margin: 2em auto;
+  }
+}
 .hd-requirement {
     @media screen and (min-width: 800px) {
-      width:70%;
+      width:68vw;
       margin: 2em auto;
     }
     background: $theme_color;
@@ -230,6 +235,12 @@ $font_detail_color: lighten(grey, 10%);
     td {
       font-size: 3em;
       color: $theme_color;
+      @media screen and (max-width: 415px) and (min-width: 321px) {
+        font-size:2.4em;
+      }
+      @media screen and (max-width: 320px) {
+        font-size:2em;
+      }
     }
     &.cmsTB td{
       color: $theme_color2;
