@@ -8,7 +8,8 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', 'bitrateFactory', function ($scope, bitrateFactory) {
+    .controller('MainCtrl', [ '$scope', 'bitrateFactory', 'menuFactory',
+      function ($scope, bitrateFactory, menuFactory) {
         $scope.onNVR = true;  // else on CMS
         $scope.storageDisplay = 0;
         $scope.bandwidthDisplay = 0;
@@ -96,32 +97,18 @@ angular.module('calculatorApp')
             return minHDD > 8 ? 8 : minHDD;
         };
 
-        // for checking whether should the class be applied
+        // for checking whether should the 'selected' class be applied
         $scope.settingRAID = new Array(4);
-        $scope.settingRAID[2] = true;       // Default RAID type
-        // when clicking the type of RAID
+        // default RAID type
+        $scope.settingRAID[2] = true;
+        // after clicked the type of RAID
         $scope.selectRAID = function(index) {
             $scope.settingRAID.fill(false);
             $scope.settingRAID[index] = true;
             if ( index < 2 ) {
                 $scope.NVRObj.RAID = index;
             } else {
-                $scope.NVRObj.RAID = 2 === index ? 5 : 6;
-            }
-        };
-
-        $scope.settingHDD = new Array(6);
-        $scope.settingHDD[2] = true;        // Default HDD size
-        $scope.showOtherHDD = false;
-        var HDDArr = [1,2,3,4,6];       // HDD size indicator
-        $scope.selectHDD = function(index) {
-            $scope.settingHDD.fill(false);
-            $scope.settingHDD[index] = true;
-            if ( 5 === index ) {
-                $scope.showOtherHDD = true;
-            } else {
-                $scope.showOtherHDD = false;
-                $scope.NVRObj.HDDsize = HDDArr[index];
+                $scope.NVRObj.RAID = 2 === index ? 5 : 10;
             }
         };
 
@@ -159,32 +146,35 @@ angular.module('calculatorApp')
         // ------------  Panel ------------ \\
 
         $scope.onEstDays = $scope.onBitRate = $scope.onCMSBitRate = false;
-
-        $scope.rDaysArr = [
-            {name:'1 day'},
-            {name:'2 days'},
-            {name:'4 days'},
-            {name:'7 days (1 week)'},
-            {name:'14 days (2 weeks)'},
-            {name:'30 days (1 month)'},
-            {name:'60 days (2 months)'},
-            {name:'90 days (3 months)'},
-            {name:'Other duration'}
-        ];
+        $scope.rDaysArr = menuFactory.getRDaysArr();
         // set the default value for the combo box
         $scope.rDays = $scope.rDaysArr[5];
         // display the textarea for other duration
         $scope.showOtherDuration = false;
 
-        $scope.selectDays = function() {
-            var tmp = parseInt($scope.rDays.name);
-            if ( isNaN(tmp) )
-                $scope.showOtherDuration = true;
-            else {
-                $scope.showOtherDuration = false;
-                $scope.NVRObj.rDays = tmp;
+        $scope.HDDArr = menuFactory.gethddSizeArr();
+        $scope.hdd = $scope.HDDArr[2];
+
+        $scope.withOtherOption = function(item,where) {
+            var tmp = parseInt(item);
+            if ( 0 === where ) { // rDays
+                $scope.showOtherDuration = isNaN(tmp);
+                if (!$scope.showOtherDuration)
+                    $scope.NVRObj.rDays = tmp;
+            } else if ( 1 === where ) {
+                $scope.showOtherHDD = isNaN(tmp);
+                if (!$scope.showOtherHDD)
+                    $scope.NVRObj.HDDsize = tmp;
             }
+
+                // var tmp = parseInt($scope.rDays);
+                // if ( isNaN(tmp) )
+                //     $scope.showOtherDuration = true;
+                // else {
+                //     $scope.showOtherDuration = false;
+                //     $scope.NVRObj.rDays = tmp;
         };
+
 
         // ----------  Bit Rate ---------- \\
 
@@ -210,11 +200,4 @@ angular.module('calculatorApp')
             $scope.isLocal = onLocal;
         };
 
-
-
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
   }]);
