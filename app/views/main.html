@@ -129,18 +129,18 @@
                         </div>
                         </section>
                         <section class="panelItem">
+                        <label for="num_rhours" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording hours a day</label>
+                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
+                          <input type="tel" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                        </div>
+                        </section>
+                        <section class="panelItem">
                         <label for="motion" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Motion Recording</label>
                         <div class="col-xs-12 col-sm-5 col-sm-pull-1">
                           <div class="range-div">
                             <input type="range" class="rangebar" ng-model="NVRObj.motion" min="0" max="100" step="10"/>
                             <span class="percentage">{{NVRObj.motion}}%</span>
                           </div>
-                        </div>
-                        </section>
-                        <section class="panelItem">
-                        <label for="num_rhours" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording hours a day</label>
-                        <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                          <input type="tel" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                         </div>
                         </section>
                     </div>
