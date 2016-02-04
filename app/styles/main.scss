@@ -164,6 +164,13 @@ $font_detail_color: lighten(grey, 10%);
       background: $theme_color2;
     }
 }
+.padding-bottom {
+  padding-bottom: 2em;
+}
+.highlight {
+  color:$theme_color2;
+  font-size:1.5em;
+}
 
 .my-addon {
   background: rgba(255,255,255,0.1);
@@ -178,7 +185,9 @@ $font_detail_color: lighten(grey, 10%);
      border-bottom:0.2em solid $theme_color2;
   }
 }
-
+.input-label {
+  padding-top:0.1em;
+}
 .filter {
   text-align: center;
   > input {
@@ -186,10 +195,6 @@ $font_detail_color: lighten(grey, 10%);
     min-width:70%;
     max-width:80%;
   }
-}
-
-.input-label {
-  padding-top:0.1em;
 }
 
 .section {
@@ -267,13 +272,6 @@ $font_detail_color: lighten(grey, 10%);
   border-bottom:.2em ridge;
   padding: .2em
 }
-
-// .btnNVR:active > a {
-//     background-color: $theme_color;
-//   }
-// .btnCMS:active > a {
-//     background-color: $theme_color2;
-//   }
 
 
 .estdays {
@@ -364,6 +362,9 @@ $font_detail_color: lighten(grey, 10%);
 .myPanel.ng-leave.ng-leave-active {
   opacity: 0;
 }
+
+
+
 
 
 

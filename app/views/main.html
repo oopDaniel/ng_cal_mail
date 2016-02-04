@@ -232,7 +232,7 @@
             </div>
             <div class="row">
               <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-              <div class="col-xs-6 col-xs-offset-1" ng-model="minHDD">{{NVRObj.HDDsize}} TB x {{ getMinHDD()}} <span class="unbreak">as a set</span><br>Totally {{modelSets}} {{modelSets>1?'sets are':'set is'}} needed</div>
+              <div class="col-xs-6 col-xs-offset-1 padding-bottom" ng-model="minHDD">{{NVRObj.HDDsize}} TB x <span class="highlight">{{ getMinHDD()}} </span><span class="unbreak">as a set</span><br>Totally <span class="highlight">{{modelSets}}</span> {{modelSets>1?'sets are':'set is'}} needed</div>
             </div>
           </div>
         </section>
