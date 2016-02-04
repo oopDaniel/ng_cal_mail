@@ -112,23 +112,6 @@ angular.module('calculatorApp')
             }
         };
 
-        $scope.settingHDD = new Array(6);
-         // default HDD size
-        $scope.settingHDD[2] = true;
-        $scope.showOtherHDD = false;
-        var HDDArr = [1,2,3,4,6];       // HDD size indicator
-        $scope.selectHDD = function(index) {
-            $scope.settingHDD.fill(false);
-            $scope.settingHDD[index] = true;
-            if ( 5 === index ) {
-                $scope.showOtherHDD = true;
-            } else {
-                $scope.showOtherHDD = false;
-                $scope.NVRObj.HDDsize = HDDArr[index];
-
-            }
-        };
-
         var validCheck = function(index) {
             switch ( index ) {
                 // case 'cmsCameras':  // At most 128
@@ -169,15 +152,29 @@ angular.module('calculatorApp')
         // display the textarea for other duration
         $scope.showOtherDuration = false;
 
-        $scope.selectDays = function() {
-            var tmp = parseInt($scope.rDays);
-            if ( isNaN(tmp) )
-                $scope.showOtherDuration = true;
-            else {
-                $scope.showOtherDuration = false;
-                $scope.NVRObj.rDays = tmp;
+        $scope.HDDArr = menuFactory.gethddSizeArr();
+        $scope.hdd = $scope.HDDArr[2];
+
+        $scope.withOtherOption = function(item,where) {
+            var tmp = parseInt(item);
+            if ( 0 === where ) { // rDays
+                $scope.showOtherDuration = isNaN(tmp);
+                if (!$scope.showOtherDuration)
+                    $scope.NVRObj.rDays = tmp;
+            } else if ( 1 === where ) {
+                $scope.showOtherHDD = isNaN(tmp);
+                if (!$scope.showOtherHDD)
+                    $scope.NVRObj.HDDsize = tmp;
             }
+
+                // var tmp = parseInt($scope.rDays);
+                // if ( isNaN(tmp) )
+                //     $scope.showOtherDuration = true;
+                // else {
+                //     $scope.showOtherDuration = false;
+                //     $scope.NVRObj.rDays = tmp;
         };
+
 
         // ----------  Bit Rate ---------- \\
 
