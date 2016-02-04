@@ -115,8 +115,8 @@ angular.module('calculatorApp')
         var validCheck = function(index) {
             switch ( index ) {
                 // case 'cmsCameras':  // At most 128
-                //     // $scope.CMSObj.cameras = $scope.CMSObj.cameras > 128 ?
-                //     //     128 : $scope.CMSObj.cameras;
+                //     $scope.CMSObj.cameras = $scope.CMSObj.cameras > 128 ?
+                //         128 : $scope.CMSObj.cameras;
                 //     break;
                 case 'storageUnit':
                     if ( $scope.storageDisplay > 1024 * 1024 * 10 )
@@ -166,13 +166,6 @@ angular.module('calculatorApp')
                 if (!$scope.showOtherHDD)
                     $scope.NVRObj.HDDsize = tmp;
             }
-
-                // var tmp = parseInt($scope.rDays);
-                // if ( isNaN(tmp) )
-                //     $scope.showOtherDuration = true;
-                // else {
-                //     $scope.showOtherDuration = false;
-                //     $scope.NVRObj.rDays = tmp;
         };
 
 

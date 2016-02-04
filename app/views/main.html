@@ -164,16 +164,7 @@
                   <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD Size</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <select ng-model="hdd" class="input form-control" ng-change="withOtherOption(hdd,1)" ng-options="opt for opt in HDDArr"></select>
-<!--                     <div class="flex">
-                      <div class="flex1" ng-click="selectHDD(0)" ng-class="{selected:settingHDD[0]}">1TB</div>
-                      <div class="flex1" ng-click="selectHDD(1)" ng-class="{selected:settingHDD[1]}">2TB</div>
-                      <div class="flex1" ng-click="selectHDD(2)" ng-class="{selected:settingHDD[2]}">3TB</div>
-                    </div>
-                    <div class="flex">
-                      <div class="flex1" ng-click="selectHDD(3)" ng-class="{selected:settingHDD[3]}">4TB</div>
-                      <div class="flex1" ng-click="selectHDD(4)" ng-class="{selected:settingHDD[4]}">6TB</div>
-                      <div class="flex1" ng-click="selectHDD(5)" ng-class="{selected:settingHDD[5]}">Other</div>
-                    </div> -->
+
                     <div ng-if="showOtherHDD" class="hidden-input input-group">
                       <input type="tel" class="form-control input" placeholder="Enter the size"
                     ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
