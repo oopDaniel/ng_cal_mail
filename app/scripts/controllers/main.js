@@ -144,11 +144,12 @@ angular.module('calculatorApp')
         };
 
 
-        $scope.rdaysEmpty = $scope.hddEmpty = false;
+        $scope.rdaysEmpty = $scope.rhoursEmpty = $scope.hddEmpty = false;
         $scope.required = function() {
             $scope.rdaysEmpty = $scope.showOtherDuration && '' === $scope.NVRObj.rDays;
             $scope.hddEmpty = $scope.showOtherHDD && '' === $scope.NVRObj.HDDsize;
-        }
+            $scope.rhoursEmpty = '' === $scope.NVRObj.rHours;
+        };
 
 
         // ------------  Panel ------------ \\

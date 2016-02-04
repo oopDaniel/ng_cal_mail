@@ -128,10 +128,15 @@
                           </div>
                         </div>
                         </section>
+
                         <section class="panelItem">
                         <label for="num_rhours" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Recording hours a day</label>
                         <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                          <input type="tel" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                          <div ng-class="{ 'has-error' : NVRForm.num_rhours.$error.pattern && NVRForm.num_rhours.$dirty || rhoursEmpty && NVRForm.num_rhours.$dirty }">
+                            <input type="tel" pattern="\d{1,2}" class="form-control input" placeholder="Enter the hours" ng-model="NVRObj.rHours" name="num_rhours" id="num_rhours" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')" ng-change="required()"/>
+                            <span ng-show="rhoursEmpty && NVRForm.num_rhours.$dirty" class="help-block">The hours are required.</span>
+                            <span ng-show="NVRForm.num_rhours.$error.pattern && NVRForm.num_rhours.$dirty" class="help-block">Please enter a valid number.</span>
+                          </div>
                         </div>
                         </section>
                         <section class="panelItem">
@@ -168,12 +173,15 @@
                 <div class="row form-group">
                   <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD Size</label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <select ng-model="hdd" class="input form-control" ng-change="withOtherOption(hdd,1)" ng-options="opt for opt in HDDArr"></select>
-
-                    <div ng-if="showOtherHDD" class="hidden-input input-group">
-                      <input type="tel" class="form-control input" placeholder="Enter the size"
-                    ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                      <div class="input-group-addon my-addon">TB</div>
+                    <select ng-model="hdd" class="input form-control" id="HDDsize" ng-change="withOtherOption(hdd,1)" ng-options="opt for opt in HDDArr"></select>
+                    <div ng-class="{ 'has-error' : NVRForm.HDDsize.$error.pattern && NVRForm.HDDsize.$dirty || hddEmpty && NVRForm.HDDsize.$dirty }">
+                      <div ng-if="showOtherHDD" class="hidden-input input-group">
+                        <input type="tel" pattern="\d{1,2}" class="form-control input" name="HDDsize" placeholder="Enter the size"
+                      ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')" ng-change="required()"/>
+                        <div class="input-group-addon my-addon">TB</div>
+                      </div>
+                      <span ng-show="hddEmpty && NVRForm.HDDsize.$dirty" class="help-block">The size is required.</span>
+                      <span ng-show="NVRForm.HDDsize.$error.pattern && NVRForm.HDDsize.$dirty" class="help-block">Please enter a valid number.</span>
                     </div>
                   </div>
                 </div>
