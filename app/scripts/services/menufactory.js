@@ -37,10 +37,10 @@ angular.module('calculatorApp')
         var rDayKeeper = rDaysArr[5];
         this.getRDayKeeper = function () {
             return rDayKeeper;
-        }
+        };
 
         this.setRDayKeeper = function (rday) {
             rDayKeeper = rday;
-        }
+        };
 
   });

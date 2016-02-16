@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('calculatorApp')
     .service('demoObjectFactory', function() {
         var NVRObj={
@@ -37,18 +39,18 @@ angular.module('calculatorApp')
 
         this.getNVRObj = function() {
             return NVRObj;
-        }
+        };
 
         this.getCMSObj = function() {
             return CMSObj;
-        }
+        };
 
         this.setNVRObj = function(obj) {
             NVRObj = obj;
-        }
+        };
 
         this.setCMSObj = function(obj) {
             CMSObj = obj;
-        }
+        };
 
     });

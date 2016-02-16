@@ -92,7 +92,7 @@ angular.module('calculatorApp')
             else if ( num > 10240 )
                  return onStorage ? 'T' : 'G';
             else return onStorage ? 'G' : 'M';
-        }
+        };
 
 
         // --------- Input validation --------- \\
@@ -145,7 +145,7 @@ angular.module('calculatorApp')
         $scope.getBitRate = function() {
             $scope.$broadcast('parentGetBitRate');
             return  $scope.bRate;
-        }
+        };
 
         $scope.$on('childSendBitRate', function(e, data) {
             $scope.bRate = data;
@@ -202,7 +202,7 @@ angular.module('calculatorApp')
             demoObjectFactory.setNVRObj($scope.NVRObj);
         else
             demoObjectFactory.setCMSObj($scope.CMSObj);
-    }
+    };
 
 
     $scope.getBitRate = function() {
@@ -253,7 +253,7 @@ angular.module('calculatorApp')
             $scope.bitRateColorFillCMS = false;
 
         });
-    }
+    };
 }]);
 
 
@@ -349,5 +349,5 @@ angular.module('calculatorApp')
         modalInstance.result.then( null, function () {
             $scope.estDayColorFill = false;
         });
-    }
+    };
 }]);
