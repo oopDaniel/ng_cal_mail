@@ -8,10 +8,9 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', 'bitrateFactory',
+    .controller('MainCtrl', [ '$scope',
         'menuFactory', 'demoObjectFactory',
-        function ($scope, bitrateFactory,
-            menuFactory, demoObjectFactory) {
+        function ($scope, menuFactory, demoObjectFactory) {
         $scope.onNVR = true;  // else on CMS
         $scope.storageDisplay = 0;
         $scope.bandwidthDisplay = 0;
@@ -115,17 +114,33 @@ angular.module('calculatorApp')
         };
 
 
-        $scope.rdaysEmpty = $scope.rhoursEmpty = $scope.hddEmpty = false;
-        $scope.required = function() {
-            $scope.rdaysEmpty = $scope.showOtherDuration && '' === $scope.NVRObj.rDays;
-            $scope.hddEmpty = $scope.showOtherHDD && '' === $scope.NVRObj.HDDsize;
-            $scope.rhoursEmpty = '' === $scope.NVRObj.rHours;
-        };
+
+        // --------------- for validation ---------------
+
+        // $scope.rdaysEmpty  = false;
+        // $scope.rhoursEmpty = false;
+        // $scope.hddEmpty    = false;
+        // $scope.required = function() {
+        //     $scope.rdaysEmpty  = $scope.showOtherDuration && '' === $scope.NVRObj.rDays;
+        //     $scope.hddEmpty    = $scope.showOtherHDD && '' === $scope.NVRObj.HDDsize;
+        //     $scope.rhoursEmpty = '' === $scope.NVRObj.rHours;
+        // };
 
 
+
+        // -------------------------------- \\
         // ------------  Panel ------------ \\
+        // -------------------------------- \\
 
-        $scope.onEstDays = $scope.onBitRate = $scope.onCMSBitRate = false;
+
+        // --------------- for validation ---------------
+
+
+        // used to check if they've been clicked,
+        // if true, fill with purple or green
+        $scope.onEstDays    = false;
+        $scope.onBitRate    = false;
+        $scope.onCMSBitRate = false;
         $scope.rDaysArr = menuFactory.getRDaysArr();
         // set the default value for the combo box
         $scope.rDays = $scope.rDaysArr[5];
@@ -151,20 +166,33 @@ angular.module('calculatorApp')
 
         // ----------  Bit Rate ---------- \\
 
-        $scope.codecList = bitrateFactory.getCodecList();
-        $scope.qList = bitrateFactory.getQList();
-        $scope.RSList = bitrateFactory.getRsList();
-        $scope.FPSList = bitrateFactory.getFPSList();
-        $scope.getBitRate = function() {
-            var bitRate = $scope.onNVR ?
-                bitrateFactory.getBitrate(
-                    $scope.RSList.indexOf( $scope.NVRObj.bitRateData.resolution ),
-                    $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS )) :
-                bitrateFactory.getBitrate(
-                    $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
-                    $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ));
-            return bitRate;
-        };
+        // $scope.codecList = bitrateFactory.getCodecList();
+        // $scope.qList = bitrateFactory.getQList();
+        // $scope.RSList = bitrateFactory.getRsList();
+        // $scope.FPSList = bitrateFactory.getFPSList();
+
+        // function() {
+        //     var bitRate = $scope.onNVR ?
+        //         bitrateFactory.getBitrate(
+        //             $scope.RSList.indexOf( $scope.NVRObj.bitRateData.resolution ),
+        //             $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS )) :
+        //         bitrateFactory.getBitrate(
+        //             $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
+        //             $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ));
+        //     return bitRate;
+        // };
+
+        $scope.bRate = 0;
+        $scope.getBitRate = function(){
+            $scope.$broadcast('parentGetBitRate');
+            return  $scope.bRate;
+        }
+
+        $scope.$on('childSendBitRate', function(e, data) {
+            $scope.bRate = data;
+        });
+
+
 
         // ------------  CMS  ------------ \\
 
@@ -175,13 +203,11 @@ angular.module('calculatorApp')
 
 
 
-
-
-
   }]);
 
 
-
+// ------------------------------
+// ------------------------------
 
 
 angular.module('calculatorApp')
@@ -205,19 +231,93 @@ $scope.items = ['item1', 'item2', 'item3'];
 }
 }]);
 
+// // ------------------------------
+// // ------------------------------
+
+
+// angular.module('calculatorApp')
+//     .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+//   $scope.items = items;
+//   $scope.selected = {
+//     item: $scope.items[0]
+//   };
+
+//   $scope.ok = function () {
+//     $uibModalInstance.close($scope.selected.item);
+//   };
+
+//   $scope.cancel = function () {
+//     $uibModalInstance.dismiss('cancel');
+//   };
+// });
+
+
+
+// ------------------------------
+// ------------------------------
+
+
 angular.module('calculatorApp')
-    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+    .controller('bRateModalCtrl', ['$scope', '$uibModal',
+        'bitrateFactory', 'demoObjectFactory', function($scope, $uibModal,
+        bitrateFactory, demoObjectFactory) {
 
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
 
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
-  };
+    $scope.onBitRate = false;
 
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});
+    $scope.NVRObj = demoObjectFactory.getNVRObj();
+    $scope.CMSObj = demoObjectFactory.getCMSObj();
+
+    $scope.codecList = bitrateFactory.getCodecList();
+    $scope.qList = bitrateFactory.getQList();
+    $scope.RSList = bitrateFactory.getRsList();
+    $scope.FPSList = bitrateFactory.getFPSList();
+
+    /**
+     *  Update the object data in "demoObjectFactory"
+     */
+    $scope.update = function() {
+        demoObjectFactory.setNVRObj($scope.NVRObj);
+    }
+
+
+
+    $scope.getBitRate = function() {
+        var bitRate = //$scope.$parent.onNVR ?
+            bitrateFactory.getBitrate(
+                $scope.RSList.indexOf( $scope.$parent.NVRObj.bitRateData.resolution ),
+                $scope.FPSList.indexOf( $scope.$parent.NVRObj.bitRateData.FPS ))
+             /*    :
+            bitrateFactory.getBitrate(
+                $scope.RSList.indexOf( $scope.$parent.CMSObj.bitRateData.resolution ),
+                $scope.FPSList.indexOf( $scope.$parent.CMSObj.bitRateData.FPS ));
+*/
+        return bitRate;
+    };
+
+    /**
+     *  In response to parent's "getBitRate()" demand
+     */
+    $scope.$on('parentGetBitRate', function(e) {
+        $scope.$emit('childSendBitRate', $scope.getBitRate());
+    });
+
+    /**
+     *  Modal handler
+     */
+    $scope.open = function (size) {
+        $scope.onBitRate = true;
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'views/bitRateEstimate.html',
+            size: size,
+            scope: $scope
+        });
+
+        // Remove the filled color
+        modalInstance.result.then( null, function () {
+            $scope.onBitRate = false;
+        });
+    }
+}]);

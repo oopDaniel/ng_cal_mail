@@ -43,4 +43,12 @@ angular.module('calculatorApp')
             return CMSObj;
         }
 
+        this.setNVRObj = function(obj) {
+            NVRObj = obj;
+        }
+
+        this.setCMSObj = function(obj) {
+            CMSObj = obj;
+        }
+
     });

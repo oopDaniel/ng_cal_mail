@@ -47,51 +47,48 @@
                     <span ng-show="NVRForm.num_cameras.$error.pattern && NVRForm.num_cameras.$dirty" class="help-block">Please enter a valid number.</span>
                   </div>
                 </div>
-                <div class="row form-group">
+                <div class="row form-group" ng-controller="bRateModalCtrl">
                   <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit Rate per Camera <sub>(Mbps)</sub></label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="input form-control" ng-click="onBitRate=!onBitRate" ng-class="{estdays:onBitRate}">{{getBitRate()}}</div>
+                    <div class="input form-control" ng-click="open()" ng-class="{estdays:onBitRate}">{{getBitRate()}}</div>
                   </div><div class="col-sm-2"></div>
                 </div>
 
               </div>
             </div>
-            <div class="myPanel myPanel-bitrate row" ng-if="onBitRate">
-              <div class="col-xs-6 col-sm-2 col-sm-offset-3 col-sm-pull-1 bigDays vcenter">{{getBitRate()}}<sub>Mbps</sub>
-              </div>
-              <div class="col-xs-5 col-sm-6 vcenter">
-                <div class="row">
-                  <section class="panelItem">
-                    <label for="codec" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Codec</label>
-                    <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                      <select id="codec" ng-model="$parent.NVRObj.bitRateData.codec" class="input form-control" ng-options="opt as opt for opt in codecList">
-                      </select>
-                    </div>
-                  </section>
-                  <section class="panelItem">
-                    <label for="quality" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Quality</label>
-                    <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                      <select id="quality" ng-model="$parent.NVRObj.bitRateData.quality" class="input form-control" ng-options="opt as opt for opt in qList">
-                      </select>
-                    </div>
-                  </section>
-                  <section class="panelItem">
-                    <label for="rs" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">Resolution</label>
-                    <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                      <select id="rs" ng-model="$parent.NVRObj.bitRateData.resolution" class="input form-control" ng-options="opt as opt for opt in RSList">
-                      </select>
-                    </div>
-                  </section>
-                  <section class="panelItem">
-                    <label for="fps" class="col-xs-12 col-sm-5 col-sm-pull-1 input-label sub-label-indent">FPS</label>
-                    <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-                      <select id="fps" ng-model="$parent.NVRObj.bitRateData.FPS" class="input form-control" ng-options="opt as opt for opt in FPSList">
-                      </select>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </div>
+
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+
+<!--   <div ng-controller="bRateModalCtrl">
+     <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+
+
+    <div>Some Content</div>
+     <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+     <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
+</div> -->
+
+<!-- ----------------------------- -->
+<!-- ----------------------------- -->
+
           </section>
           <section class="col-xs-12 section">
             <div class="row">
