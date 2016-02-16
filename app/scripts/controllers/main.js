@@ -202,4 +202,51 @@ angular.module('calculatorApp')
             $scope.isLocal = onLocal;
         };
 
+
+
+
+
+
   }]);
+
+
+
+
+
+angular.module('calculatorApp')
+    .controller('ModalCtrl', ['$scope',  '$uibModal',function($scope,  $uibModal) {
+
+$scope.items = ['item1', 'item2', 'item3'];
+
+ $scope.open = function (size) {
+
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'views/project.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+}
+}]);
+
+angular.module('calculatorApp')
+    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.ok = function () {
+    $uibModalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
