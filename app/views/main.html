@@ -2,15 +2,32 @@
 <div ng-controller="MainCtrl">
   <div class="jumbotron">
     <div class="row">
+
       <div class="col-md-12">
         <ul class="nav nav-pills">
-          <li class="active"><a href="#nvr" data-toggle="tab" ng-click="whereami(true)">NVR</a></li>
-          <li><a href="#cms" data-toggle="tab" ng-click="whereami(false)">CMS</a></li>
+          <li class="active">
+            <a href="#nvr"
+              data-toggle="tab"
+              ng-click="whereami(true)">
+              NVR
+            </a>
+          </li>
+          <li>
+            <a href="#cms"
+              data-toggle="tab"
+              ng-click="whereami(false)">
+              CMS
+            </a>
+          </li>
         </ul>
       </div>
+
       <div class="row">
-        <div class="table-showdigit col-xs-12 col-md-6 col-md-offset-3">
-          <table class="table table-hover table-responsive" ng-class="{cmsTB:!onNVR}">
+        <div class="table-showdigit col-xs-12
+                    col-md-6 col-md-offset-3">
+          <table
+            class="table table-hover table-responsive"
+            ng-class="{cmsTB:!onNVR}">
             <thead>
               <tr>
                 <th>Total Storage</th>
@@ -19,68 +36,139 @@
             </thead>
             <tbody>
               <tr>
-                <td class="greyMinus">{{getStorage() | storageFilter}}<sub>{{storageUnit}}</sub></td>
-                <td>{{getBandwidth() | storageFilter}}<sub>{{bandwidthUnit}}</sub></td>
+                <td class="greyMinus">
+                  {{getStorage() | storageFilter}}
+                  <sub>{{storageUnit}}</sub>
+                </td>
+                <td>
+                  {{getBandwidth() | storageFilter}}
+                  <sub>{{bandwidthUnit}}</sub>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    </div>
-  </div>
+    </div> <!-- end row -->
+  </div> <!-- end jumbotron -->
+
+<!-- ----------------------------- -->
 
   <div class="tab-content">
     <div id="nvr" class="tab-pane fade in active">
       <div class="row customization">
-        <form class="form-horizontal" name="NVRForm" ng-submit="submitNVR()" novalidate="">
+        <form
+          class="form-horizontal"
+          name="NVRForm"
+          ng-submit="submitNVR()"
+          novalidate="">
+
           <section class="col-xs-12 section">
             <div class="row">
               <div class="col-xs-12 col-sm-1 col-sm-push-2">
                 <i class="fa fa-camera-retro fa-3x icon-centered"></i>
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                <div class="row form-group" ng-class="{ 'has-error' : NVRForm.num_cameras.$error.required && NVRForm.num_cameras.$dirty || NVRForm.num_cameras.$error.pattern && NVRForm.num_cameras.$dirty }">
-                  <label for="num_cameras" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of Cameras</label>
+                <div
+                  class="row form-group"
+                  ng-class="{ 'has-error' :
+                               cameraEmpty || cameraInvalid }">
+                  <label
+                    for="num_cameras"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3
+                           input-label">
+                    Number of Cameras
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="tel" class="form-control input" placeholder="Enter the number" pattern="\d{1,5}" ng-model="NVRObj.cameras" name="num_cameras" id="num_cameras" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')" required/>
-                    <span ng-show="NVRForm.num_cameras.$error.required && NVRForm.num_cameras.$dirty" class="help-block">The number is required.</span>
-                    <span ng-show="NVRForm.num_cameras.$error.pattern && NVRForm.num_cameras.$dirty" class="help-block">Please enter a valid number.</span>
+                    <input
+                      type="tel"
+                      class="form-control input"
+                      id="num_cameras"
+                      name="num_cameras"
+                      pattern="\d{1,5}"
+                      maxlength="5"
+                      onkeyup="value=value.replace(/[^\d]/g,'')"
+                      placeholder="Enter the number"
+                      required
+                      ng-model="NVRObj.cameras"
+                      ng-change="ValidCheck()"/>
+                    <span
+                      class="help-block"
+                      ng-show="cameraEmpty">
+                      The number is required.
+                    </span>
+                    <span
+                      class="help-block"
+                      ng-show="cameraInvalid">
+                      Please enter a valid number.
+                    </span>
                   </div>
-                </div>
+                </div> <!-- end form-group -->
 
 <!-- ----------------------------- -->
 
-                <div class="row form-group" ng-controller="bRateModalCtrl">
-                  <label for="bitrate_per" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit Rate per Camera <sub>(Mbps)</sub></label>
-                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="input form-control" ng-click="open()" ng-class="{estdays:bitRateColorFill}">{{getBitRate()}}</div>
-                  </div><div class="col-sm-2"></div>
+                <div
+                  class="row form-group"
+                  ng-controller="bRateModalCtrl">
+                  <label
+                    for="bitrate_per"
+                    class="col-xs-6 col-sm-2
+                           col-sm-offset-3 input-label">
+                      Bit Rate per Camera
+                      <sub>(Mbps)</sub>
+                  </label>
+                  <div
+                    class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <div
+                      class="input form-control"
+                      ng-click="open()"
+                      ng-class="{estdays:bitRateColorFill}">{{getBitRate()}}
+                    </div>
+                  </div>
+                  <div class="col-sm-2"></div>
                 </div>
 
               </div>
-            </div>
+            </div> <!-- end row -->
+          </section>
 
 <!-- ----------------------------- -->
 
-
-          </section>
           <section class="col-xs-12 section">
             <div class="row">
               <div class="col-xs-12 col-sm-1 col-sm-push-2">
                 <i class="fa fa-database fa-3x icon-centered"></i>
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-<!-- ----------------------------- -->
-                <div class="row form-group" ng-controller="estDayModalCtrl">
-                  <label for="num_rdays" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Estimated Recording Days</label>
+
+<!-- ----------- modal start ----------- -->
+                <div
+                  class="row form-group"
+                  ng-controller="estDayModalCtrl">
+                  <label
+                    for="num_rdays"
+                    class="col-xs-6 col-sm-2
+                           col-sm-offset-3 input-label">
+                    Estimated Recording Days
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="input form-control" ng-click="open(lg)" ng-class="{estdays:estDayColorFill}">{{getEstDays()}}</div>
-                  </div><div class="col-sm-2"></div>
+                    <div
+                      class="input form-control"
+                      ng-click="open()"
+                      ng-class="{estdays:estDayColorFill}">
+                      {{getEstDays()}}
+                    </div>
+                  </div>
+                  <div class="col-sm-2"></div>
                 </div>
-<!-- ----------------------------- -->
+<!-- ------------ modal end ------------- -->
+
               </div>
-            </div>
+            </div> <!-- end row -->
           </section>
+
+<!-- ----------------------------- -->
+
           <section class="col-xs-12 section">
             <div class="row">
               <div class="col-xs-12 col-sm-1 col-sm-push-2">
@@ -88,32 +176,84 @@
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="RAID" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">RAID Type</label>
+                  <label
+                    for="RAID"
+                    class="col-xs-6 col-sm-2
+                    col-sm-offset-3 input-label">
+                    RAID Type
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div class="flex" id="RAID">
-                      <div class="flex1" ng-click="selectRAID(0)" ng-class="{selected:settingRAID[0]}">Non</div><!-- non -->
-                      <div class="flex1" ng-click="selectRAID(1)" ng-class="{selected:settingRAID[1]}">1</div><!-- x/2 -->
-                      <div class="flex1" ng-click="selectRAID(2)" ng-class="{selected:settingRAID[2]}">5</div><!-- x-1 -->
-                      <div class="flex1" ng-click="selectRAID(3)" ng-class="{selected:settingRAID[3]}">10</div><!-- ?? -->
-                      <!-- consider to add an expansible option here! -->
+                      <div class="flex1"
+                        ng-click="selectRAID(0)"
+                        ng-class="{selected:settingRAID[0]}">
+                        Non
+                      </div><!-- non -->
+                      <div class="flex1"
+                        ng-click="selectRAID(1)"
+                        ng-class="{selected:settingRAID[1]}">
+                        1
+                      </div><!-- x/2 -->
+                      <div class="flex1"
+                        ng-click="selectRAID(2)"
+                        ng-class="{selected:settingRAID[2]}">
+                        5
+                      </div><!-- x-1 -->
+                      <div class="flex1"
+                        ng-click="selectRAID(3)"
+                        ng-class="{selected:settingRAID[3]}">
+                        10
+                      </div><!-- ?? -->
+                    <!-- consider to add an expansible option here! -->
                     </div>
                   </div>
-                </div>
+                </div> <!-- end row -->
+
                 <div class="row form-group">
-                  <label for="HDDsize" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">HDD Size</label>
+                  <label
+                    for="HDDsize"
+                    class="col-xs-6 col-sm-2
+                           col-sm-offset-3 input-label">
+                    HDD Size
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <select ng-model="hdd" class="input form-control" id="HDDsize" ng-change="withOtherOption(hdd,1)" ng-options="opt for opt in HDDArr"></select>
-                    <div ng-class="{ 'has-error' : NVRForm.HDDsize.$error.pattern && NVRForm.HDDsize.$dirty || hddEmpty && NVRForm.HDDsize.$dirty }">
-                      <div ng-if="showOtherHDD" class="hidden-input input-group">
-                        <input type="tel" pattern="\d{1,2}" class="form-control input" name="HDDsize" placeholder="Enter the size"
-                      ng-model="NVRObj.HDDsize" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')" ng-change="required()"/>
+                    <select
+                      class="input form-control"
+                      id="HDDsize"
+                      ng-model="hdd"
+                      ng-change="showHdd()"
+                      ng-options="opt for opt in HDDArr">
+                    </select>
+                    <div
+                      ng-class="{'has-error' : hddInvalid || hddEmpty}"
+                      ng-show="showOtherHDD">
+                      <div class="hidden-input input-group">
+                        <input
+                          type="tel"
+                          class="form-control input"
+                          name="HDDsize"
+                          pattern="\d{1,2}"
+                          onkeyup="value=value.replace(/[^\d]/g,'')"
+                          maxlength="2"
+                          placeholder="Enter the size"
+                          ng-model="NVRObj.HDDsize"
+                          ng-change="ValidCheck()"
+                          />
                         <div class="input-group-addon my-addon">TB</div>
                       </div>
-                      <span ng-show="hddEmpty && NVRForm.HDDsize.$dirty" class="help-block">The size is required.</span>
-                      <span ng-show="NVRForm.HDDsize.$error.pattern && NVRForm.HDDsize.$dirty" class="help-block">Please enter a valid number.</span>
-                    </div>
-                  </div>
-                </div>
+                      <span
+                        class="help-block"
+                        ng-show="hddEmpty">
+                        The size is required.
+                      </span>
+                      <span
+                        class="help-block"
+                        ng-show="hddInvalid">
+                        Please enter a valid number.
+                      </span>
+                    </div> <!-- end validCheck block -->
+                  </div> <!-- end HDD -->
+                </div> <!-- end row -->
               </div>
             </div>
           </section>
@@ -123,8 +263,10 @@
       <div class="row hd-requirement">
         <h4>Minimin Hardware Requirement</h4>
         <section class="row section section-require">
-          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-            <i class="fa fa-cubes fa-3x"></i></div>
+          <div class="col-xs-1 col-xs-offset-1
+                      col-sm-1 col-sm-offset-3">
+            <i class="fa fa-cubes fa-3x"></i>
+          </div>
           <div class="col-xs-9 col-sm-8">
             <div class="row">
               <label class="col-xs-2 col-xs-offset-2">Model</label>
@@ -151,8 +293,12 @@
           </div>
         </section>
         <section class="row section section-require">
-          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-            <span class="glyphicon glyphicon-hdd" style="font-size:2.5em"></span>
+          <div
+            class="col-xs-1 col-xs-offset-1
+                   col-sm-1 col-sm-offset-3">
+            <span
+              class="glyphicon glyphicon-hdd"
+              style="font-size:2.5em"></span>
           </div>
           <div class="col-xs-9 col-sm-8">
             <div class="row">
@@ -161,69 +307,163 @@
             </div>
             <div class="row">
               <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-              <div class="col-xs-6 col-xs-offset-1 padding-bottom" ng-model="minHDD">{{NVRObj.HDDsize}} TB x <span class="highlight">{{ getMinHDD()}} </span><span class="unbreak">as a set</span><br>Totally <span class="highlight">{{modelSets}}</span> {{modelSets>1?'sets are':'set is'}} needed</div>
+              <div
+                class="col-xs-6 col-xs-offset-1 padding-bottom"
+                ng-model="minHDD">
+                {{NVRObj.HDDsize}} TB x
+                <span class="highlight">{{ getMinHDD()}} </span>
+                <span class="unbreak">as a set</span>
+                <br>
+                Totally
+                <span class="highlight">{{modelSets}}</span>
+                {{modelSets>1?'sets are':'set is'}} needed
+              </div>
             </div>
           </div>
         </section>
-      </div>
-    </div>
+      </div> <!-- end hd-requirement -->
+    </div> <!-- end NVR -->
+
+
+
+<!-- ----------------------------- -->
+
+
+
+
     <div id="cms" class="tab-pane fade">
       <div class="row customization">
-        <form class="form-horizontal" name="CMSForm" ng-submit="submitCMS()" novalidate="">
+        <form
+          class="form-horizontal"
+          name="CMSForm"
+          ng-submit="submitCMS()"
+          novalidate="">
+
           <section class="col-xs-12 section">
             <div class="row">
               <div class="col-xs-12 col-sm-1 col-sm-push-2">
-                <i class="fa fa-camera-retro fa-3x icon-centered"></i></div>
+                <i class="fa fa-camera-retro fa-3x icon-centered"></i>
+              </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                <div class="row form-group" ng-class="{ 'has-error' : CMSForm.num_cameras_cms.$error.required && CMSForm.num_cameras_cms.$dirty || CMSForm.num_cameras_cms.$error.pattern && CMSForm.num_cameras_cms.$dirty }">
-                  <label for="num_cameras_cms" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Number of Cameras</label>
+                <div
+                  class="row form-group"
+                  ng-class="{ 'has-error' :
+                              cameraEmptyCMS || cameraInvalidCMS }">
+                  <label
+                    for="num_cameras_cms"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
+                    Number of Cameras
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="tel" class="form-control input cmsBdr" placeholder="Enter the number" pattern="\d{1,5}" ng-model="CMSObj.cameras" name="num_cameras_cms" id="num_cameras_cms" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')" required/>
-                    <span ng-show="CMSForm.num_cameras_cms.$error.required && CMSForm.num_cameras_cms.$dirty" class="help-block">The number is required.</span>
-                    <span ng-show="CMSForm.num_cameras_cms.$error.pattern && CMSForm.num_cameras_cms.$dirty" class="help-block">Please enter a valid number.</span>
+                    <input
+                      type="tel"
+                      class="form-control input cmsBdr"
+                      name="num_cameras_cms"
+                      id="num_cameras_cms"
+                      pattern="\d{1,5}"
+                      onkeyup="value=value.replace(/[^\d]/g,'')"
+                      maxlength="5"
+                      required
+                      placeholder="Enter the number"
+                      ng-model="CMSObj.cameras"
+                      ng-change="ValidCheck()" />
+                    <span
+                      class="help-block"
+                      ng-show="cameraEmptyCMS">
+                      The number is required.
+                    </span>
+                    <span
+                      class="help-block"
+                      ng-show="cameraInvalidCMS">
+                      Please enter a valid number.
+                    </span>
                   </div>
                 </div>
 
-<!-- ----------------------------- -->
+<!-- ----------- modal start ----------- -->
 
-                <div class="row form-group" ng-controller="bRateModalCtrl">
-                  <label class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Bit Rate per Camera <sub>(Mbps)</sub></label>
+                <div
+                  class="row form-group"
+                  ng-controller="bRateModalCtrl">
+                  <label
+                    class="col-xs-6 col-sm-2
+                           col-sm-offset-3 input-label">
+                    Bit Rate per Camera
+                    <sub>(Mbps)</sub>
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="input cmsBdr form-control" ng-click="open()" ng-class="{estdaysCMS:bitRateColorFillCMS}">{{getBitRate()}}</div>
-                  </div><div class="col-sm-2"></div>
+                    <div
+                      class="input cmsBdr form-control"
+                      ng-click="open()"
+                      ng-class="{estdaysCMS:bitRateColorFillCMS}">
+                      {{getBitRate()}}
+                    </div>
+                  </div>
+                  <div class="col-sm-2"></div>
                 </div>
 
-<!-- ----------------------------- -->
+<!-- ----------- modal end ----------- -->
 
               </div>
             </div>
           </section>
+
+<!-- ----------------------------- -->
+
           <section class="col-xs-12 section">
             <div class="row">
               <div class="col-xs-12 col-sm-1 col-sm-push-2">
-                <i class="fa fa-user fa-3x icon-centered"></i></div>
+                <i class="fa fa-user fa-3x icon-centered"></i>
+              </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                 <div class="row form-group">
-                  <label for="local-client" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Local Client</label>
+                  <label
+                    for="local-client"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
+                    Local Client
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="flex" id="local-client">
-                      <div class="flex1 cmsFlex" ng-click="selectLocal(true)" ng-class="{selected:isLocal}">Yes</div>
-                      <div class="flex1 cmsFlex" ng-click="selectLocal(false)" ng-class="{selected:!isLocal}">No</div>
-                    </div>
+                    <div class="flex"
+                         id="local-client">
+                      <div
+                        class="flex1 cmsFlex"
+                        ng-click="selectLocal(true)"
+                        ng-class="{selected:isLocal}">
+                        Yes
+                      </div>
+                      <div
+                        class="flex1 cmsFlex"
+                        ng-click="selectLocal(false)"
+                        ng-class="{selected:!isLocal}">
+                        No
+                      </div>
+                    </div> <!-- end local-client -->
                   </div>
-                </div>
+                </div> <!-- end row -->
+
                 <div class="row form-group range-div">
-                  <label for="remote-user" class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">Concurrent Remote Users</label>
+                  <label
+                    for="remote-user"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
+                    Concurrent Remote Users
+                  </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <input type="range" class="rangebar-cms" ng-model="CMSObj.remoteUsers" min="1" max="10"/>
+                    <input
+                      type="range"
+                      class="rangebar-cms"
+                      min="1"
+                      max="10"
+                      ng-model="CMSObj.remoteUsers" />
                     <span class="percentage">{{CMSObj.remoteUsers}}</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> <!-- end row -->
           </section>
+
         </form>
       </div>
+
 
       <div class="row hd-requirement cmsBG">
         <h4>Minimin Hardware Requirement</h4>
@@ -271,6 +511,6 @@
           </div>
         </section>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!-- end CMS -->
+  </div> <!-- end Tab -->
+</div> <!-- end MainCtrl -->
