@@ -8,8 +8,10 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', 'bitrateFactory', 'menuFactory',
-      function ($scope, bitrateFactory, menuFactory) {
+    .controller('MainCtrl', [ '$scope', 'bitrateFactory',
+        'menuFactory', 'demoObjectFactory',
+        function ($scope, bitrateFactory,
+            menuFactory, demoObjectFactory) {
         $scope.onNVR = true;  // else on CMS
         $scope.storageDisplay = 0;
         $scope.bandwidthDisplay = 0;
@@ -17,39 +19,8 @@ angular.module('calculatorApp')
         $scope.bandwidthUnit = 'Mbps';
         $scope.modelSets = 1;
         $scope.estDays = 4;
-        $scope.NVRObj={
-          itemName:'',
-          storage:960,
-          bandwidth:64,
-          cameras:16,
-          bitRate:4,
-          bitRateData: {
-            codec:'H.264',
-            quality:'Medium',
-            resolution:'Full HD (1920 x 1080)',
-            FPS:30
-            },
-          rDays:30,
-          rHours:16,
-          motion:50,
-          RAID:5,
-          HDDsize:3
-        };
-        $scope.CMSObj={
-          itemName:'',
-          storage:'-',
-          bandwidth:64,
-          cameras:16,
-          bitRate:4,
-          bitRateData: {
-            codec:'H.264',
-            quality:'Medium',
-            resolution:'Full HD (1920 x 1080)',
-            FPS:30
-            },
-          local:true,
-          remoteUsers:10
-        };
+        $scope.NVRObj=demoObjectFactory.getNVRObj();
+        $scope.CMSObj=demoObjectFactory.getCMSObj();
 
         // for switch tab
         $scope.whereami = function(toNVR) {
