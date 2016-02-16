@@ -9,6 +9,9 @@
       <div class="col-xs-5 col-sm-6 vcenter">
         <div class="row">
 
+          <div class="form-group">
+          <form class="form-horizontal" name="rDayForm" ng-submit="submit()" novalidate="">
+
           <section class="panelItem" >
             <label
               for="rDays"
@@ -16,18 +19,15 @@
               input-label sub-label-indent">Recording Days</label>
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
-                ng-model="$parent.rDays"
-                ng-change="withOtherOption($parent.rDays,0)"
-                ng-options="opt for opt in rDaysArr"
+                ng-model="rDays"
+                ng-change="update()"
+                ng-options="opt as opt.content for opt in rDaysArr"
                 class="input form-control">
               </select>
               <div
-              ng-class="{ 'has-error' :
-                NVRForm.myrdays.$error.pattern && NVRForm.myrdays.$dirty ||
-                rdaysEmpty && NVRForm.myrdays.$dirty }">
-                <div
-                  ng-if="showOtherDuration"
-                  class="hidden-input input-group">
+                ng-show="showOtherDuration"
+                ng-class="{ 'has-error' : invalidDays || emptyDays }">
+                <div class="hidden-input input-group">
                   <input
                     type="tel"
                     class="form-control input"
@@ -36,19 +36,19 @@
                     onkeyup="value=value.replace(/[^\d]/g,'')"
                     placeholder="Enter the days"
                     maxlength="3"
-                    ng-change="required()"
+                    ng-change="validCheck()"
                     ng-model="NVRObj.rDays"/>
                   <div class="input-group-addon my-addon">
                     Days
                   </div>
                 </div>
                 <span
-                  ng-show="rdaysEmpty && NVRForm.myrdays.$dirty"
+                  ng-show="emptyDays"
                   class="help-block">
                   The day is required.
                 </span>
                 <span
-                  ng-show="NVRForm.myrdays.$error.pattern && NVRForm.myrdays.$dirty"
+                  ng-show="invalidDays"
                   class="help-block">
                   Please enter a valid number.
                 </span>
@@ -66,10 +66,7 @@
             </label>
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <div
-              ng-class="{ 'has-error' :
-              NVRForm.num_rhours.$error.pattern &&
-              NVRForm.num_rhours.$dirty ||
-              rhoursEmpty && NVRForm.num_rhours.$dirty }">
+              ng-class="{ 'has-error' : invalidHours || emptyHours }">
                 <input
                   type="tel"
                   class="form-control input"
@@ -80,17 +77,15 @@
                   placeholder="Enter the hours"
                   maxlength="2"
                   ng-model="NVRObj.rHours"
-                  ng-change="required()"/>
+                  ng-change="validCheck()"/>
                 <span
-                  ng-show="rhoursEmpty &&
-                           NVRForm.num_rhours.$dirty"
+                  ng-show="emptyHours"
                   class="help-block">
                   The hours are required.
                 </span>
                 <span
-                  ng-show="NVRForm.num_rhours.$error.pattern &&
-                           NVRForm.num_rhours.$dirty"
-                           class="help-block">
+                  ng-show="invalidHours"
+                  class="help-block">
                   Please enter a valid number.
                 </span>
               </div>
@@ -121,6 +116,8 @@
             </div>
             </section>
 
+          </form>
+          </div>
 
         </div>
       </div>

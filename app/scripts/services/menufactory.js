@@ -10,15 +10,15 @@
 angular.module('calculatorApp')
     .service('menuFactory', function () {
         var rDaysArr = [
-            '1 day',
-            '2 days',
-            '4 days',
-            '7 days (1 week)',
-            '14 days (2 weeks)',
-            '30 days (1 month)',
-            '60 days (2 months)',
-            '90 days (3 months)',
-            'Other duration'
+            {num:1,content:'1 day'},
+            {num:2,content:'2 days'},
+            {num:4,content:'4 days'},
+            {num:7,content:'7 days (1 week)'},
+            {num:14,content:'14 days (2 weeks)'},
+            {num:30,content:'30 days (1 month)'},
+            {num:60,content:'60 days (2 months)'},
+            {num:90,content:'90 days (3 months)'},
+            {num:-1,content:'Other duration'}
         ];
 
         var hddSizeArr = [

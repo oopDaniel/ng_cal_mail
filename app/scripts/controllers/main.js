@@ -167,10 +167,24 @@ angular.module('calculatorApp')
             $scope.bRate = data;
         });
 
-        $scope.getBRate = function() {
-            $scope.$broadcast('parentGetBitRate');
-            return  $scope.bRate;
-        }
+        // $scope.getBRate = function() {
+        //     $scope.$broadcast('parentGetBitRate');
+        //     return  $scope.bRate;
+        // }
+
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+        $scope.estDay = 0;
+        $scope.getEstDays = function() {
+            $scope.$broadcast('parentGetEstDays');
+            return  $scope.estDay;
+        };
+
+        $scope.$on('childSendEstDays', function(e, data) {
+            $scope.estDay = data;
+        });
+//-------------------------------------------------------------
+//-------------------------------------------------------------
 
 
         // ------------  CMS  ------------ \\
@@ -320,9 +334,31 @@ angular.module('calculatorApp')
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //--------------------------------
 //--------------------------------
 //--------------------------------
+
+
+
+
+
+
+
+
 
 
 
@@ -337,41 +373,65 @@ angular.module('calculatorApp')
     $scope.showOtherDuration = false;
 
     $scope.NVRObj = demoObjectFactory.getNVRObj();
-    $scope.CMSObj = demoObjectFactory.getCMSObj();
-
-
 
     $scope.rDaysArr = menuFactory.getRDaysArr();
     // set the default value for the combo box
     $scope.rDays = $scope.rDaysArr[5];
 
 
+    $scope.invalidHours = false;
+    $scope.invalidDays  = false;
+    $scope.emptyDays    = false;
+    $scope.emptyHours   = false;
 
-    $scope.withOtherOption = function(item,where) {
-        var tmp = parseInt(item);
-        if ( 0 === where ) { // rDays
-            $scope.showOtherDuration = isNaN(tmp);
-            if (!$scope.showOtherDuration)
-                $scope.NVRObj.rDays = tmp;
-        } else if ( 1 === where ) {
-            $scope.showOtherHDD = isNaN(tmp);
-            if (!$scope.showOtherHDD)
-                $scope.NVRObj.HDDsize = tmp;
+    $scope.validCheck = function() {
+        if ( $scope.rDayForm.$dirty ) {
+            $scope.invalidDays =
+                $scope.rDayForm.myrdays.$error.pattern;
+            $scope.emptyDays =
+                '' === $scope.NVRObj.rDays;
+        }
+
+        if ( $scope.rDayForm.num_rhours.$dirty ) {
+            $scope.invalidHours =
+                $scope.rDayForm.num_rhours.$error.pattern;
+            $scope.emptyHours =
+                '' === $scope.NVRObj.rHours;
         }
     };
 
 
 
 
+
+    $scope.update = function() {
+        var tmp = parseInt($scope.rDays.content);
+
+        $scope.showOtherDuration = isNaN(tmp);
+        if (!$scope.showOtherDuration) {
+            var tmpstr = '' + tmp;
+            $scope.NVRObj.rDays = $scope.rDaysArr[tmpstr].num;
+            console.log($scope.rDaysArr[tmpstr] );
+        }
+
+        demoObjectFactory.setNVRObj($scope.NVRObj);
+    };
+
     /**
      *  Update the object data in "demoObjectFactory"
      */
-    $scope.update = function() {
-        if ( $scope.$parent.onNVR )
-            demoObjectFactory.setNVRObj($scope.NVRObj);
-        else
-            demoObjectFactory.setCMSObj($scope.CMSObj);
-    }
+    // $scope.update = function() {
+
+
+    //     if ($scope.rDayForm.myrdays.$dirty)
+    //         console.log("yo");
+
+
+    //     if ( $scope.$parent.onNVR )
+    //         demoObjectFactory.setNVRObj($scope.NVRObj);
+    //     else
+    //         demoObjectFactory.setCMSObj($scope.CMSObj);
+    // }
 
 
     $scope.getEstDays = function() {
@@ -386,35 +446,26 @@ angular.module('calculatorApp')
     /**
      *  In response to parent's "getBitRate()" demand
      */
-    $scope.$on('parentGetBitRate', function(e) {
-        $scope.$emit('childSendBitRate', $scope.getBitRate());
+    $scope.$on('parentGetEstDays', function(e) {
+        $scope.$emit('childSendEstDays', $scope.getEstDays());
     });
 
     /**
      *  Modal handler
      */
-    $scope.open = function (onNVR, size) {
-        $scope.$parent.onNVR = onNVR;
-        console.log("On NVR: "+onNVR);
+    $scope.open = function (size) {
 
-        $scope.bitRateColorFill    = true;
-        $scope.bitRateColorFillCMS = true;
-
-        var templateStr = onNVR ?
-            'views/bitRateEstimate.html' :
-            'views/bitRateEstimateCMS.html';
+        $scope.estDayColorFill = true;
 
         var modalInstance = $uibModal.open({
-            templateUrl: templateStr,
+            templateUrl: 'views/rDaysEstimate.html',
             size: size,
             scope: $scope
         });
 
         // Remove the filled color
         modalInstance.result.then( null, function () {
-            $scope.bitRateColorFill    = false;
-            $scope.bitRateColorFillCMS = false;
-
+            $scope.estDayColorFill = false;
         });
     }
 }]);
