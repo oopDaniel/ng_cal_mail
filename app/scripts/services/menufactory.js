@@ -9,6 +9,11 @@
  */
 angular.module('calculatorApp')
     .service('menuFactory', function () {
+
+        var defaultRDaysStr = '30 days (1 month)';
+        var defaultHddStr   = '3TB';
+        var defaultRAIDStr  = '5';
+
         var rDaysArr = [
             '1 day',
             '2 days',
@@ -26,6 +31,10 @@ angular.module('calculatorApp')
           '4TB', '6TB', 'Other'
         ];
 
+        var RAIDArr = [
+          'Non', '1', '5', '10'
+        ];
+
         this.getRDaysArr = function () {
             return rDaysArr;
         };
@@ -34,15 +43,16 @@ angular.module('calculatorApp')
             return hddSizeArr;
         };
 
-        // Keep the default value in the combo box
-        var rDayKeeper = rDaysArr[5];
-
-        this.getRDayKeeper = function () {
-            return rDayKeeper;
+        this.getRAIDArr = function () {
+            return RAIDArr;
         };
 
-        this.setRDayKeeper = function (rday) {
-            rDayKeeper = rday;
-        };
+        // Set the default value for combo boxes
+        this.defaultRDays      =
+            rDaysArr[ rDaysArr.indexOf(defaultRDaysStr) ];
+        this.defaultHdd        =
+            hddSizeArr[ hddSizeArr.indexOf(defaultHddStr) ];
+        this.defaultRAIDindex  =
+            RAIDArr.indexOf(defaultRAIDStr);
 
   });

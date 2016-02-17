@@ -184,28 +184,14 @@
                   </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div class="flex" id="RAID">
-                      <div class="flex1"
-                        ng-click="selectRAID(0)"
-                        ng-class="{selected:settingRAID[0]}">
-                        Non
-                      </div><!-- non -->
-                      <div class="flex1"
-                        ng-click="selectRAID(1)"
-                        ng-class="{selected:settingRAID[1]}">
-                        1
-                      </div><!-- x/2 -->
-                      <div class="flex1"
-                        ng-click="selectRAID(2)"
-                        ng-class="{selected:settingRAID[2]}">
-                        5
-                      </div><!-- x-1 -->
-                      <div class="flex1"
-                        ng-click="selectRAID(3)"
-                        ng-class="{selected:settingRAID[3]}">
-                        10
-                      </div><!-- ?? -->
-                    <!-- consider to add an expansible option here! -->
-                    </div>
+                      <div
+                        class="flex1"
+                        ng-repeat="raid in RAIDArr"
+                        ng-click="updateRAID($index,raid)"
+                        ng-class="{selected:coloringRAID[$index]}">
+                        {{raid}}
+                      </div>
+                    </div> <!-- end flex -->
                   </div>
                 </div> <!-- end row -->
 

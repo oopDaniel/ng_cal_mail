@@ -74,18 +74,23 @@ angular.module('calculatorApp')
      *      Checking whether the 'selected' class
      *      should be applied in flexbox
      */
-        $scope.settingRAID = new Array(4);
+        $scope.RAIDArr = menuFactory.getRAIDArr();
+
+        $scope.showHdd = function() {
+            var tmp = parseInt($scope.hdd);
+            $scope.showOtherHDD = isNaN(tmp);
+            if (!$scope.showOtherHDD)
+                $scope.NVRObj.HDDsize = tmp;
+        };
+
+        $scope.coloringRAID = new Array( $scope.RAIDArr.length );
         // default RAID type
-        $scope.settingRAID[2] = true;
+        $scope.coloringRAID[ menuFactory.defaultRAIDindex ] = true;
         // after clicked on a certain type of RAID
-        $scope.selectRAID = function(index) {
-            $scope.settingRAID.fill(false);
-            $scope.settingRAID[index] = true;
-            if ( index < 2 ) {
-                $scope.NVRObj.RAID = index;
-            } else {
-                $scope.NVRObj.RAID = 2 === index ? 5 : 10;
-            }
+        $scope.updateRAID = function(index, RAIDtype) {
+            $scope.coloringRAID.fill(false);
+            $scope.coloringRAID[index] = true;
+            $scope.NVRObj.RAID = RAIDtype;
         };
 
     /*****************************************
@@ -145,7 +150,7 @@ angular.module('calculatorApp')
      *      check if 'other option' was selected.
      */
         $scope.HDDArr = menuFactory.gethddSizeArr();
-        $scope.hdd = $scope.HDDArr[2];
+        $scope.hdd = menuFactory.defaultHdd;
 
         $scope.showHdd = function() {
             var tmp = parseInt($scope.hdd);
@@ -191,7 +196,6 @@ angular.module('calculatorApp')
         };
 
   }]);
-
 
 
 
@@ -275,7 +279,6 @@ angular.module('calculatorApp')
                 modalInstance.result.then( null, function () {
                     $scope.bitRateColorFill    = false;
                     $scope.bitRateColorFillCMS = false;
-
                 });
             };
 }]);
@@ -298,7 +301,7 @@ angular.module('calculatorApp')
 
         $scope.rDaysArr = menuFactory.getRDaysArr();
         // Keep the data in the modal available for display
-        $scope.rDays    = menuFactory.getRDayKeeper();
+        $scope.rDays    = menuFactory.defaultRDays;
 
         $scope.invalidHours = false;
         $scope.invalidDays  = false;
@@ -334,7 +337,7 @@ angular.module('calculatorApp')
             // Do the update if getting a number
             if (!$scope.showOtherDuration) {
                 // for cross-controller display
-                menuFactory.setRDayKeeper($scope.rDays);
+                menuFactory.defaultRDays = $scope.rDays;
                 // for storage
                 $scope.NVRObj.rDays = tmp;
             }

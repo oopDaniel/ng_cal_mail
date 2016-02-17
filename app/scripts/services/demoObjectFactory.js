@@ -17,7 +17,7 @@ angular.module('calculatorApp')
           rDays:30,
           rHours:16,
           motion:50,
-          RAID:5,
+          RAID:'5',
           HDDsize:3
         };
 
