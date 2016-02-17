@@ -34,10 +34,8 @@ angular.module('calculatorApp')
               rs:'5MP',
               FPS:[1.27,4.68,7.77,9.91,11.5,12.95,14.65]
           }
-        ]
+        ];
 
-        var rsList = ['VGA','720P (1280 x 720)','1.3MP',
-                    'Full HD (1920 x 1080)','3MP','5MP'];
         var codecList = ['H.264'];
         var qList = ['Medium'];
         var FPSList = [1,5,10,15,20,25,30];
@@ -47,6 +45,10 @@ angular.module('calculatorApp')
         };
 
         this.getRsList = function() {
+            var rsList = [];
+            for ( var i in rule ) {
+                rsList.push(rule[i].rs);
+            }
             return rsList;
         };
 
