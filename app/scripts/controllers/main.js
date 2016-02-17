@@ -15,16 +15,21 @@ angular.module('calculatorApp')
         $scope.bandwidthDisplay = 0;
         $scope.storageUnit = 'GB';
         $scope.bandwidthUnit = 'Mbps';
-        $scope.modelSets = 1;
+        $scope.totalModelSets = 1;
         $scope.NVRObj = demoObjectFactory.getNVRObj();
         $scope.CMSObj = demoObjectFactory.getCMSObj();
 
-        // for switch tab
-        $scope.whereami = function(toNVR) {
-            $scope.onNVR = toNVR;
+    /*****************************************
+     *     track the current tab
+     */
+        $scope.whereami = function(onNVR) {
+            $scope.onNVR = onNVR;
         };
 
 
+    /*****************************************
+     *     Display the info of bandwidth and storage
+     */
         $scope.getBandwidth = function() {
             if ( $scope.onNVR ) {
                 $scope.bandwidthDisplay = $scope.NVRObj.cameras * $scope.getBitRate();
@@ -35,7 +40,6 @@ angular.module('calculatorApp')
             return $scope.bandwidthDisplay;
         };
 
-
         $scope.getStorage = function() {
             $scope.storageDisplay = $scope.onNVR ?
               $scope.bandwidthDisplay * 0.125 * // to MB/s
@@ -44,6 +48,10 @@ angular.module('calculatorApp')
             return $scope.storageDisplay;
         };
 
+    /*****************************************
+     *     Define the RAID rule and
+     *     count the HDDs needed
+     */
         $scope.getMinHDD = function() {
             var minHDD = Math.ceil( $scope.storageDisplay / $scope.NVRObj.HDDsize / 1024 );
             switch ( $scope.NVRObj.RAID ) { // RAID Rule
@@ -58,15 +66,18 @@ angular.module('calculatorApp')
                     break;
                 default:
             }
-            $scope.modelSets = Math.ceil( minHDD / 8 );
+            $scope.totalModelSets = Math.ceil( minHDD / 8 );
             return minHDD > 8 ? 8 : minHDD;
         };
 
-        // for checking whether should the 'selected' class be applied
+    /*****************************************
+     *      Checking whether the 'selected' class
+     *      should be applied in flexbox
+     */
         $scope.settingRAID = new Array(4);
         // default RAID type
         $scope.settingRAID[2] = true;
-        // after clicked the type of RAID
+        // after clicked on a certain type of RAID
         $scope.selectRAID = function(index) {
             $scope.settingRAID.fill(false);
             $scope.settingRAID[index] = true;
@@ -77,6 +88,9 @@ angular.module('calculatorApp')
             }
         };
 
+    /*****************************************
+     *      Convert the units displayed
+     */
         var unitCheck = function(index) {
             if ( 'storageUnit' === index )
                 $scope.storageUnit =
@@ -95,8 +109,9 @@ angular.module('calculatorApp')
         };
 
 
-        // --------- Input validation --------- \\
-
+    /***************************************
+     *      Input validation
+     */
         $scope.hddEmpty         = false;
         $scope.hddInvalid       = false;
         $scope.cameraEmpty      = false;
@@ -125,10 +140,10 @@ angular.module('calculatorApp')
             }
         };
 
-
-        // -------------  HDD ------------- \\
-
-
+    /********************************************
+     *      Deal with the selection of HDD,
+     *      check if 'other option' was selected.
+     */
         $scope.HDDArr = menuFactory.gethddSizeArr();
         $scope.hdd = $scope.HDDArr[2];
 
@@ -139,8 +154,9 @@ angular.module('calculatorApp')
                 $scope.NVRObj.HDDsize = tmp;
         };
 
-        // ----------  Bit Rate ---------- \\
-
+    /********************************************
+     *      Communication with the Bit Rate modal
+     */
         $scope.bRate = 0;
         $scope.getBitRate = function() {
             $scope.$broadcast('parentGetBitRate');
@@ -152,8 +168,9 @@ angular.module('calculatorApp')
         });
 
 
-        // ------------  estDay  ------------ \\
-
+    /***************************************************
+     *      Communication with the estimated-days modal
+     */
         $scope.estDays = 0;
         $scope.getEstDays = function() {
             $scope.$broadcast('parentGetEstDays');
@@ -165,103 +182,109 @@ angular.module('calculatorApp')
         });
 
 
-        // ------------  CMS  ------------ \\
-
+    /********************************************
+     *      CMS local user identifier
+     */
         $scope.isLocal = true;
         $scope.selectLocal = function(onLocal) {
             $scope.isLocal = onLocal;
         };
 
-
-
   }]);
 
 
-// ------------------------------
-// ------------------------------
 
 
-angular.module('calculatorApp')
-    .controller('bRateModalCtrl', ['$scope', '$uibModal',
-        'bitrateFactory', 'demoObjectFactory', function($scope, $uibModal,
-        bitrateFactory, demoObjectFactory) {
-
-    $scope.bitRateColorFill    = false;
-    $scope.bitRateColorFillCMS = false;
-
-    $scope.codecList = bitrateFactory.getCodecList();
-    $scope.qList     = bitrateFactory.getQList();
-    $scope.RSList    = bitrateFactory.getRsList();
-    $scope.FPSList   = bitrateFactory.getFPSList();
-
-    /**
-     *  Update the object data in "demoObjectFactory"
-     */
-    $scope.update = function() {
-        if ( $scope.$parent.onNVR )
-            demoObjectFactory.setNVRObj($scope.NVRObj);
-        else
-            demoObjectFactory.setCMSObj($scope.CMSObj);
-    };
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Bit Rate Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-    $scope.getBitRate = function() {
-        var bitRate;
-        if ( $scope.$parent.onNVR ) {
-            bitRate = bitrateFactory.getBitrate(
-                $scope.RSList.indexOf( $scope.NVRObj.bitRateData.resolution ),
-                $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS ));
-            $scope.NVRObj.bitRate = bitRate;
-        } else {
-            bitRate = bitrateFactory.getBitrate(
-                $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
-                $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ));
-            $scope.CMSObj.bitRate = bitRate;
-        }
-        return bitRate;
-    };
+    angular.module('calculatorApp')
+        .controller('bRateModalCtrl', ['$scope', '$uibModal',
+            'bitrateFactory', 'demoObjectFactory', function($scope, $uibModal,
+            bitrateFactory, demoObjectFactory) {
 
-    /**
-     *  In response to parent's "getBitRate()" demand
-     */
-    $scope.$on('parentGetBitRate', function(e) {
-        $scope.$emit('childSendBitRate', $scope.getBitRate());
-    });
-
-    /**
-     *  Modal handler
-     */
-    $scope.open = function (size) {
-        var onNVR = $scope.$parent.onNVR;
-
-        $scope.bitRateColorFill    = true;
-        $scope.bitRateColorFillCMS = true;
-
-        var templateStr = onNVR ?
-            'views/bitRateEstimate.html' :
-            'views/bitRateEstimateCMS.html';
-
-        var modalInstance = $uibModal.open({
-            templateUrl: templateStr,
-            size       : size,
-            scope      : $scope
-        });
-
-        // Remove the filled color
-        modalInstance.result.then( null, function () {
             $scope.bitRateColorFill    = false;
             $scope.bitRateColorFillCMS = false;
 
-        });
-    };
+            $scope.codecList = bitrateFactory.getCodecList();
+            $scope.qList     = bitrateFactory.getQList();
+            $scope.RSList    = bitrateFactory.getRsList();
+            $scope.FPSList   = bitrateFactory.getFPSList();
+
+        /**
+         *  Update the object data in "demoObjectFactory"
+         */
+            $scope.update = function() {
+                if ( $scope.$parent.onNVR )
+                    demoObjectFactory.setNVRObj($scope.NVRObj);
+                else
+                    demoObjectFactory.setCMSObj($scope.CMSObj);
+            };
+
+        /**
+         *  Counting the bit rate using the data in the object
+         *
+         *  @return (integer) bitRate
+         */
+            $scope.getBitRate = function() {
+                var bitRate;
+                if ( $scope.$parent.onNVR ) {
+                    bitRate = bitrateFactory.getBitrate(
+                        $scope.RSList.indexOf( $scope.NVRObj.bitRateData.resolution ),
+                        $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS ));
+                    $scope.NVRObj.bitRate = bitRate;
+                } else {
+                    bitRate = bitrateFactory.getBitrate(
+                        $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
+                        $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ));
+                    $scope.CMSObj.bitRate = bitRate;
+                }
+                return bitRate;
+            };
+
+        /**
+         *  In response to parent's demand of "getBitRate()",
+         *  return the result of bit rate counted.
+         */
+            $scope.$on('parentGetBitRate', function(e) {
+                $scope.$emit('childSendBitRate', $scope.getBitRate());
+            });
+
+        /**
+         *  Modal handler
+         */
+            $scope.open = function (size) {
+                var onNVR = $scope.$parent.onNVR;
+
+                $scope.bitRateColorFill    = true;
+                $scope.bitRateColorFillCMS = true;
+
+                var templateStr = onNVR ?
+                    'views/bitRateEstimate.html' :
+                    'views/bitRateEstimateCMS.html';
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: templateStr,
+                    size       : size,
+                    scope      : $scope
+                });
+
+                // Remove the filled color
+                modalInstance.result.then( null, function () {
+                    $scope.bitRateColorFill    = false;
+                    $scope.bitRateColorFillCMS = false;
+
+                });
+            };
 }]);
 
 
 
-//--------------------------------
-//--------------------------------
-//--------------------------------
-
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Estimated-days Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
 
@@ -270,84 +293,87 @@ angular.module('calculatorApp')
         'menuFactory', 'demoObjectFactory', function($scope, $uibModal,
         menuFactory, demoObjectFactory) {
 
-    $scope.estDayColorFill   = false;
-    $scope.showOtherDuration = false;
+        $scope.estDayColorFill   = false;
+        $scope.showOtherDuration = false;
 
-    $scope.rDaysArr = menuFactory.getRDaysArr();
-    // Get the data from service for keeping display available
-    $scope.rDays    = menuFactory.getRDayKeeper();
+        $scope.rDaysArr = menuFactory.getRDaysArr();
+        // Keep the data in the modal available for display
+        $scope.rDays    = menuFactory.getRDayKeeper();
 
-    $scope.invalidHours = false;
-    $scope.invalidDays  = false;
-    $scope.emptyDays    = false;
-    $scope.emptyHours   = false;
+        $scope.invalidHours = false;
+        $scope.invalidDays  = false;
+        $scope.emptyDays    = false;
+        $scope.emptyHours   = false;
 
-    $scope.validCheck = function() {
-        if ( $scope.rDayForm.$dirty ) {
-            $scope.invalidDays =
-                $scope.rDayForm.myrdays.$error.pattern;
-            $scope.emptyDays =
-                '' === $scope.NVRObj.rDays;
-        }
-        if ( $scope.rDayForm.num_rhours.$dirty ) {
-            $scope.invalidHours =
-                $scope.rDayForm.num_rhours.$error.pattern;
-            $scope.emptyHours =
-                '' === $scope.NVRObj.rHours;
-        }
-    };
+    /**
+     *  Input validation
+     */
+        $scope.validCheck = function() {
+            if ( $scope.rDayForm.$dirty ) {
+                $scope.invalidDays =
+                    $scope.rDayForm.myrdays.$error.pattern;
+                $scope.emptyDays =
+                    '' === $scope.NVRObj.rDays;
+            }
+            if ( $scope.rDayForm.num_rhours.$dirty ) {
+                $scope.invalidHours =
+                    $scope.rDayForm.num_rhours.$error.pattern;
+                $scope.emptyHours =
+                    '' === $scope.NVRObj.rHours;
+            }
+        };
 
     /**
      *  Update the object data in "demoObjectFactory"
      */
-    $scope.update = function() {
-        var tmp = parseInt($scope.rDays);
-        // The last option begins with 'Other', thus NaN
-        $scope.showOtherDuration = isNaN(tmp);
+        $scope.update = function() {
+            var tmp = parseInt($scope.rDays);
+            // The last option begins with 'Other', thus NaN
+            $scope.showOtherDuration = isNaN(tmp);
 
-        // Do the update if getting a number
-        if (!$scope.showOtherDuration) {
-            // for cross-controller display
-            menuFactory.setRDayKeeper($scope.rDays);
-            // for storage
-            $scope.NVRObj.rDays = tmp;
-        }
-        demoObjectFactory.setNVRObj($scope.NVRObj);
-    };
+            // Do the update if getting a number
+            if (!$scope.showOtherDuration) {
+                // for cross-controller display
+                menuFactory.setRDayKeeper($scope.rDays);
+                // for storage
+                $scope.NVRObj.rDays = tmp;
+            }
+            demoObjectFactory.setNVRObj($scope.NVRObj);
+        };
 
-    $scope.getEstDays = function() {
-        $scope.NVRObj.rHours =
-            $scope.NVRObj.rHours > 24 ?
-                24 : $scope.NVRObj.rHours;
-        $scope.estDays = $scope.NVRObj.rDays *
-            $scope.NVRObj.motion / 100 *
-            $scope.NVRObj.rHours / 24;
-        return Math.ceil($scope.estDays);
-    };
+        $scope.getEstDays = function() {
+            $scope.NVRObj.rHours =
+                $scope.NVRObj.rHours > 24 ?
+                    24 : $scope.NVRObj.rHours;
+            $scope.estDays = $scope.NVRObj.rDays *
+                $scope.NVRObj.motion / 100 *
+                $scope.NVRObj.rHours / 24;
+            return Math.ceil($scope.estDays);
+        };
 
-    /**
-     *  In response to parent's "getEstDays" demand
-     */
-    $scope.$on('parentGetEstDays', function(e) {
-        $scope.$emit('childSendEstDays', $scope.getEstDays());
-    });
-
-    /**
-     *  Modal handler
-     */
-    $scope.open = function (size) {
-
-        $scope.estDayColorFill = true;
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'views/rDaysEstimate.html',
-            size: size,
-            scope: $scope
+        /**
+         *  In response to parent's "getEstDays" demand
+         */
+        $scope.$on('parentGetEstDays', function(e) {
+            $scope.$emit('childSendEstDays', $scope.getEstDays());
         });
 
-        // Remove the filled color
-        modalInstance.result.then( null, function () {
-            $scope.estDayColorFill = false;
-        });
-    };
+        /**
+         *  Modal handler
+         */
+        $scope.open = function (size) {
+
+            $scope.estDayColorFill = true;
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'views/rDaysEstimate.html',
+                size: size,
+                scope: $scope
+            });
+
+            // Remove the filled color
+            modalInstance.result.then( null, function () {
+                $scope.estDayColorFill = false;
+            });
+        };
 }]);

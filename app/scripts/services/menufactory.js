@@ -34,7 +34,9 @@ angular.module('calculatorApp')
             return hddSizeArr;
         };
 
+        // Keep the default value in the combo box
         var rDayKeeper = rDaysArr[5];
+
         this.getRDayKeeper = function () {
             return rDayKeeper;
         };
