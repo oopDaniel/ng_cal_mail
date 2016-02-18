@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc filter
- * @name calculatorApp.filter:storageFilter
+ * @name calculatorApp.filter:displayFilter
  * @function
  * @description
- * # storageFilter
+ * # displayFilter
  * Filter in the calculatorApp.
  */
 angular.module('calculatorApp')
-    .filter('storageFilter', ['$filter', function ($filter) {
+    .filter('displayFilter', ['$filter', function ($filter) {
         return function (input) {
             if ( 0 === input )
                 return '- ';

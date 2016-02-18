@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name calculatorApp.menuFactory
+ * @name calculatorApp.formOptionsFactory
  * @description
- * # menuFactory
+ * # formOptionsFactory
  * Service in the calculatorApp.
  */
 angular.module('calculatorApp')
-    .service('menuFactory', function () {
+    .service('formOptionsFactory', function () {
 
         var defaultRDaysStr = '30 days (1 month)';
         var defaultHddStr   = '3TB';

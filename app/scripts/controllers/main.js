@@ -8,8 +8,8 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', '$filter', 'menuFactory', 'localStorageFactory',
-        function ($scope, $filter, menuFactory, localStorageFactory) {
+    .controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'localStorageFactory',
+        function ($scope, $filter, formOptionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
         $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
@@ -27,27 +27,27 @@ angular.module('calculatorApp')
     /*****************************************
      *     Local storage
      */
-        $scope.save = function(){
+        $scope.save = function() {
             if ($scope.onNVR) {
                 $scope.NVRObj.storageUnit   = $scope.storageUnit;
                 $scope.NVRObj.bandwidthUnit = $scope.bandwidthUnit;
                 $scope.NVRObj.storage       = $scope.getStorage();
                 $scope.NVRObj.bandwidth     = $scope.getBandwidth();
+                localStorageFactory.storeObj('NVR');
             } else {
                 $scope.CMSObj.storageUnit   = $scope.storageUnit;
                 $scope.CMSObj.bandwidthUnit = $scope.bandwidthUnit;
                 $scope.CMSObj.storage       = $scope.getStorage();
                 $scope.CMSObj.bandwidth     = $scope.getBandwidth();
+                localStorageFactory.storeObj('CMS');
             }
-            localStorageFactory.storeObj('NVR');
-            console.log(localStorageFactory.storeObj('NVR'));
+            console.log("file saved!");
         };
 
-        $scope.load = function(){
+        $scope.load = function() {
             var x = localStorageFactory.getStoredObj('NVR');
             console.log(x);
         };
-        // console.log( $scope.NVRObj);
 
     /*****************************************
      *     Display the info of bandwidth and storage
@@ -60,7 +60,7 @@ angular.module('calculatorApp')
                 bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
             }
             unitCheck('bandwidth', bandwidthDisplay);
-            return $filter('storageFilter')(bandwidthDisplay);
+            return $filter('displayFilter')(bandwidthDisplay);
         };
 
         $scope.getStorage = function() {
@@ -68,7 +68,7 @@ angular.module('calculatorApp')
               $scope.getBandwidth() * 0.125 * // to MB/s
               60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
             unitCheck('storage', storageDisplay);
-            return $filter('storageFilter')(storageDisplay);
+            return $filter('displayFilter')(storageDisplay);
         };
 
     /*****************************************
@@ -97,7 +97,7 @@ angular.module('calculatorApp')
      *      Checking whether the 'selected' class
      *      should be applied in flexbox
      */
-        $scope.RAIDArr = menuFactory.getRAIDArr();
+        $scope.RAIDArr = formOptionsFactory.getRAIDArr();
 
         $scope.showHdd = function() {
             var tmp = parseInt($scope.hdd);
@@ -108,7 +108,7 @@ angular.module('calculatorApp')
 
         $scope.coloringRAID = new Array( $scope.RAIDArr.length );
         // default RAID type
-        $scope.coloringRAID[ menuFactory.defaultRAIDindex ] = true;
+        $scope.coloringRAID[ formOptionsFactory.defaultRAIDindex ] = true;
         // after clicked on a certain type of RAID
         $scope.updateRAID = function(index, RAIDtype) {
             $scope.coloringRAID.fill(false);
@@ -172,8 +172,8 @@ angular.module('calculatorApp')
      *      Deal with the selection of HDD,
      *      check if 'other option' was selected.
      */
-        $scope.HDDArr = menuFactory.gethddSizeArr();
-        $scope.hdd = menuFactory.defaultHdd;
+        $scope.HDDArr = formOptionsFactory.gethddSizeArr();
+        $scope.hdd = formOptionsFactory.defaultHdd;
 
         $scope.showHdd = function() {
             var tmp = parseInt($scope.hdd);
@@ -316,15 +316,15 @@ angular.module('calculatorApp')
 
 angular.module('calculatorApp')
     .controller('estDayModalCtrl', ['$scope', '$uibModal',
-        'menuFactory', 'localStorageFactory', function($scope, $uibModal,
-        menuFactory, localStorageFactory) {
+        'formOptionsFactory', 'localStorageFactory', function($scope, $uibModal,
+        formOptionsFactory, localStorageFactory) {
 
         $scope.estDayColorFill   = false;
         $scope.showOtherDuration = false;
 
-        $scope.rDaysArr = menuFactory.getRDaysArr();
+        $scope.rDaysArr = formOptionsFactory.getRDaysArr();
         // Keep the data in the modal available for display
-        $scope.rDays    = menuFactory.defaultRDays;
+        $scope.rDays    = formOptionsFactory.defaultRDays;
 
         $scope.invalidHours = false;
         $scope.invalidDays  = false;
@@ -360,7 +360,7 @@ angular.module('calculatorApp')
             // Do the update if getting a number
             if (!$scope.showOtherDuration) {
                 // for cross-controller display
-                menuFactory.defaultRDays = $scope.rDays;
+                formOptionsFactory.defaultRDays = $scope.rDays;
                 // for storage
                 $scope.NVRObj.rDays = tmp;
             }

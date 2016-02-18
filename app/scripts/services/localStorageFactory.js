@@ -72,9 +72,9 @@ angular.module('calculatorApp')
             if ( 'NVR' === key ) {
                 return $window.localStorage[key] === undefined ?
                     NVRObj : JSON.parse($window.localStorage[key]);
-                // return JSON.parse($window.localStorage[key] || NVRObj);
             } else if ( 'CMS' === key ) {
-                return JSON.parse($window.localStorage[key] || CMSObj);
+                 return $window.localStorage[key] === undefined ?
+                    CMSObj : JSON.parse($window.localStorage[key]);
             } else {
                 return JSON.parse($window.localStorage[key] || defaultValue);
             }
