@@ -1,0 +1,95 @@
+<div class="modal-header" ng-controller="saveModalCtrl">
+  <div class="modal-body">
+    <div class="myPanel row">
+          <div class="form-group">
+          <form class="form-horizontal" name="saveForm" ng-submit="submit()" novalidate="">
+
+
+            <section class="panelItem">
+            <label
+              for="itemName"
+              class="col-xs-12 col-sm-5 col-sm-push-1
+                     input-label sub-label-indent">
+              Item Name
+            </label>
+            <div class="col-xs-12 col-sm-5 col-sm-push-1">
+              <div
+              ng-class="{ 'has-error' : emptyItemNameClass }">
+                <input
+                  type="text"
+                  class="form-control input"
+                  name="itemName"
+                  id="itemName"
+                  placeholder="Enter the item name"
+                  maxlength="20"
+                  required
+                  ng-model="pj.itemName"
+                  ng-change="validCheck()"/>
+                <span
+                  ng-show="emptyItemNameClass"
+                  class="help-block">
+                  Item name is required.
+                </span>
+              </div>
+            </div>
+            </section>
+
+
+
+          <section class="panelItem" >
+            <label
+              for="pjName"
+              class="col-xs-12 col-sm-5 col-sm-push-1
+              input-label sub-label-indent">Project Name</label>
+            <div class="col-xs-12 col-sm-5 col-sm-push-1">
+              <div ng-show="!firstTimeCreate">
+                <select
+                  ng-model="pjNameOption"
+                  ng-change="update()"
+                  ng-options="opt.name for opt in pjArr"
+                  class="input form-control">
+                </select>
+              </div>
+              <div
+                ng-show="firstTimeCreate||newPj"
+                ng-class="{ 'has-error' : emptyPjNameClass }">
+                  <input
+                    type="tel"
+                    id="pjName"
+                    class="form-control input"
+                    name="pjName"
+                    placeholder="Enter the project name"
+                    maxlength="20"
+                    ng-change="validCheck()"
+                    ng-model="pj.pjName"/>
+                <span
+                  ng-show="emptyPjNameClass"
+                  class="help-block">
+                  The project name is required.
+                </span>
+              </div>
+            </div>
+            </section>
+            <div class="row panelItem">
+            <div class="col-xs-6 col-xs-push-5">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                ng-disabled="$parent.invalidForm">
+                Save
+              </button>
+              <button
+                class="btn btn-warning"
+                ng-click="closeModal()">
+                Cancel
+              </button>
+            </div>
+            </div>
+          </form>
+          </div>
+
+        </div>
+      </div>
+    </div>  <!-- end myPanel -->
+  </div>  <!-- end modal-body -->
+</div>  <!-- end modal-header -->

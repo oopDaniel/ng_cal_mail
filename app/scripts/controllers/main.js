@@ -18,6 +18,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
         $scope.storageUnit    = $scope.NVRObj.display.storageUnit;
         $scope.bandwidthUnit  = $scope.NVRObj.display.bandwidthUnit;
+        $scope.invalidForm    = true;
     /*****************************************
      *     Track the current tab
      */
@@ -153,7 +154,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         $scope.ValidCheck = function() {
             if ( $scope.NVRForm.HDDsize.$dirty ) {
                 $scope.hddEmpty =
-                    '' === $scope.NVRObj.HDDsize;
+                    "" === $scope.NVRObj.HDDsize;
                 $scope.hddInvalid =
                     $scope.NVRForm.HDDsize.$error.pattern;
             }
@@ -340,13 +341,13 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
                 $scope.invalidDays =
                     $scope.rDayForm.myrdays.$error.pattern;
                 $scope.emptyDays =
-                    '' === $scope.NVRObj.estDays.params.rDays;
+                    "" === $scope.NVRObj.estDays.params.rDays;
             }
             if ( $scope.rDayForm.num_rhours.$dirty ) {
                 $scope.invalidHours =
                     $scope.rDayForm.num_rhours.$error.pattern;
                 $scope.emptyHours =
-                    '' === $scope.NVRObj.estDays.params.rHours;
+                    "" === $scope.NVRObj.estDays.params.rHours;
             }
         };
 
@@ -402,5 +403,131 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
             modalInstance.result.then( null, function () {
                 $scope.estDayColorFill = false;
             });
+        };
+}]);
+
+
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        Save Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
+    function($scope, $uibModal, localStorageFactory) {
+
+        $scope.pjArr = localStorageFactory.getPjArr();
+
+        // Only contain '(Create New Project)'
+        $scope.firstTimeCreate    = $scope.pjArr.length === 1;
+        $scope.newPj              = false;
+        $scope.saveForm           = {};
+
+        $scope.emptyItemName      = true;
+        $scope.emptyItemNameClass = false;
+        $scope.emptyPjName        = true;
+        $scope.emptyPjNameClass   = false;
+        $scope.pj = {
+            pjName:"",
+            itemName:"",
+            data:[]
+        };
+
+        // Set default value
+        if ( !$scope.firstTimeCreate ) {
+            $scope.pjNameOption = $scope.pjArr[0];
+        }
+
+
+
+    /**
+     *  Input validation
+     */
+        $scope.validCheck = function() {
+            $scope.emptyItemName =
+                $scope.saveForm.itemName.$error.required;
+            $scope.emptyItemNameClass =
+                $scope.saveForm.itemName.$dirty &&
+                $scope.emptyItemName;
+
+            $scope.emptyPjName =
+                "" === $scope.pj.pjName;
+            $scope.emptyPjNameClass =
+                $scope.saveForm.pjName.$dirty &&
+                $scope.emptyPjName;
+
+            $scope.$parent.invalidForm =
+                $scope.emptyItemName ||
+                $scope.emptyPjName && $scope.newPj;
+        };
+
+    /**
+     *  Update the object data in "localStorageFactory"
+     */
+        $scope.update = function() {
+            $scope.newPj = $scope.pjNameOption.name === localStorageFactory.defaultNewPjStr;
+            $scope.validCheck();
+        };
+
+
+        $scope.submit = function () {
+            // Refresh the result from the combo box
+            if ( !$scope.newPj ) {
+                $scope.pj.pjName = $scope.pjNameOption.name;
+            }
+
+            var index = getPjIndex( $scope.pj.pjName );
+            console.log(index);
+
+            if ( $scope.onNVR ) {
+                $scope.NVRObj = refreshDisplay($scope.NVRObj);
+                localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.NVRObj, true );
+            } else {
+                $scope.NVRObj = refreshDisplay($scope.CMSObj);
+                localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.CMSObj, false );
+            }
+
+            localStorageFactory.store();
+            $scope.closeModal();
+        };
+
+        var refreshDisplay = function(obj) {
+            obj.display.storageUnit   = $scope.storageUnit;
+            obj.display.bandwidthUnit = $scope.bandwidthUnit;
+            obj.display.storage       = $scope.getStorage();
+            obj.display.bandwidth     = $scope.getBandwidth();
+            return obj;
+        };
+
+        var getPjIndex = function( pjName ) {
+            console.log(pjName==="123");
+            if ( -1 === localStorageFactory.getPjIndex(pjName) ) {
+                var pj = {
+                    name: pjName,
+                    NVR:[],
+                    CMS:[]
+                };
+                localStorageFactory.pushPj(pj);
+            }
+            console.log("!!! "+localStorageFactory.getPjIndex(pjName));
+            return localStorageFactory.getPjIndex(pjName);
+        };
+
+
+        $scope.openModal = function (size) {
+
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: 'views/save.html',
+                size: size,
+                scope: $scope
+            });
+        };
+
+        $scope.closeModal = function () {
+            $scope.modalInstance.close();
         };
 }]);

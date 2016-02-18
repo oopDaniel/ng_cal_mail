@@ -2,6 +2,9 @@
 
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
+
+        this.defaultNewPjStr = "(Create New Project)";
+
         var NVRObj={
           itemName:'',
           display: {
@@ -93,17 +96,43 @@ angular.module('calculatorApp')
             }
         };
 
-        var Str2Int = function (key) {
-            if ( 'NVR' === key ) {
-                NVRObj.estDays.params.cameras = parseInt(NVRObj.estDays.params.cameras);
-                NVRObj.estDays.params.motion  = parseInt(NVRObj.estDays.params.motion);
-                NVRObj.estDays.params.rHours  = parseInt(NVRObj.estDays.params.rHours);
+        var Str2Int = function (obj) {
+            obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
+            obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
+            obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
+            return obj;
+        };
+
+        var projects = [{name:"123",NVR:[],CMS:[]},{name:"456",NVR:[],CMS:[]},{name:this.defaultNewPjStr}];
+
+        this.getPjArr = function() {
+            return projects;
+        };
+
+        this.getPjIndex = function(pjName) {
+            return projects.indexOf(pjName);
+        };
+
+        this.pushPj = function(data) {
+            projects.unshift(data);
+        };
+
+        this.pushPjData = function(index, itemName, data, onNVR) {
+            data = Str2Int(data);
+            var item = {
+                name:itemName,
+                data:data
             }
-            if ( 'CMS' === key ) {
-                CMSObj.estDays.params.cameras = parseInt(CMSObj.estDays.params.cameras);
-                CMSObj.estDays.params.motion  = parseInt(CMSObj.estDays.params.motion);
-                CMSObj.estDays.params.rHours  = parseInt(CMSObj.estDays.params.rHours);
+            if ( onNVR ) {
+                projects[index].NVR.push(item);
+            } else {
+                projects[index].CMS.push(item);
             }
         };
+
+        this.store = function() {
+            $window.localStorage["projects"] = JSON.stringify(projects);
+        }
+
 
     }]);
