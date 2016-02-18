@@ -8,8 +8,8 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', 'menuFactory', 'localStorageFactory',
-        function ($scope, menuFactory, localStorageFactory) {
+    .controller('MainCtrl', [ '$scope', '$filter', 'menuFactory', 'localStorageFactory',
+        function ($scope, $filter, menuFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
         $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
@@ -44,10 +44,10 @@ angular.module('calculatorApp')
         };
 
         $scope.load = function(){
-            localStorageFactory.getStoredObj('NVR');
-            console.log(localStorageFactory.getStoredObj('NVR'));
-            console.log(3213213);
+            var x = localStorageFactory.getStoredObj('NVR');
+            console.log(x);
         };
+        // console.log( $scope.NVRObj);
 
     /*****************************************
      *     Display the info of bandwidth and storage
@@ -60,7 +60,7 @@ angular.module('calculatorApp')
                 bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
             }
             unitCheck('bandwidth', bandwidthDisplay);
-            return bandwidthDisplay;
+            return $filter('storageFilter')(bandwidthDisplay);
         };
 
         $scope.getStorage = function() {
@@ -68,7 +68,7 @@ angular.module('calculatorApp')
               $scope.getBandwidth() * 0.125 * // to MB/s
               60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
             unitCheck('storage', storageDisplay);
-            return storageDisplay;
+            return $filter('storageFilter')(storageDisplay);
         };
 
     /*****************************************

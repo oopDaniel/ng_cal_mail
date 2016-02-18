@@ -70,15 +70,14 @@ angular.module('calculatorApp')
 
         this.getStoredObj = function(key, defaultValue) {
             if ( 'NVR' === key ) {
-                return JSON.parse($window.localStorage[key] || NVRObj);
+                return $window.localStorage[key] === undefined ?
+                    NVRObj : JSON.parse($window.localStorage[key]);
+                // return JSON.parse($window.localStorage[key] || NVRObj);
             } else if ( 'CMS' === key ) {
                 return JSON.parse($window.localStorage[key] || CMSObj);
             } else {
                 return JSON.parse($window.localStorage[key] || defaultValue);
             }
-
-            console.log(NVRObj.storageUnit);
-            $window.alert(123);
         };
 
         var Str2Int = function (key) {
