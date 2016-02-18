@@ -37,11 +37,11 @@
             <tbody>
               <tr>
                 <td class="greyMinus">
-                  {{getStorage()}}
+                  {{ getStorage() | displayFilter }}
                   <sub>{{storageUnit}}</sub>
                 </td>
                 <td>
-                  {{getBandwidth()}}
+                  {{ getBandwidth() | displayFilter }}
                   <sub>{{bandwidthUnit}}</sub>
                 </td>
               </tr>
@@ -498,13 +498,14 @@
         </section>
       </div>
     </div> <!-- end CMS -->
+
   </div> <!-- end Tab -->
 
-
-
-<div ng-controller="saveModalCtrl">
-  <button ng-click="openModal()">Save</button>
-</div>
+  <div class="row">
+    <div class="col-xs-6 col-xs-push-6" ng-controller="saveModalCtrl">
+      <button class='btn btn-info' ng-click="openModal()">Save</button>
+    </div>
+  </div>
 
 </div> <!-- end MainCtrl -->
 
