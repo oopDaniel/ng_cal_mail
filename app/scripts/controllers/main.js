@@ -8,16 +8,16 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', 'menuFactory', 'demoObjectFactory',
-        function ($scope, menuFactory, demoObjectFactory) {
+    .controller('MainCtrl', [ '$scope', 'menuFactory', 'localStorageFactory',
+        function ($scope, menuFactory, localStorageFactory) {
         $scope.onNVR = true;  // else on CMS
         $scope.storageDisplay = 0;
         $scope.bandwidthDisplay = 0;
         $scope.storageUnit = 'GB';
         $scope.bandwidthUnit = 'Mbps';
         $scope.totalModelSets = 1;
-        $scope.NVRObj = demoObjectFactory.getNVRObj();
-        $scope.CMSObj = demoObjectFactory.getCMSObj();
+        $scope.NVRObj = localStorageFactory.getNVRObj();
+        $scope.CMSObj = localStorageFactory.getCMSObj();
 
     /*****************************************
      *     track the current tab
@@ -206,8 +206,8 @@ angular.module('calculatorApp')
 
     angular.module('calculatorApp')
         .controller('bRateModalCtrl', ['$scope', '$uibModal',
-            'bitrateFactory', 'demoObjectFactory', function($scope, $uibModal,
-            bitrateFactory, demoObjectFactory) {
+            'bitrateFactory', 'localStorageFactory', function($scope, $uibModal,
+            bitrateFactory, localStorageFactory) {
 
             $scope.bitRateColorFill    = false;
             $scope.bitRateColorFillCMS = false;
@@ -218,13 +218,13 @@ angular.module('calculatorApp')
             $scope.FPSList   = bitrateFactory.getFPSList();
 
         /**
-         *  Update the object data in "demoObjectFactory"
+         *  Update the object data in "localStorageFactory"
          */
             $scope.update = function() {
                 if ( $scope.$parent.onNVR )
-                    demoObjectFactory.setNVRObj($scope.NVRObj);
+                    localStorageFactory.setNVRObj($scope.NVRObj);
                 else
-                    demoObjectFactory.setCMSObj($scope.CMSObj);
+                    localStorageFactory.setCMSObj($scope.CMSObj);
             };
 
         /**
@@ -293,8 +293,8 @@ angular.module('calculatorApp')
 
 angular.module('calculatorApp')
     .controller('estDayModalCtrl', ['$scope', '$uibModal',
-        'menuFactory', 'demoObjectFactory', function($scope, $uibModal,
-        menuFactory, demoObjectFactory) {
+        'menuFactory', 'localStorageFactory', function($scope, $uibModal,
+        menuFactory, localStorageFactory) {
 
         $scope.estDayColorFill   = false;
         $scope.showOtherDuration = false;
@@ -327,7 +327,7 @@ angular.module('calculatorApp')
         };
 
     /**
-     *  Update the object data in "demoObjectFactory"
+     *  Update the object data in "localStorageFactory"
      */
         $scope.update = function() {
             var tmp = parseInt($scope.rDays);
@@ -341,7 +341,7 @@ angular.module('calculatorApp')
                 // for storage
                 $scope.NVRObj.rDays = tmp;
             }
-            demoObjectFactory.setNVRObj($scope.NVRObj);
+            localStorageFactory.setNVRObj($scope.NVRObj);
         };
 
         $scope.getEstDays = function() {

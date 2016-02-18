@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('calculatorApp')
-    .service('demoObjectFactory', function() {
+    .service('localStorageFactory', function() {
         var NVRObj={
           itemName:'',
           storage:960,
