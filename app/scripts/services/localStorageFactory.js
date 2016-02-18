@@ -4,38 +4,51 @@ angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
         var NVRObj={
           itemName:'',
-          storage:960,
-          storageUnit:'TB',
-          bandwidth:64,
-          bandwidthUnit:'Mbps',
+          display: {
+            storage:960,
+            storageUnit:'TB',
+            bandwidth:64,
+            bandwidthUnit:'Mbps',
+          },
           cameras:16,
-          bitRate:4,
-          bitRateData: {
-            codec:'H.264',
-            quality:'Medium',
-            resolution:'Full HD (1920 x 1080)',
-            FPS:30
-            },
-          rDays:30,
-          rHours:16,
-          motion:50,
+          bitRate: {
+            data:4,
+            params:{
+              codec:'H.264',
+              quality:'Medium',
+              resolution:'Full HD (1920 x 1080)',
+              FPS:30
+            }
+          },
+          estDays: {
+            data:10,
+            params:{
+              rDays:30,
+              rHours:16,
+              motion:50,
+            }
+          },
           RAID:'5',
           HDDsize:3
         };
 
         var CMSObj={
           itemName:'',
-          storage:'-',
-          bandwidth:64,
-          bandwidthUnit:'Mbps',
-          cameras:16,
-          bitRate:4,
-          bitRateData: {
-            codec:'H.264',
-            quality:'Medium',
-            resolution:'Full HD (1920 x 1080)',
-            FPS:30
-            },
+          display: {
+            storage:'-',
+            bandwidth:64,
+            bandwidthUnit:'Mbps',
+          },
+          cameras:169,
+          bitRate: {
+            data:4,
+            params:{
+              codec:'H.264',
+              quality:'Medium',
+              resolution:'Full HD (1920 x 1080)',
+              FPS:30
+            }
+          },
           local:true,
           remoteUsers:10
         };

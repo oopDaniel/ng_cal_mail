@@ -14,14 +14,16 @@ angular.module('calculatorApp')
         $scope.totalModelSets = 1;
         $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
         $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
-        $scope.storageUnit    = $scope.NVRObj.storageUnit;
-        $scope.bandwidthUnit  = $scope.NVRObj.bandwidthUnit;
-
+        $scope.storageUnit    = $scope.NVRObj.display.storageUnit;
+        $scope.bandwidthUnit  = $scope.NVRObj.display.bandwidthUnit;
+        console.log("switch tab");
+        console.log("On NVR?  "+$scope.onNVR);
     /*****************************************
      *     Track the current tab
      */
         $scope.whereami = function(onNVR) {
             $scope.onNVR = onNVR;
+            // console.log("On NVR?  "+onNVR);
         };
 
     /*****************************************
@@ -29,23 +31,26 @@ angular.module('calculatorApp')
      */
         $scope.save = function() {
             if ($scope.onNVR) {
-                $scope.NVRObj.storageUnit   = $scope.storageUnit;
-                $scope.NVRObj.bandwidthUnit = $scope.bandwidthUnit;
-                $scope.NVRObj.storage       = $scope.getStorage();
-                $scope.NVRObj.bandwidth     = $scope.getBandwidth();
+                $scope.NVRObj.display.storageUnit   = $scope.storageUnit;
+                $scope.NVRObj.display.bandwidthUnit = $scope.bandwidthUnit;
+                $scope.NVRObj.display.storage       = $scope.getStorage();
+                $scope.NVRObj.display.bandwidth     = $scope.getBandwidth();
                 localStorageFactory.storeObj('NVR');
             } else {
-                $scope.CMSObj.storageUnit   = $scope.storageUnit;
-                $scope.CMSObj.bandwidthUnit = $scope.bandwidthUnit;
-                $scope.CMSObj.storage       = $scope.getStorage();
-                $scope.CMSObj.bandwidth     = $scope.getBandwidth();
+                $scope.CMSObj.display.storageUnit   = $scope.storageUnit;
+                $scope.CMSObj.display.bandwidthUnit = $scope.bandwidthUnit;
+                $scope.CMSObj.display.storage       = $scope.getStorage();
+                $scope.CMSObj.display.bandwidth     = $scope.getBandwidth();
                 localStorageFactory.storeObj('CMS');
             }
             console.log("file saved!");
         };
 
         $scope.load = function() {
-            var x = localStorageFactory.getStoredObj('NVR');
+            console.log($scope.onNVR);
+            var x = $scope.onNVR ?
+                localStorageFactory.getStoredObj('NVR') :
+                localStorageFactory.getStoredObj('CMS') ;
             console.log(x);
         };
 
@@ -259,14 +264,14 @@ angular.module('calculatorApp')
                 var bitRate;
                 if ( $scope.$parent.onNVR ) {
                     bitRate = bitrateFactory.getBitrate(
-                        $scope.RSList.indexOf( $scope.NVRObj.bitRateData.resolution ),
-                        $scope.FPSList.indexOf( $scope.NVRObj.bitRateData.FPS ));
-                    $scope.NVRObj.bitRate = bitRate;
+                        $scope.RSList.indexOf( $scope.NVRObj.bitRate.params.resolution ),
+                        $scope.FPSList.indexOf( $scope.NVRObj.bitRate.params.FPS ));
+                    $scope.NVRObj.bitRate.data = bitRate;
                 } else {
                     bitRate = bitrateFactory.getBitrate(
-                        $scope.RSList.indexOf( $scope.CMSObj.bitRateData.resolution ),
-                        $scope.FPSList.indexOf( $scope.CMSObj.bitRateData.FPS ));
-                    $scope.CMSObj.bitRate = bitRate;
+                        $scope.RSList.indexOf( $scope.CMSObj.bitRate.params.resolution ),
+                        $scope.FPSList.indexOf( $scope.CMSObj.bitRate.params.FPS ));
+                    $scope.CMSObj.bitRate.data = bitRate;
                 }
                 return bitRate;
             };
@@ -339,13 +344,13 @@ angular.module('calculatorApp')
                 $scope.invalidDays =
                     $scope.rDayForm.myrdays.$error.pattern;
                 $scope.emptyDays =
-                    '' === $scope.NVRObj.rDays;
+                    '' === $scope.NVRObj.estDays.params.rDays;
             }
             if ( $scope.rDayForm.num_rhours.$dirty ) {
                 $scope.invalidHours =
                     $scope.rDayForm.num_rhours.$error.pattern;
                 $scope.emptyHours =
-                    '' === $scope.NVRObj.rHours;
+                    '' === $scope.NVRObj.estDays.params.rHours;
             }
         };
 
@@ -362,18 +367,18 @@ angular.module('calculatorApp')
                 // for cross-controller display
                 formOptionsFactory.defaultRDays = $scope.rDays;
                 // for storage
-                $scope.NVRObj.rDays = tmp;
+                $scope.NVRObj.estDays.params.rDays = tmp;
             }
             localStorageFactory.setDefaultNVRObj($scope.NVRObj);
         };
 
         $scope.getEstDays = function() {
-            $scope.NVRObj.rHours =
-                $scope.NVRObj.rHours > 24 ?
-                    24 : $scope.NVRObj.rHours;
-            $scope.estDays = $scope.NVRObj.rDays *
-                $scope.NVRObj.motion / 100 *
-                $scope.NVRObj.rHours / 24;
+            $scope.NVRObj.estDays.params.rHours =
+                $scope.NVRObj.estDays.params.rHours > 24 ?
+                    24 : $scope.NVRObj.estDays.params.rHours;
+            $scope.estDays = $scope.NVRObj.estDays.params.rDays *
+                $scope.NVRObj.estDays.params.motion / 100 *
+                $scope.NVRObj.estDays.params.rHours / 24;
             return Math.ceil($scope.estDays);
         };
 

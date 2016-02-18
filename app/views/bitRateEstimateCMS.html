@@ -24,7 +24,7 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="codec"
-                ng-model="CMSObj.bitRateData.codec"
+                ng-model="CMSObj.bitRate.params.codec"
                 ng-change="update()"
                 ng-options="opt as opt for opt in codecList"
                 class="input cmsBdr form-control" >
@@ -43,7 +43,7 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="quality"
-                ng-model="CMSObj.bitRateData.quality"
+                ng-model="CMSObj.bitRate.params.quality"
                 ng-change="update()"
                 ng-options="opt as opt for opt in qList"
                 class="input cmsBdr form-control">
@@ -62,7 +62,7 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="rs"
-                ng-model="CMSObj.bitRateData.resolution"
+                ng-model="CMSObj.bitRate.params.resolution"
                 ng-change="update()"
                 ng-options="opt as opt for opt in RSList"
                 class="input cmsBdr form-control">
@@ -81,7 +81,7 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="fps"
-                ng-model="CMSObj.bitRateData.FPS"
+                ng-model="CMSObj.bitRate.params.FPS"
                 ng-change="update()"
                 ng-options="opt as opt for opt in FPSList"
                 class="input cmsBdr form-control">
