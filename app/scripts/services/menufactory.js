@@ -47,7 +47,7 @@ angular.module('calculatorApp')
             return RAIDArr;
         };
 
-        // Set the default value for combo boxes
+        // Set the default value for the combo boxes
         this.defaultRDays      =
             rDaysArr[ rDaysArr.indexOf(defaultRDaysStr) ];
         this.defaultHdd        =
