@@ -106,16 +106,18 @@ angular.module('calculatorApp')
         };
 
         this.pushPjData = function(index, itemName, data, onNVR) {
-            data = str2Int(data);
+            var targetArr = projects[index].CMS;
+            if ( onNVR ) {
+                data      = str2Int(data);
+                targetArr = projects[index].NVR;
+            }
+
             var item = {
                 name:itemName,
                 data:data
             };
-            if ( onNVR ) {
-                projects[index].NVR.push(item);
-            } else {
-                projects[index].CMS.push(item);
-            }
+
+            targetArr.push(item);
         };
 
         this.store = function() {
