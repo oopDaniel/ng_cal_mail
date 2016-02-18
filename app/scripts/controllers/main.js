@@ -27,33 +27,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         };
 
     /*****************************************
-     *     Local storage
-     */
-        // $scope.save = function() {
-        //     if ($scope.onNVR) {
-        //         $scope.NVRObj.display.storageUnit   = $scope.storageUnit;
-        //         $scope.NVRObj.display.bandwidthUnit = $scope.bandwidthUnit;
-        //         $scope.NVRObj.display.storage       = $scope.getStorage();
-        //         $scope.NVRObj.display.bandwidth     = $scope.getBandwidth();
-        //         localStorageFactory.storeObj('NVR');
-        //     } else {
-        //         $scope.CMSObj.display.storageUnit   = $scope.storageUnit;
-        //         $scope.CMSObj.display.bandwidthUnit = $scope.bandwidthUnit;
-        //         $scope.CMSObj.display.storage       = $scope.getStorage();
-        //         $scope.CMSObj.display.bandwidth     = $scope.getBandwidth();
-        //         localStorageFactory.storeObj('CMS');
-        //     }
-        //     console.log("file saved!");
-        // };
-
-        // $scope.load = function() {
-        //     var x = $scope.onNVR ?
-        //         localStorageFactory.getStoredObj('NVR') :
-        //         localStorageFactory.getStoredObj('CMS') ;
-        //     console.log(x);
-        // };
-
-    /*****************************************
      *     Display the info of bandwidth and storage
      */
         $scope.getBandwidth = function() {
@@ -500,8 +473,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         };
 
         var refreshDisplay = function(obj) {
-            obj.display.storageUnit   = $scope.storageUnit;
-            obj.display.bandwidthUnit = $scope.bandwidthUnit;
             obj.display.storage       = $scope.getStorage();
             obj.display.bandwidth     = $scope.getBandwidth();
             return obj;

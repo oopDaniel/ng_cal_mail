@@ -8,8 +8,8 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-  .controller('ProjectCtrl', ['$scope', 'localStorageFactory',
-    function ($scope, localStorageFactory) {
+  .controller('ProjectCtrl', ['$scope', '$filter', 'localStorageFactory',
+    function ($scope, $filter, localStorageFactory) {
         $scope.filtText = '';
         $scope.projects = localStorageFactory.getPjArr();
 
@@ -31,7 +31,9 @@ angular.module('calculatorApp')
                 storage += parseFloat(pj.CMS[i].data.display.storage);
             }
         */
-            return storage;
+            counter = 0;
+            storage = unitConverter(storage);
+            return $filter("number")(storage, 1) + " " + storageUnitArr[counter];
         };
 
         $scope.totalBandwidth = function (pj) {
@@ -42,7 +44,20 @@ angular.module('calculatorApp')
             for ( var i in pj.CMS ) {
                 bandwidth += parseFloat(pj.CMS[i].data.display.bandwidth);
             }
+            counter = 0;
+            bandwidth = unitConverter(bandwidth);
+            return $filter("number")(bandwidth, 1) + " " + bandwidthUnitArr[counter];
+        };
 
-            return bandwidth;
+        var counter;
+        var storageUnitArr   = ["GB","TB","PB"];
+        var bandwidthUnitArr = ["Mbps","Gbps","Tbps"];
+
+        var unitConverter = function (num) {
+            if ( num > 10240 ) {
+                counter++;
+                return unitConverter( num / 1024 );
+            }
+            return num;
         };
   }]);
