@@ -29,29 +29,29 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
     /*****************************************
      *     Local storage
      */
-        $scope.save = function() {
-            if ($scope.onNVR) {
-                $scope.NVRObj.display.storageUnit   = $scope.storageUnit;
-                $scope.NVRObj.display.bandwidthUnit = $scope.bandwidthUnit;
-                $scope.NVRObj.display.storage       = $scope.getStorage();
-                $scope.NVRObj.display.bandwidth     = $scope.getBandwidth();
-                localStorageFactory.storeObj('NVR');
-            } else {
-                $scope.CMSObj.display.storageUnit   = $scope.storageUnit;
-                $scope.CMSObj.display.bandwidthUnit = $scope.bandwidthUnit;
-                $scope.CMSObj.display.storage       = $scope.getStorage();
-                $scope.CMSObj.display.bandwidth     = $scope.getBandwidth();
-                localStorageFactory.storeObj('CMS');
-            }
-            console.log("file saved!");
-        };
+        // $scope.save = function() {
+        //     if ($scope.onNVR) {
+        //         $scope.NVRObj.display.storageUnit   = $scope.storageUnit;
+        //         $scope.NVRObj.display.bandwidthUnit = $scope.bandwidthUnit;
+        //         $scope.NVRObj.display.storage       = $scope.getStorage();
+        //         $scope.NVRObj.display.bandwidth     = $scope.getBandwidth();
+        //         localStorageFactory.storeObj('NVR');
+        //     } else {
+        //         $scope.CMSObj.display.storageUnit   = $scope.storageUnit;
+        //         $scope.CMSObj.display.bandwidthUnit = $scope.bandwidthUnit;
+        //         $scope.CMSObj.display.storage       = $scope.getStorage();
+        //         $scope.CMSObj.display.bandwidth     = $scope.getBandwidth();
+        //         localStorageFactory.storeObj('CMS');
+        //     }
+        //     console.log("file saved!");
+        // };
 
-        $scope.load = function() {
-            var x = $scope.onNVR ?
-                localStorageFactory.getStoredObj('NVR') :
-                localStorageFactory.getStoredObj('CMS') ;
-            console.log(x);
-        };
+        // $scope.load = function() {
+        //     var x = $scope.onNVR ?
+        //         localStorageFactory.getStoredObj('NVR') :
+        //         localStorageFactory.getStoredObj('CMS') ;
+        //     console.log(x);
+        // };
 
     /*****************************************
      *     Display the info of bandwidth and storage
@@ -423,9 +423,8 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         $scope.pjArr = localStorageFactory.getPjArr();
 
         // Only contain '(Create New Project)'
-        $scope.firstTimeCreate    = $scope.pjArr.length === 1;
-        $scope.newPj              = false;
-        $scope.saveForm           = {};
+        $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;
+        $scope.isAddingNewPj      = false;
 
         $scope.emptyItemName      = true;
         $scope.emptyItemNameClass = false;
@@ -438,7 +437,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         };
 
         // Set default value
-        if ( !$scope.firstTimeCreate ) {
+        if ( !$scope.isFirstTimeCreate ) {
             $scope.pjNameOption = $scope.pjArr[0];
         }
 
@@ -462,26 +461,30 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
 
             $scope.$parent.invalidForm =
                 $scope.emptyItemName ||
-                $scope.emptyPjName && $scope.newPj;
+                $scope.emptyPjName && $scope.isAddingNewPj;
         };
 
     /**
      *  Update the object data in "localStorageFactory"
      */
         $scope.update = function() {
-            $scope.newPj = $scope.pjNameOption.name === localStorageFactory.defaultNewPjStr;
+            if (null !== $scope.pjNameOption) {
+                    $scope.isAddingNewPj =
+                        $scope.pjNameOption.name === localStorageFactory.defaultNewPjStr;
+            }
             $scope.validCheck();
         };
 
 
         $scope.submit = function () {
             // Refresh the result from the combo box
-            if ( !$scope.newPj ) {
+            if ( !$scope.isAddingNewPj && !$scope.isFirstTimeCreate ) {
                 $scope.pj.pjName = $scope.pjNameOption.name;
             }
 
+            // console.log("passed pjName: "+$scope.pj.pjName+typeof($scope.pj.pjName));
             var index = getPjIndex( $scope.pj.pjName );
-            console.log(index);
+            // console.log(index);
 
             if ( $scope.onNVR ) {
                 $scope.NVRObj = refreshDisplay($scope.NVRObj);
@@ -504,16 +507,19 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         };
 
         var getPjIndex = function( pjName ) {
-            console.log(pjName==="123");
-            if ( -1 === localStorageFactory.getPjIndex(pjName) ) {
+            // console.log("pjName: "+pjName+typeof(pjName));
+            // console.log("name == 123 : "+(pjName=="123"));
+            // console.log("index = "+localStorageFactory.getPjIndex(pjName));
+            if ( undefined === localStorageFactory.getPjIndex(pjName) ) {
                 var pj = {
                     name: pjName,
                     NVR:[],
                     CMS:[]
                 };
+                // console.log("This is pj: "+pj);
                 localStorageFactory.pushPj(pj);
             }
-            console.log("!!! "+localStorageFactory.getPjIndex(pjName));
+            // console.log("!!! "+localStorageFactory.getPjIndex(pjName));
             return localStorageFactory.getPjIndex(pjName);
         };
 
@@ -525,6 +531,8 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 size: size,
                 scope: $scope
             });
+
+            localStorageFactory.loadPj();
         };
 
         $scope.closeModal = function () {

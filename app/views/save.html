@@ -42,7 +42,7 @@
               class="col-xs-12 col-sm-5 col-sm-push-1
               input-label sub-label-indent">Project Name</label>
             <div class="col-xs-12 col-sm-5 col-sm-push-1">
-              <div ng-show="!firstTimeCreate">
+              <div ng-show="!isFirstTimeCreate">
                 <select
                   ng-model="pjNameOption"
                   ng-change="update()"
@@ -51,7 +51,7 @@
                 </select>
               </div>
               <div
-                ng-show="firstTimeCreate||newPj"
+                ng-show="isFirstTimeCreate||isAddingNewPj"
                 ng-class="{ 'has-error' : emptyPjNameClass }">
                   <input
                     type="tel"

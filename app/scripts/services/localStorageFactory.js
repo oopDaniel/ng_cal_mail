@@ -4,6 +4,7 @@ angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
         this.defaultNewPjStr = "(Create New Project)";
+        var newPjObj = { name: this.defaultNewPjStr };
 
         var NVRObj={
           itemName:'',
@@ -72,57 +73,44 @@ angular.module('calculatorApp')
             CMSObj = obj;
         };
 
-        this.storeObj = function(key, value) {
-            if ( 'NVR' === key ) {
-                Str2Int('NVR');
-                $window.localStorage[key] = JSON.stringify(NVRObj);
-            } else if ( 'CMS' === key ) {
-                Str2Int('CMS');
-                $window.localStorage[key] = JSON.stringify(CMSObj);
-            } else {
-                $window.localStorage[key] = JSON.stringify(value);
-            }
-        };
 
-        this.getStoredObj = function(key, defaultValue) {
-            if ( 'NVR' === key ) {
-                return $window.localStorage[key] === undefined ?
-                    NVRObj : JSON.parse($window.localStorage[key]);
-            } else if ( 'CMS' === key ) {
-                 return $window.localStorage[key] === undefined ?
-                    CMSObj : JSON.parse($window.localStorage[key]);
-            } else {
-                return JSON.parse($window.localStorage[key] || defaultValue);
-            }
-        };
+//----------------------------------------------------------------------
 
-        var Str2Int = function (obj) {
-            obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
-            obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
-            obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
-            return obj;
-        };
+//----------------------------------------------------------------------
 
-        var projects = [{name:"123",NVR:[],CMS:[]},{name:"456",NVR:[],CMS:[]},{name:this.defaultNewPjStr}];
+
+        var projects = [];
+        var hasData;
+
+        this.loadPj = function() {
+          hasData = undefined !== $window.localStorage["projects"];
+          if ( hasData ) {
+            projects = JSON.parse($window.localStorage["projects"]);
+            // Add the option of "(Create New Project)"
+            projects.push(newPjObj);
+          }
+        };
 
         this.getPjArr = function() {
             return projects;
         };
 
         this.getPjIndex = function(pjName) {
-            return projects.indexOf(pjName);
+            return findByAttr( projects, "name", pjName );
         };
 
         this.pushPj = function(data) {
+            console.log("in pushPJ, data: "+data);
+            console.log(projects);
             projects.unshift(data);
         };
 
         this.pushPjData = function(index, itemName, data, onNVR) {
-            data = Str2Int(data);
+            data = str2Int(data);
             var item = {
                 name:itemName,
                 data:data
-            }
+            };
             if ( onNVR ) {
                 projects[index].NVR.push(item);
             } else {
@@ -131,8 +119,31 @@ angular.module('calculatorApp')
         };
 
         this.store = function() {
+            if ( hasData ) {
+                // Remove the option of "(Create New Project)"
+                projects.pop();
+            }
             $window.localStorage["projects"] = JSON.stringify(projects);
-        }
+        };
+
+
+
+
+        var str2Int = function (obj) {
+            obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
+            obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
+            obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
+            return obj;
+        };
+
+        var findByAttr = function (array, attr, value) {
+            for(var i = 0, l = array.length; i < l; i++) {
+                if(array[i][attr] === value) {
+                    return i;
+                }
+            }
+        };
+
 
 
     }]);
