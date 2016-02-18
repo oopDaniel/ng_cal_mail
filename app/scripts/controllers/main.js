@@ -64,7 +64,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
                 bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
             }
             unitCheck('bandwidth', bandwidthDisplay);
-            return $filter('displayFilter')(bandwidthDisplay);
+            return bandwidthDisplay;
         };
 
         $scope.getStorage = function() {
@@ -72,7 +72,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
               $scope.getBandwidth() * 0.125 * // to MB/s
               60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
             unitCheck('storage', storageDisplay);
-            return $filter('displayFilter')(storageDisplay);
+            return storageDisplay;
         };
 
     /*****************************************
@@ -82,13 +82,13 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         $scope.getMinHDD = function() {
             var minHDD = Math.ceil( $scope.getStorage() / $scope.NVRObj.HDDsize / 1024 );
             switch ( $scope.NVRObj.RAID ) { // RAID Rule
-                case 1:
+                case "1":
                     minHDD *= 2;
                     break;
-                case 5:
+                case "5":
                     minHDD += 1;
                     break;
-                case 10:
+                case "10":
                     minHDD += 2;
                     break;
                 default:
@@ -118,6 +118,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
             $scope.coloringRAID.fill(false);
             $scope.coloringRAID[index] = true;
             $scope.NVRObj.RAID = RAIDtype;
+            console.log($scope.NVRObj.RAID);
         };
 
     /*****************************************
@@ -532,7 +533,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 scope: $scope
             });
 
-            localStorageFactory.loadPj();
+            // localStorageFactory.loadPj();
         };
 
         $scope.closeModal = function () {
