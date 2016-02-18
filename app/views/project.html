@@ -11,11 +11,11 @@
   <div class="project" ng-repeat="pj in projects | orderBy: 'name' | filter: filtText">
     <h4>{{pj.name}}</h4>
     <div class="details">
-      <span ng-show="pj.NVR.data.length">NVR: {{pj.NVR.count}}</span>
-      <span ng-show="pj.NVR.data.length && pj.CMS.data.length">, </span>
-      <span ng-show="pj.CMS.data.length">CMS: {{pj.CMS.count}}</span>
-      <br>Total storage: {{pj.totalStorage}}
-      <br>Total bandwidth: {{pj.totalBandwidth}}
+      <span ng-show="pj.NVR.length">NVR: {{pj.NVR.length}}</span>
+      <span ng-show="pj.NVR.length && pj.CMS.length">, </span>
+      <span ng-show="pj.CMS.length">CMS: {{pj.CMS.length}}</span>
+      <br>Total Storage: {{totalStorage(pj) | number:1}}
+      <br>Total Bandwidth: {{totalBandwidth(pj) | number:1}}
     </div>
   </div>
 </section>

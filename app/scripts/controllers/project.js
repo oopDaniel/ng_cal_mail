@@ -8,28 +8,41 @@
  * Controller of the calculatorApp
  */
 angular.module('calculatorApp')
-  .controller('ProjectCtrl', ['$scope', 'projectFactory',
-    function ($scope, projectFactory) {
+  .controller('ProjectCtrl', ['$scope', 'localStorageFactory',
+    function ($scope, localStorageFactory) {
         $scope.filtText = '';
-        $scope.projects = projectFactory.getProjects();
+        $scope.projects = localStorageFactory.getPjArr();
 
+        // Remove the option of 'create' from pj array
+        if ( $scope.projects[ $scope.projects.length - 1 ].name ===
+            localStorageFactory.defaultNewPjStr ) {
+            $scope.projects.pop();
+        }
 
+        $scope.totalStorage = function (pj) {
+            var storage = 0;
+            for ( var i in pj.NVR ) {
+                storage += parseFloat(pj.NVR[i].data.display.storage);
+            }
 
+            // Not available for CMS
 
+        /*  for ( var i in pj.CMS ) {
+                storage += parseFloat(pj.CMS[i].data.display.storage);
+            }
+        */
+            return storage;
+        };
 
+        $scope.totalBandwidth = function (pj) {
+            var bandwidth = 0;
+            for ( var i in pj.NVR ) {
+                bandwidth += parseFloat(pj.NVR[i].data.display.bandwidth);
+            }
+            for ( var i in pj.CMS ) {
+                bandwidth += parseFloat(pj.CMS[i].data.display.bandwidth);
+            }
 
-
-
-
-
-
-
-
-
-
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+            return bandwidth;
+        };
   }]);

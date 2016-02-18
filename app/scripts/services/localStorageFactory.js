@@ -82,7 +82,7 @@ angular.module('calculatorApp')
         var projects = [];
         var hasData;
 
-        this.loadPj = function() {
+        var loadPj = function() {
           hasData = undefined !== $window.localStorage["projects"];
           if ( hasData ) {
             projects = JSON.parse($window.localStorage["projects"]);
@@ -92,6 +92,7 @@ angular.module('calculatorApp')
         };
 
         this.getPjArr = function() {
+            loadPj();
             return projects;
         };
 
