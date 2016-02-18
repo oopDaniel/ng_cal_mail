@@ -14,9 +14,6 @@ angular.module('calculatorApp')
                       name:'project X',
                       totalStorage:789,
                       totalBandwidth:500,
-                      user:'andy',
-                      createTime:1450221938631,
-                      lastUpdate:1452221938631,
                       NVR:{
                           count:2,
                           data:[
@@ -107,9 +104,6 @@ angular.module('calculatorApp')
                       name:'Plan B',
                       totalStorage:9527,
                       totalBandwidth:1234,
-                      user:'john123',
-                      createTime:1454221938631,
-                      lastUpdate:1454221940631,
                       NVR:{
                           count:1,
                           data:[
@@ -168,9 +162,6 @@ angular.module('calculatorApp')
                       name:'Seeing is believing',
                       totalStorage:5566,
                       totalBandwidth:678,
-                      user:'bob',
-                      createTime:1412221938631,
-                      lastUpdate:1416221940631,
                       NVR:{
                           count:0,
                           data:[]

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name calculatorApp.menuFactory
+ * @name calculatorApp.formOptionsFactory
  * @description
- * # menuFactory
+ * # formOptionsFactory
  * Service in the calculatorApp.
  */
 angular.module('calculatorApp')
-    .service('menuFactory', function () {
+    .service('formOptionsFactory', function () {
 
         var defaultRDaysStr = '30 days (1 month)';
         var defaultHddStr   = '3TB';
@@ -47,7 +47,7 @@ angular.module('calculatorApp')
             return RAIDArr;
         };
 
-        // Set the default value for combo boxes
+        // Set the default value for the combo boxes
         this.defaultRDays      =
             rDaysArr[ rDaysArr.indexOf(defaultRDaysStr) ];
         this.defaultHdd        =
