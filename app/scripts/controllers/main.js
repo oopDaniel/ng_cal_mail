@@ -10,42 +10,65 @@
 angular.module('calculatorApp')
     .controller('MainCtrl', [ '$scope', 'menuFactory', 'localStorageFactory',
         function ($scope, menuFactory, localStorageFactory) {
-        $scope.onNVR = true;  // else on CMS
-        $scope.storageDisplay = 0;
-        $scope.bandwidthDisplay = 0;
-        $scope.storageUnit = 'GB';
-        $scope.bandwidthUnit = 'Mbps';
+        $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
-        $scope.NVRObj = localStorageFactory.getNVRObj();
-        $scope.CMSObj = localStorageFactory.getCMSObj();
+        $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
+        $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
+        $scope.storageUnit    = $scope.NVRObj.storageUnit;
+        $scope.bandwidthUnit  = $scope.NVRObj.bandwidthUnit;
 
     /*****************************************
-     *     track the current tab
+     *     Track the current tab
      */
         $scope.whereami = function(onNVR) {
             $scope.onNVR = onNVR;
         };
 
+    /*****************************************
+     *     Local storage
+     */
+        $scope.save = function(){
+            if ($scope.onNVR) {
+                $scope.NVRObj.storageUnit   = $scope.storageUnit;
+                $scope.NVRObj.bandwidthUnit = $scope.bandwidthUnit;
+                $scope.NVRObj.storage       = $scope.getStorage();
+                $scope.NVRObj.bandwidth     = $scope.getBandwidth();
+            } else {
+                $scope.CMSObj.storageUnit   = $scope.storageUnit;
+                $scope.CMSObj.bandwidthUnit = $scope.bandwidthUnit;
+                $scope.CMSObj.storage       = $scope.getStorage();
+                $scope.CMSObj.bandwidth     = $scope.getBandwidth();
+            }
+            localStorageFactory.storeObj('NVR');
+            console.log(localStorageFactory.storeObj('NVR'));
+        };
+
+        $scope.load = function(){
+            localStorageFactory.getStoredObj('NVR');
+            console.log(localStorageFactory.getStoredObj('NVR'));
+            console.log(3213213);
+        };
 
     /*****************************************
      *     Display the info of bandwidth and storage
      */
         $scope.getBandwidth = function() {
+            var bandwidthDisplay;
             if ( $scope.onNVR ) {
-                $scope.bandwidthDisplay = $scope.NVRObj.cameras * $scope.getBitRate();
+                bandwidthDisplay = $scope.NVRObj.cameras * $scope.getBitRate();
             } else {
-                $scope.bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
+                bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
             }
-            unitCheck('bandwidthUnit');
-            return $scope.bandwidthDisplay;
+            unitCheck('bandwidth', bandwidthDisplay);
+            return bandwidthDisplay;
         };
 
         $scope.getStorage = function() {
-            $scope.storageDisplay = $scope.onNVR ?
-              $scope.bandwidthDisplay * 0.125 * // to MB/s
+            var storageDisplay = $scope.onNVR ?
+              $scope.getBandwidth() * 0.125 * // to MB/s
               60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
-            unitCheck('storageUnit');
-            return $scope.storageDisplay;
+            unitCheck('storage', storageDisplay);
+            return storageDisplay;
         };
 
     /*****************************************
@@ -53,7 +76,7 @@ angular.module('calculatorApp')
      *     count the HDDs needed
      */
         $scope.getMinHDD = function() {
-            var minHDD = Math.ceil( $scope.storageDisplay / $scope.NVRObj.HDDsize / 1024 );
+            var minHDD = Math.ceil( $scope.getStorage() / $scope.NVRObj.HDDsize / 1024 );
             switch ( $scope.NVRObj.RAID ) { // RAID Rule
                 case 1:
                     minHDD *= 2;
@@ -96,13 +119,13 @@ angular.module('calculatorApp')
     /*****************************************
      *      Convert the units displayed
      */
-        var unitCheck = function(index) {
-            if ( 'storageUnit' === index )
+        var unitCheck = function(index, capacity) {
+            if ( 'storage' === index )
                 $scope.storageUnit =
-                    unitConverter($scope.storageDisplay, true) + 'B';
-            if ( 'bandwidthUnit' === index )
+                    unitConverter(capacity, true) + 'B';
+            if ( 'bandwidth' === index )
                 $scope.bandwidthUnit =
-                    unitConverter($scope.bandwidthDisplay, false) + 'bps';
+                    unitConverter(capacity, false) + 'bps';
         };
 
         var unitConverter = function( num, onStorage ) {
@@ -222,9 +245,9 @@ angular.module('calculatorApp')
          */
             $scope.update = function() {
                 if ( $scope.$parent.onNVR )
-                    localStorageFactory.setNVRObj($scope.NVRObj);
+                    localStorageFactory.setDefaultNVRObj($scope.NVRObj);
                 else
-                    localStorageFactory.setCMSObj($scope.CMSObj);
+                    localStorageFactory.setDefaultCMSObj($scope.CMSObj);
             };
 
         /**
@@ -341,7 +364,7 @@ angular.module('calculatorApp')
                 // for storage
                 $scope.NVRObj.rDays = tmp;
             }
-            localStorageFactory.setNVRObj($scope.NVRObj);
+            localStorageFactory.setDefaultNVRObj($scope.NVRObj);
         };
 
         $scope.getEstDays = function() {
