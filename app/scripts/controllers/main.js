@@ -18,14 +18,11 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
         $scope.storageUnit    = $scope.NVRObj.display.storageUnit;
         $scope.bandwidthUnit  = $scope.NVRObj.display.bandwidthUnit;
-        console.log("switch tab");
-        console.log("On NVR?  "+$scope.onNVR);
     /*****************************************
      *     Track the current tab
      */
         $scope.whereami = function(onNVR) {
             $scope.onNVR = onNVR;
-            console.log("(in whereami) On NVR?  "+onNVR);
         };
 
     /*****************************************
@@ -49,7 +46,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         };
 
         $scope.load = function() {
-            console.log($scope.onNVR);
             var x = $scope.onNVR ?
                 localStorageFactory.getStoredObj('NVR') :
                 localStorageFactory.getStoredObj('CMS') ;

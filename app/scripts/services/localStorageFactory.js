@@ -39,7 +39,7 @@ angular.module('calculatorApp')
             bandwidth:64,
             bandwidthUnit:'Mbps',
           },
-          cameras:169,
+          cameras:16,
           bitRate: {
             data:4,
             params:{
@@ -95,14 +95,14 @@ angular.module('calculatorApp')
 
         var Str2Int = function (key) {
             if ( 'NVR' === key ) {
-                NVRObj.cameras = parseInt(NVRObj.cameras);
-                NVRObj.motion  = parseInt(NVRObj.motion);
-                NVRObj.rHours  = parseInt(NVRObj.rHours);
+                NVRObj.estDays.params.cameras = parseInt(NVRObj.estDays.params.cameras);
+                NVRObj.estDays.params.motion  = parseInt(NVRObj.estDays.params.motion);
+                NVRObj.estDays.params.rHours  = parseInt(NVRObj.estDays.params.rHours);
             }
             if ( 'CMS' === key ) {
-                CMSObj.cameras = parseInt(CMSObj.cameras);
-                CMSObj.motion  = parseInt(CMSObj.motion);
-                CMSObj.rHours  = parseInt(CMSObj.rHours);
+                CMSObj.estDays.params.cameras = parseInt(CMSObj.estDays.params.cameras);
+                CMSObj.estDays.params.motion  = parseInt(CMSObj.estDays.params.motion);
+                CMSObj.estDays.params.rHours  = parseInt(CMSObj.estDays.params.rHours);
             }
         };
 
