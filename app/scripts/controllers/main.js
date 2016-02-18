@@ -7,8 +7,10 @@
  * # MainCtrl
  * Controller of the calculatorApp
  */
-angular.module('calculatorApp')
-    .controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'localStorageFactory',
+
+var myApp = angular.module('calculatorApp');
+
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'localStorageFactory',
         function ($scope, $filter, formOptionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
@@ -23,7 +25,7 @@ angular.module('calculatorApp')
      */
         $scope.whereami = function(onNVR) {
             $scope.onNVR = onNVR;
-            // console.log("On NVR?  "+onNVR);
+            console.log("(in whereami) On NVR?  "+onNVR);
         };
 
     /*****************************************
@@ -232,8 +234,7 @@ angular.module('calculatorApp')
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-    angular.module('calculatorApp')
-        .controller('bRateModalCtrl', ['$scope', '$uibModal',
+myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
             'bitrateFactory', 'localStorageFactory', function($scope, $uibModal,
             bitrateFactory, localStorageFactory) {
 
@@ -319,8 +320,7 @@ angular.module('calculatorApp')
 
 
 
-angular.module('calculatorApp')
-    .controller('estDayModalCtrl', ['$scope', '$uibModal',
+myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
         'formOptionsFactory', 'localStorageFactory', function($scope, $uibModal,
         formOptionsFactory, localStorageFactory) {
 
