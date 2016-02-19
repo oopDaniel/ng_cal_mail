@@ -22,7 +22,9 @@
             <br>Total Storage: {{totalStorage(pj)}}
             <br>Total Bandwidth: {{totalBandwidth(pj)}}
           </div>
-          <div class="col-xs-2">EDIT</div>
+          <div class="col-xs-2">
+             <a ui-sref="app.projectdetails({id: $index})">EDIT</a>
+           </div>
           <div class="col-xs-2">DELETE</div>
       </div>
     </div>

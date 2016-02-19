@@ -112,6 +112,26 @@ myApp.controller('renameCtrl', ['$scope', '$uibModal','localStorageFactory',
             $scope.closeModal();
         };
 
+}]);
 
+
+
+
+myApp.controller('projectDetailCtrl', ['$scope', '$uibModal','localStorageFactory',
+    function ($scope, $uibModal, localStorageFactory) {
+        // $scope.emptyPjName = false;
+        // $scope.validCheck = function () {
+        //     if ( $scope.renameForm.$error.required ) {
+        //         $scope.emptyPjName = true;
+        //     } else {
+        //         $scope.emptyPjName = false;
+        //     }
+        // };
+
+        // $scope.renameSubmit = function () {
+        //     localStorageFactory.renamePj($scope.pjOldName, $scope.pjRename);
+        //     $scope.$emit('refreshArr');
+        //     $scope.closeModal();
+        // };
 
 }]);
