@@ -13,7 +13,7 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorage
     function ($scope, $filter, $uibModal, localStorageFactory) {
         $scope.filtText  = '';
 
-        $scope.arrayProcess = function () {
+        $scope.arrayInit = function () {
             $scope.projects  = localStorageFactory.getPjArr();
             $scope.nodata    = false;
             $scope.pjRename  = '';
@@ -28,7 +28,7 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorage
                 $scope.projects.pop();
             }
         };
-        $scope.arrayProcess();
+        $scope.arrayInit();
 
         var counter;
         var storageUnitArr   = ["GB","TB","PB"];
@@ -86,11 +86,10 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorage
 
         $scope.closeModal = function () {
             $scope.modalInstance.close();
-            // $scope.$apply($scope.arrayProcess());
         };
 
         $scope.$on('refreshArr', function() {
-            $scope.arrayProcess();
+            $scope.arrayInit();
         });
 
 }]);
