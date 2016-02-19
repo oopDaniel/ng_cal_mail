@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <div class="modal-body">
+    <form name="renameForm" ng-submit="renameSubmit()" novalidate="">
+            <div
+            ng-class="{ 'has-error' : emptyPjName }">
+              <input
+                type="text"
+                class="form-control input"
+                name="pjName"
+                placeholder="Enter your project name"
+                maxlength="20"
+                required
+                ng-model="pjRename"
+                ng-change="validCheck()"/>
+              <span
+                ng-show="emptyPjName"
+                class="help-block">
+                Project Name is required.
+              </span>
+            </div>
+
+            <div class="hidden-input">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                ng-disabled="emptyPjName">
+                Confirm
+              </button>
+              <button
+                class="btn btn-warning"
+                ng-click="closeModal()">
+                Cancel
+              </button>
+            </div>
+    </form>
+  </div>  <!-- end modal-body -->
+</div>  <!-- end modal-header -->

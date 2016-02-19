@@ -456,9 +456,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.pj.pjName = $scope.pjNameOption.name;
             }
 
-            // console.log("passed pjName: "+$scope.pj.pjName+typeof($scope.pj.pjName));
             var index = getPjIndex( $scope.pj.pjName );
-            // console.log(index);
 
             if ( $scope.onNVR ) {
                 $scope.NVRObj = refreshDisplay($scope.NVRObj);
@@ -479,19 +477,14 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         };
 
         var getPjIndex = function( pjName ) {
-            // console.log("pjName: "+pjName+typeof(pjName));
-            // console.log("name == 123 : "+(pjName=="123"));
-            // console.log("index = "+localStorageFactory.getPjIndex(pjName));
             if ( undefined === localStorageFactory.getPjIndex(pjName) ) {
                 var pj = {
                     name: pjName,
                     NVR:[],
                     CMS:[]
                 };
-                // console.log("This is pj: "+pj);
                 localStorageFactory.pushPj(pj);
             }
-            // console.log("!!! "+localStorageFactory.getPjIndex(pjName));
             return localStorageFactory.getPjIndex(pjName);
         };
 
@@ -503,8 +496,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 size: size,
                 scope: $scope
             });
-
-            // localStorageFactory.loadPj();
         };
 
         $scope.closeModal = function () {

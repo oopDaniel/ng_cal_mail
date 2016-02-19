@@ -3,8 +3,9 @@
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
-        this.defaultNewPjStr = "(Create New Project)";
-        var newPjObj = { name: this.defaultNewPjStr };
+        var self = this;
+        self.defaultNewPjStr = "(Create New Project)";
+        var newPjObj = { name: self.defaultNewPjStr };
 
         var NVRObj={
           itemName:'',
@@ -82,6 +83,7 @@ angular.module('calculatorApp')
         var projects = [];
         var hasData;
 
+        // Load projects from local storage
         var loadPj = function() {
           hasData = undefined !== $window.localStorage["projects"];
           if ( hasData ) {
@@ -100,24 +102,33 @@ angular.module('calculatorApp')
             return findByAttr( projects, "name", pjName );
         };
 
+        this.renamePj = function(oldName, newName) {
+            var index = self.getPjIndex(oldName);
+            console.log("old: "+oldName+" new: "+newName);
+            console.log(index);
+            loadPj();
+            console.log(projects[index]);
+
+            projects[index].name = newName;
+            self.store();
+        };
+
+        // Used when creating new project
         this.pushPj = function(data) {
-            console.log("in pushPJ, data: "+data);
-            console.log(projects);
             projects.unshift(data);
         };
 
+        // Used to store data in the local storage
         this.pushPjData = function(index, itemName, data, onNVR) {
             var targetArr = projects[index].CMS;
             if ( onNVR ) {
                 data      = str2Int(data);
                 targetArr = projects[index].NVR;
             }
-
             var item = {
                 name:itemName,
                 data:data
             };
-
             targetArr.push(item);
         };
 
@@ -128,8 +139,6 @@ angular.module('calculatorApp')
             }
             $window.localStorage["projects"] = JSON.stringify(projects);
         };
-
-
 
 
         var str2Int = function (obj) {
@@ -146,7 +155,6 @@ angular.module('calculatorApp')
                 }
             }
         };
-
 
 
     }]);
