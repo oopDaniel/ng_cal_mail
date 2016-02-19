@@ -11,28 +11,18 @@ var myApp = angular.module('calculatorApp');
 
 myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorageFactory',
     function ($scope, $filter, $uibModal, localStorageFactory) {
-        $scope.pj        = localStorageFactory.getPj();
-        $scope.projects  = $scope.pj.projects;
-        console.log($scope.pj.hasData);
-        $scope.nodata    = !$scope.pj.hasData;
+        // $scope.pj        = localStorageFactory.getPj();
+        $scope.pjArr = localStorageFactory.pj.projects;
+        $scope.nodata    = !localStorageFactory.pj.hasData;
         $scope.filtText  = '';
 
         $scope.arrayInit = function () {
-
             $scope.pjRename  = '';
             $scope.pjOldName = '';
-            var length = $scope.pj.projects.length;
             // if ( 0 === length ) {
             //     $scope.nodata = true;
             // }
             // Remove the option of 'create' from pj array
-            console.log($scope.pj.projects);
-            if ( $scope.pj.hasData ) {
-                if ( $scope.pj.projects[ length - 1 ].name ===
-                    localStorageFactory.defaultNewPjStr ) {
-                    $scope.pj.projects.pop();
-                }
-            }
         };
         $scope.arrayInit();
 
@@ -92,8 +82,8 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorage
         };
 
         $scope.$on('fireRename', function(e, newName) {
-            $scope.pj.renamePj($scope.pjOldName, newName);
-            localStorageFactory.setPj( $scope.pj );
+            localStorageFactory.pj.renamePj($scope.pjOldName, newName);
+            // localStorageFactory.setPj( $scope.pj );
             $scope.arrayInit();
         });
 

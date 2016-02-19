@@ -3,12 +3,10 @@
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
-        var self = this;
-        this.defaultNewPjStr = "(Create New Project)";
-
+        var self   = this;
         var nvrObj = new NVRObj();
         var cmsObj = new CMSObj();
-        var pj = new Projects();
+        this.pj    = new Projects();
 
         this.getDefaultNVRObj = function() {
             return nvrObj;
@@ -39,100 +37,18 @@ angular.module('calculatorApp')
 //----------------------------------------------------------------------
 
 
-
-        // var projects = [];
-        // var hasData;
-
-        // this.getPjArr = function() {
-        //     loadPj();
-        //     return projects;
-        // };
-
-        // this.renamePj = function(oldName, newName) {
-        //     var index = getPjIndex(oldName);
-        //     loadPj();
-        //     projects[index].name = newName;
-        //     storePj();
-        // };
-
-        // // Used to store data in the local storage
-        // this.pushPjData = function(itemName, pjName, data, onNVR) {
-
-        //     var index = getPjIndex(pjName);
-
-        //     var targetArr = projects[index].CMS;
-        //     if ( onNVR ) {
-        //         data      = str2Int(data);
-        //         targetArr = projects[index].NVR;
-        //     }
-        //     var item = {
-        //         name:itemName,
-        //         data:data
-        //     };
-        //     targetArr.push(item);
-        //     storePj();
-        // };
-
-
-
-        // // Load projects from local storage
-        // var loadPj = function() {
-        //   hasData = undefined !== $window.localStorage["projects"];
-        //   if ( hasData ) {
-        //     projects = JSON.parse($window.localStorage["projects"]);
-        //     // Add the option of "(Create New Project)"
-        //     projects.push(createPjStr);
-        //   }
-        // };
-
-        // var storePj = function() {
-        //     if ( hasData ) {
-        //         // Remove the option of "(Create New Project)"
-        //         projects.pop();
-        //     }
-        //     $window.localStorage["projects"] = JSON.stringify(projects);
-        // };
-
-        // var getPjIndex = function(pjName) {
-        //     var index = findByAttr( projects, "name", pjName );
-        //     if ( undefined === index ) {
-        //         var pj = new NewPJ(pjName);
-        //         projects.unshift(pj);
-        //         return 0;
-        //     }
-        //     return index;
-        // };
-
-        // var str2Int = function (obj) {
-        //     obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
-        //     obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
-        //     obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
-        //     return obj;
-        // };
-
-        // var findByAttr = function (array, attr, value) {
-        //     for(var i = 0, l = array.length; i < l; i++) {
-        //         if(array[i][attr] === value) {
-        //             return i;
-        //         }
-        //     }
-        // };
-
-
-
         function Projects() {
-            var me          = this;
             this.projects   = loadData();
-
-            var createPjStr = { name: self.defaultNewPjStr };
+            this.length     = this.projects.length;
+            var me          = this;
 
             this.updateStatus = function () {
-                this.hasData = ( this.projects.length > 0 );
-                if ( this.hasData ) {
-                    this.projects.push(createPjStr);
-                }
+                this.length = this.projects.length;
+                this.hasData = ( this.length > 0 );
             };
+
             this.updateStatus();
+            console.log("this.hasData: "+this.hasData);
 
             this.renamePj = function (oldName, newName) {
                 var index = getPjIndex(oldName);
@@ -196,15 +112,12 @@ angular.module('calculatorApp')
             };
 
             function storeData () {
-                if ( me.hasData ) {
-                    // Remove the option of "(Create New Project)"
-                    me.projects.pop();
-                }
                 try {
                     $window.localStorage["projects"] = JSON.stringify(me.projects);
                 } catch(e) {
                     console.log("exception: " + e);
                 }
+                me.updateStatus();
           };
 
         }

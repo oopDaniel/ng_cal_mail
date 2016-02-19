@@ -8,16 +8,16 @@
 </section>
 <hr class="hr">
 <section>
-  <div ng-if="!pj.hasData" class="nodata">
+  <div ng-if="nodata" class="nodata">
     <h4>There is no available data now!</h4>
   </div>
-  <div class="project" ng-repeat="item in pj.projects | orderBy: 'name' | filter: filtText">
+  <div class="project" ng-repeat="item in pjArr | orderBy: 'name' | filter: filtText">
     <span ng-click="clickRename(item)"><h4>{{item.name}}</h4></span>
       <div class="details">
         <div class="row">
           <div class="col-xs-8">
-            <span ng-show="item.NVR.length">NVR: {{project.NVR.length}}</span>
-            <span ng-show="project.NVR.length && project.CMS.length">, </span>
+            <span ng-show="item.NVR.length">NVR: {{item.NVR.length}}</span>
+            <span ng-show="item.NVR.length && item.CMS.length">, </span>
             <span ng-show="item.CMS.length">CMS: {{item.CMS.length}}</span>
             <br>Total Storage: {{totalStorage(item)}}
             <br>Total Bandwidth: {{totalBandwidth(item)}}

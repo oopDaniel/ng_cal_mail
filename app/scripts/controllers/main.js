@@ -393,20 +393,18 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
 myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
     function($scope, $uibModal, localStorageFactory) {
 
-        var pj       = localStorageFactory.getPj();
-        $scope.pjArr = pj.projects;
+        $scope.pjArr = localStorageFactory.pj.projects;
+        console.log($scope.pjArr);
 
         // Only contain '(Create New Project)'
         // $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;
-        console.log(pj.hasData)
-        $scope.isFirstTimeCreate  = !pj.hasData;
+        $scope.isFirstTimeCreate  = !localStorageFactory.pj.hasData;
         $scope.isAddingNewPj      = false;
 
         $scope.emptyItemName      = true;
         $scope.emptyItemNameClass = false;
         $scope.emptyPjName        = true;
         $scope.emptyPjNameClass   = false;
-
 
         $scope.pj4form = {
             pjName:"",
@@ -416,9 +414,8 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
 
         // Set default value
         if ( !$scope.isFirstTimeCreate ) {
-            $scope.pjNameOption = pj.projects[0];
+            $scope.pjNameOption = $scope.pjArr[0];
         }
-
 
 
     /**
@@ -446,10 +443,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
      *  Update the object data in "localStorageFactory"
      */
         $scope.update = function() {
-            if (null !== $scope.pjNameOption) {
-                $scope.isAddingNewPj =
-                    $scope.pjNameOption.name === localStorageFactory.defaultNewPjStr;
-            }
+            $scope.isAddingNewPj = $scope.pjNameOption === null;
             $scope.validCheck();
         };
 
@@ -462,16 +456,13 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
 
             if ( $scope.onNVR ) {
                 $scope.NVRObj = refreshDisplay($scope.NVRObj);
-                pj.pushPjData( $scope.pj4form.itemName, $scope.pj4form.pjName,
-                                $scope.NVRObj, true );
-                localStorageFactory.setPj(pj);
+                localStorageFactory.pj.pushPjData( $scope.pj4form.itemName,
+                            $scope.pj4form.pjName, $scope.NVRObj, true );
             } else {
                 $scope.NVRObj = refreshDisplay($scope.CMSObj);
-                pj.pushPjData( $scope.pj4form.itemName, $scope.pj4form.pjName,
-                                $scope.CMSObj, false );
-                localStorageFactory.setPj(pj);
+                localStorageFactory.pj.pushPjData( $scope.pj4form.itemName,
+                            $scope.pj4form.pjName, $scope.CMSObj, false );
             }
-
             $scope.closeModal();
         };
 
@@ -480,19 +471,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
             obj.display.bandwidth     = $scope.getBandwidth();
             return obj;
         };
-
-        // var getPjIndex = function( pjName ) {
-        //     if ( undefined === localStorageFactory.getPjIndex(pjName) ) {
-        //         var pj = {
-        //             name: pjName,
-        //             NVR:[],
-        //             CMS:[]
-        //         };
-        //         localStorageFactory.pushPj(pj);
-        //     }
-        //     return localStorageFactory.getPjIndex(pjName);
-        // };
-
 
         $scope.openModal = function (size) {
 
