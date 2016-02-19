@@ -465,8 +465,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.NVRObj = refreshDisplay($scope.CMSObj);
                 localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.CMSObj, false );
             }
-
-            localStorageFactory.store();
             $scope.closeModal();
         };
 

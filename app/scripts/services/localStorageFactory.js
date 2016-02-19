@@ -104,13 +104,9 @@ angular.module('calculatorApp')
 
         this.renamePj = function(oldName, newName) {
             var index = self.getPjIndex(oldName);
-            console.log("old: "+oldName+" new: "+newName);
-            console.log(index);
             loadPj();
-            console.log(projects[index]);
-
             projects[index].name = newName;
-            self.store();
+            storePj();
         };
 
         // Used when creating new project
@@ -130,9 +126,10 @@ angular.module('calculatorApp')
                 data:data
             };
             targetArr.push(item);
+            storePj();
         };
 
-        this.store = function() {
+        var storePj = function() {
             if ( hasData ) {
                 // Remove the option of "(Create New Project)"
                 projects.pop();
