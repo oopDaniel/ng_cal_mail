@@ -394,7 +394,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
     function($scope, $uibModal, localStorageFactory) {
 
         $scope.pjArr = localStorageFactory.pj.projects;
-        console.log($scope.pjArr);
 
         // Only contain '(Create New Project)'
         // $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;

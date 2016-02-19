@@ -48,13 +48,10 @@ angular.module('calculatorApp')
             };
 
             this.updateStatus();
-            console.log("this.hasData: "+this.hasData);
 
             this.renamePj = function (oldName, newName) {
                 var index = getPjIndex(oldName);
                 this.projects[index].name = newName;
-                console.log(newName);
-                console.log(this.projects[index].name);
                 storeData();
             };
 
