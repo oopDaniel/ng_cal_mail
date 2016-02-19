@@ -91,7 +91,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
             $scope.coloringRAID.fill(false);
             $scope.coloringRAID[index] = true;
             $scope.NVRObj.RAID = RAIDtype;
-            console.log($scope.NVRObj.RAID);
         };
 
     /*****************************************
@@ -394,17 +393,19 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
 myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
     function($scope, $uibModal, localStorageFactory) {
 
-        $scope.pjArr = localStorageFactory.getPjArr();
+        $scope.pjArr = localStorageFactory.pj.projects;
 
         // Only contain '(Create New Project)'
-        $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;
+        // $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;
+        $scope.isFirstTimeCreate  = !localStorageFactory.pj.hasData;
         $scope.isAddingNewPj      = false;
 
         $scope.emptyItemName      = true;
         $scope.emptyItemNameClass = false;
         $scope.emptyPjName        = true;
         $scope.emptyPjNameClass   = false;
-        $scope.pj = {
+
+        $scope.pj4form = {
             pjName:"",
             itemName:"",
             data:[]
@@ -414,7 +415,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         if ( !$scope.isFirstTimeCreate ) {
             $scope.pjNameOption = $scope.pjArr[0];
         }
-
 
 
     /**
@@ -428,7 +428,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.emptyItemName;
 
             $scope.emptyPjName =
-                "" === $scope.pj.pjName;
+                "" === $scope.pj4form.pjName;
             $scope.emptyPjNameClass =
                 $scope.saveForm.pjName.$dirty &&
                 $scope.emptyPjName;
@@ -442,10 +442,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
      *  Update the object data in "localStorageFactory"
      */
         $scope.update = function() {
-            if (null !== $scope.pjNameOption) {
-                    $scope.isAddingNewPj =
-                        $scope.pjNameOption.name === localStorageFactory.defaultNewPjStr;
-            }
+            $scope.isAddingNewPj = $scope.pjNameOption === null;
             $scope.validCheck();
         };
 
@@ -453,20 +450,18 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         $scope.submit = function () {
             // Refresh the result from the combo box
             if ( !$scope.isAddingNewPj && !$scope.isFirstTimeCreate ) {
-                $scope.pj.pjName = $scope.pjNameOption.name;
+                $scope.pj4form.pjName = $scope.pjNameOption.name;
             }
-
-            var index = getPjIndex( $scope.pj.pjName );
 
             if ( $scope.onNVR ) {
                 $scope.NVRObj = refreshDisplay($scope.NVRObj);
-                localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.NVRObj, true );
+                localStorageFactory.pj.pushPjData( $scope.pj4form.itemName,
+                            $scope.pj4form.pjName, $scope.NVRObj, true );
             } else {
                 $scope.NVRObj = refreshDisplay($scope.CMSObj);
-                localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.CMSObj, false );
+                localStorageFactory.pj.pushPjData( $scope.pj4form.itemName,
+                            $scope.pj4form.pjName, $scope.CMSObj, false );
             }
-
-            localStorageFactory.store();
             $scope.closeModal();
         };
 
@@ -475,19 +470,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
             obj.display.bandwidth     = $scope.getBandwidth();
             return obj;
         };
-
-        var getPjIndex = function( pjName ) {
-            if ( undefined === localStorageFactory.getPjIndex(pjName) ) {
-                var pj = {
-                    name: pjName,
-                    NVR:[],
-                    CMS:[]
-                };
-                localStorageFactory.pushPj(pj);
-            }
-            return localStorageFactory.getPjIndex(pjName);
-        };
-
 
         $scope.openModal = function (size) {
 
