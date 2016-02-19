@@ -13,12 +13,18 @@
   </div>
   <div class="project" ng-repeat="pj in projects | orderBy: 'name' | filter: filtText">
     <span ng-click="rename(pj)"><h4>{{pj.name}}</h4></span>
-    <div class="details">
-      <span ng-show="pj.NVR.length">NVR: {{pj.NVR.length}}</span>
-      <span ng-show="pj.NVR.length && pj.CMS.length">, </span>
-      <span ng-show="pj.CMS.length">CMS: {{pj.CMS.length}}</span>
-      <br>Total Storage: {{totalStorage(pj)}}
-      <br>Total Bandwidth: {{totalBandwidth(pj)}}
+      <div class="details">
+        <div class="row">
+          <div class="col-xs-8">
+            <span ng-show="pj.NVR.length">NVR: {{pj.NVR.length}}</span>
+            <span ng-show="pj.NVR.length && pj.CMS.length">, </span>
+            <span ng-show="pj.CMS.length">CMS: {{pj.CMS.length}}</span>
+            <br>Total Storage: {{totalStorage(pj)}}
+            <br>Total Bandwidth: {{totalBandwidth(pj)}}
+          </div>
+          <div class="col-xs-2">EDIT</div>
+          <div class="col-xs-2">DELETE</div>
+      </div>
     </div>
   </div>
 </section>
