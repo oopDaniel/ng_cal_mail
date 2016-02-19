@@ -37,7 +37,7 @@ angular
         url:'project',
         views: {
           'content@': {
-            templateUrl: 'views/project.html',
+            templateUrl: 'views/projectList.html',
             controller: 'ProjectCtrl'
           }
         }
