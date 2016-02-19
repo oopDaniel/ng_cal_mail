@@ -8,6 +8,9 @@
 </section>
 <hr class="hr">
 <section>
+  <div ng-if="nodata" class="nodata">
+    <h4>There is no available data now!</h4>
+  </div>
   <div class="project" ng-repeat="pj in projects | orderBy: 'name' | filter: filtText">
     <h4>{{pj.name}}</h4>
     <div class="details">

@@ -366,7 +366,10 @@ $font_detail_color: lighten(grey, 10%);
 
 
 
-
+.nodata {
+  padding: 2em 0 4em;
+  color: grey;
+}
 
 
 // --------- for Range bar ------------------

@@ -12,9 +12,16 @@ angular.module('calculatorApp')
     function ($scope, $filter, localStorageFactory) {
         $scope.filtText = '';
         $scope.projects = localStorageFactory.getPjArr();
+        $scope.nodata   = false;
+        var length = $scope.projects.length;
+        console.log(length);
+
+        if ( 0 === length ) {
+            $scope.nodata = true;
+        }
 
         // Remove the option of 'create' from pj array
-        if ( $scope.projects[ $scope.projects.length - 1 ].name ===
+        else if ( $scope.projects[ length - 1 ].name ===
             localStorageFactory.defaultNewPjStr ) {
             $scope.projects.pop();
         }
