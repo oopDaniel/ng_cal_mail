@@ -3,33 +3,45 @@
 angular.module('calculatorApp')
     .service('unitConvertFactory', ['$filter', function($filter) {
 
+
+    var storageUnitArr   = ["GB","TB","PB"];
+    var bandwidthUnitArr = ["Mbps","Gbps","Tbps"];
+
     this.setData = function (obj) {
         display.setup(obj);
     };
 
     this.getTotalStorage = function () {
-        return display.countTotalStorage();
+        var result = display.countTotalStorage();
+        var unit   = storageUnitArr[ result[1] ];
+        return [ result[0], unit ];
     };
 
     this.getTotalBandwidth = function () {
-        return display.countTotalBandwidth();
+        var result = display.countTotalBandwidth();
+        var unit   = bandwidthUnitArr[ result[1] ];
+        return [ result[0], unit ];
     };
 
     this.getStorage = function (num) {
-        return display.countStorage(num);
+        var result = display.doTheMath(num);
+        var unit   = storageUnitArr[ result[1] ];
+        return [ result[0], unit ];
     };
 
     this.getBandwidth = function (num) {
-        return display.countBandwidth(num);
+        var result = display.doTheMath(num);
+        var unit   = bandwidthUnitArr[ result[1] ];
+        return [ result[0], unit ];
     };
 
-    this.getStorageUnit = function () {
-        return display.storageUnit;
-    };
+    // this.getStorageUnit = function () {
+    //     return display.storageUnit;
+    // };
 
-    this.getBandwidthUnit = function () {
-        return display.bandwidthUnit;
-    };
+    // this.getBandwidthUnit = function () {
+    //     return display.bandwidthUnit;
+    // };
 
     function Displayer () {
         var self = this;
@@ -48,10 +60,10 @@ angular.module('calculatorApp')
         this.countTotalStorage = function () {
             if ( this.isObjPassed ) {
                 var storage = 0;
-                for ( var i in this.obj.NVR ) {
-                    storage += parseFloat(this.obj.NVR[i].data.display.storage);
+                for ( var i in this.obj.data ) {
+                    storage += parseFloat(this.obj.data[i].data.display.storage);
                 }
-                return self.countStorage(storage);
+                return self.doTheMath(storage);
             }
             return "Failed to setup";
         };
@@ -59,13 +71,10 @@ angular.module('calculatorApp')
         this.countTotalBandwidth = function () {
             if ( this.isObjPassed ) {
                 var bandwidth = 0;
-                for ( var i in this.obj.NVR ) {
-                    bandwidth += parseFloat(this.obj.NVR[i].data.display.bandwidth);
+                for ( var i in this.obj.data ) {
+                    bandwidth += parseFloat(this.obj.data[i].data.display.bandwidth);
                 }
-                for ( var i in this.obj.CMS ) {
-                    bandwidth += parseFloat(this.obj.CMS[i].data.display.bandwidth);
-                }
-                return self.countBandwidth(bandwidth);
+                return self.doTheMath(bandwidth);
             }
             return "Failed to setup";
         };
@@ -73,23 +82,13 @@ angular.module('calculatorApp')
 
     Displayer.prototype = {
         isObjPassed : false,
-        obj : null,
-        storageUnitArr  : ["GB","TB","PB"],
-        bandwidthUnitArr : ["Mbps","Gbps","Tbps"],
-        storageUnit   : 'defaultUnit',
-        bandwidthUnit : 'defaultUnit'
+        obj         : null
 
         //************ This doesn't work ******************
         ,
-        countStorage  : function(num) {
+        doTheMath : function (num) {
             var cv = new Converter(num);
-            this.storageUnit = this.storageUnitArr[cv.counter];
-            return $filter("number")( cv.result, 1 );
-        },
-        countBandwidth : function (num) {
-            var cv = new Converter(num);
-            this.bandwidthUnit = this.bandwidthUnitArr[cv.counter];
-            return $filter("number")( cv.result, 1 );
+            return [ $filter("number")( cv.result, 1 ), cv.counter ];
         }
         //**************************************************
     };

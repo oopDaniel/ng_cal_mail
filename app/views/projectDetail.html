@@ -17,11 +17,11 @@
               <tr>
                 <td class="greyMinus">
                   {{ storage }}
-                  <sub>{{storageUnit}}</sub>
+                  <sub>{{sUnit}}</sub>
                 </td>
                 <td>
                   {{ bandwidth }}
-                  <sub>{{bandwidthUnit}}</sub>
+                  <sub>{{bUnit}}</sub>
                 </td>
               </tr>
             </tbody>
@@ -47,14 +47,15 @@
   <div ng-if="nodata" class="nodata">
     <h4>There is no available data now!</h4>
   </div>
-  <div class="project" ng-repeat="pj in projects | orderBy: 'name' | filter: filtText">
-    <span ng-click="rename(pj)"><h4>{{pj.name}}</h4></span>
+  <div class="project" ng-repeat="item in data | orderBy: 'name' | filter: filtText">
+    <span ng-click="rename(item)"><h4>{{item.name}}</h4></span>
     <div class="details">
-      <span ng-show="pj.NVR.length">NVR: {{pj.NVR.length}}</span>
-      <span ng-show="pj.NVR.length && pj.CMS.length">, </span>
-      <span ng-show="pj.CMS.length">CMS: {{pj.CMS.length}}</span>
-      <br>Total Storage: {{totalStorage(pj)}}
-      <br>Total Bandwidth: {{totalBandwidth(pj)}}
+      <span>
+        {{item.type}},
+        {{item.data.cameras}} Camera<span ng-show="item.data.cameras>1">s</span>
+        <span ng-if="item.data.display.storage > 0">{{convert(item.data.display.storage)}}</span>
+        {{convert(item.data.display.bandwidth)}}
+      </span>
     </div>
   </div>
 </section>

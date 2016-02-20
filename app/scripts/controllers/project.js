@@ -47,8 +47,8 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
             // storage = unitConverter(storage);
             // return $filter("number")(storage, 1) + " " + storageUnitArr[counter];
             unitConvertFactory.setData(obj);
-            return unitConvertFactory.getTotalStorage() + " " +
-                    unitConvertFactory.getStorageUnit();
+            var result = unitConvertFactory.getTotalStorage();
+            return result[0] + " " + result[1];
         };
 
         $scope.totalBandwidth = function (obj) {
@@ -63,8 +63,8 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
             // bandwidth = unitConverter(bandwidth);
             // return $filter("number")(bandwidth, 1) + " " + bandwidthUnitArr[counter];
             unitConvertFactory.setData(obj);
-            return unitConvertFactory.getTotalBandwidth() + " " +
-                    unitConvertFactory.getBandwidthUnit();
+            var result = unitConvertFactory.getTotalBandwidth();
+            return result[0] + " " + result[1];
         };
 
         $scope.clickRename = function (obj) {
@@ -120,27 +120,19 @@ myApp.controller('renameCtrl', ['$scope', '$uibModal',
 
 myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'localStorageFactory',
     function ($scope, $stateParams, unitConvertFactory, localStorageFactory) {
-        var project = localStorageFactory.pj.getPj(parseInt($stateParams.id));
-        $scope.project       = project;
-        $scope.storage       = unitConvertFactory.getStorage(project.storage);
-        $scope.bandwidth     = unitConvertFactory.getBandwidth(project.bandwidth);
-        $scope.storageUnit   = unitConvertFactory.getStorageUnit();
-        $scope.bandwidthUnit = unitConvertFactory.getBandwidthUnit();
+        var project      = localStorageFactory.pj.getPj(parseInt($stateParams.id));
+        $scope.data      = project.data;
+        var storage      = unitConvertFactory.getStorage(project.storage);
+        var bandwidth    = unitConvertFactory.getBandwidth(project.bandwidth);
+        $scope.storage   = storage[0];
+        $scope.sUnit     = storage[1];
+        $scope.bandwidth = bandwidth[0];
+        $scope.bUnit     = bandwidth[1];
 
+        $scope.convert   = function (num) {
+            var result = unitConvertFactory.getStorage(num);
+            return result[0] + " " + result[1];
+        }
 
-        // $scope.emptyPjName = false;
-        // $scope.validCheck = function () {
-        //     if ( $scope.renameForm.$error.required ) {
-        //         $scope.emptyPjName = true;
-        //     } else {
-        //         $scope.emptyPjName = false;
-        //     }
-        // };
-
-        // $scope.renameSubmit = function () {
-        //     localStorageFactory.renamePj($scope.pjOldName, $scope.pjRename);
-        //     $scope.$emit('refreshArr');
-        //     $scope.closeModal();
-        // };
 
 }]);
