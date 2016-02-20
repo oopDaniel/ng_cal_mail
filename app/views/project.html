@@ -24,8 +24,8 @@
           </div>
           <div class="col-xs-2">
              <a ui-sref="app.projectdetails({id: item._id})">EDIT</a>
-           </div>
-          <div class="col-xs-2">DELETE</div>
+          </div>
+          <div class="col-xs-2" ng-click="delete(item._id)">DELETE</div>
       </div>
     </div>
   </div>

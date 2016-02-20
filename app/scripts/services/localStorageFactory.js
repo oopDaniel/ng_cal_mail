@@ -47,7 +47,6 @@ angular.module('calculatorApp')
         function Projects() {
             var me          = this;
             this.projects   = loadData();
-            this.length     = this.projects.length;
 
             this.updateStatus = function () {
                 this.length = this.projects.length;
@@ -88,10 +87,23 @@ angular.module('calculatorApp')
                 return this.projects[ id - 1 ];
             };
 
+            this.deletePj = function (id) {
+                var index = findByAttr( this.projects, "_id", id);
+                if ( undefined !== index ) {
+                    this.projects.splice(index, 1);
+                    this.updateStatus();
+                    if ( !this.hasData ) {
+                        $window.localStorage.removeItem("projects");
+                    } else {
+                        storeData();
+                    }
+                }
+            };
+
 
             function getPjIndex (pjName) {
                 var index = findByAttr( me.projects, "name", pjName );
-                if ( undefined === index ) {
+                if ( undefined === index) {
                     var pj = new NewPJ(pjName);
                     me.projects.push(pj);
                     me.updateStatus();
@@ -114,25 +126,6 @@ angular.module('calculatorApp')
                         return i;
                     }
                 }
-            };
-
-            // function countAttr (arr, attr, value) {
-            //     var counter = 0, i = 0, l = arr.length;
-            //     for( i; i < l; i++ ) {
-            //         if(arr[i][attr] === value) {
-            //             counter++;
-            //         }
-            //     }
-            //     return counter;
-
-            // };
-
-            function countAttr (arr, attr, value) {
-                var count = 0;
-                angular.forEach( arr, function(item) {
-                    count += item[attr] === value ? 1 : 0;
-                });
-                return count;
             };
 
             function loadData () {

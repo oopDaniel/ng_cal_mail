@@ -94,6 +94,10 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
             $scope.arrayInit();
         });
 
+        $scope.delete = function (target) {
+            localStorageFactory.pj.deletePj(target);
+        };
+
 }]);
 
 
