@@ -76,6 +76,7 @@ angular.module('calculatorApp')
                     type : type,
                     data : data
                 };
+
                 this.projects[index].data.push(item);
                 this.projects[index].storage   += item.data.display.storage;
                 this.projects[index].bandwidth += item.data.display.bandwidth;
@@ -101,22 +102,21 @@ angular.module('calculatorApp')
                 }
             };
 
-            // TEST!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-            this.deleteItem = function (id) {
-                var arr   = this.projects.data;
-                var index = findByAttr( arr, "_id", id);
+            this.deleteItem = function (id, pid) {
+                var indexP = findByAttr( this.projects, "_id", pid);
+                var arr    = this.projects[indexP].data;
+                var index  = findByAttr( arr, "_id", id);
 
                 if ( undefined !== index ) {
-                    var type = arr.type;
-
+                    var type = arr[index].type;
                     if ( "NVR" === type ) {
-                        this.projects.count.NVR--;
-                        this.projects.storage -= arr.data.display.storage;
+                        this.projects[indexP].count.NVR--;
+                        this.projects[indexP].storage -= arr[index].data.display.storage;
                     } else {
-                        this.projects.count.CMS--;
+                        this.projects[indexP].count.CMS--;
                     }
-                        this.projects.bandwidth -= arr.data.display.bandwidth;
+                        this.projects[indexP].bandwidth -= arr[index].data.display.bandwidth;
 
                     arr.splice(index, 1);
                     storeData();

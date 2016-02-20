@@ -77,7 +77,9 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         };
 
 
-
+/*********************************************************************
+                          Redundant
+*********************************************************************/
         $scope.openModal = function (template, ctrl, size) {
             return $uibModal.open({
                 templateUrl: "views/" + template + ".html",
@@ -86,6 +88,10 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
                 scope: $scope
             });
         };
+
+//********************************************************************
+
+//********************************************************************
 
         $scope.closeModal = function () {
             $scope.modalInstance.close();
@@ -151,8 +157,8 @@ myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
 }]);
 
 
-myApp.controller('renameCtrl', ['$scope', '$uibModal',
-    function ($scope, $uibModal) {
+myApp.controller('renameCtrl', ['$scope',
+    function ($scope) {
         $scope.emptyPjName = false;
         $scope.validCheck = function () {
             $scope.emptyPjName = $scope.renameForm.$error.required;
@@ -171,17 +177,24 @@ myApp.controller('renameCtrl', ['$scope', '$uibModal',
 
 
 
-myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'localStorageFactory',
-    function ($scope, $stateParams, unitConvertFactory, localStorageFactory) {
+myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
+    function ($scope, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
         var project      = localStorageFactory.pj.getPj(parseInt($stateParams.id));
         $scope.name      = project.name;
         $scope.data      = project.data;
-        var storage      = unitConvertFactory.getStorage(project.storage);
-        var bandwidth    = unitConvertFactory.getBandwidth(project.bandwidth);
-        $scope.storage   = storage[0];
-        $scope.sUnit     = storage[1];
-        $scope.bandwidth = bandwidth[0];
-        $scope.bUnit     = bandwidth[1];
+
+        function displaySetup () {
+            var storage      = unitConvertFactory.getStorage(project.storage);
+            var bandwidth    = unitConvertFactory.getBandwidth(project.bandwidth);
+            $scope.storage   = storage[0];
+            $scope.sUnit     = storage[1];
+            $scope.bandwidth = bandwidth[0];
+            $scope.bUnit     = bandwidth[1];
+        }
+
+        displaySetup();
+
+
 
         $scope.convert   = function (num) {
             var result = unitConvertFactory.getStorage(num);
@@ -198,13 +211,13 @@ myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFac
         };
 
         $scope.clickDelete = function (index) {
-            console.log(123);
-            var deleteModal = $scope.$parent.openModal( "confirm", "confirmCtrl","sm");
-            var id          = pj.projects[index]._id;
+            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
+            var id          = project.data[index]._id;
 
             deleteModal.result.then(
                 function() {
-                    localStorageFactory.pj.deleteItem(id);
+                    localStorageFactory.pj.deleteItem(id, project._id);
+                    displaySetup();
                 },
                 function() {
                     $scope.clickArr[index] = !$scope.clickArr[index];
@@ -213,7 +226,14 @@ myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFac
         };
 
 
-
+        $scope.openModal = function (template, ctrl, size) {
+            return $uibModal.open({
+                templateUrl: "views/" + template + ".html",
+                size: size,
+                controller: ctrl,
+                scope: $scope
+            });
+        };
 
 
 
