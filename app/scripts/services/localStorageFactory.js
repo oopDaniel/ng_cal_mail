@@ -64,26 +64,30 @@ angular.module('calculatorApp')
 
             this.pushPjData = function (itemName, pjName, data, onNVR) {
                 var index = getPjIndex(pjName);
-                var targetArr = this.projects[index].CMS;
+                var type = "CMS";
+                var countTarget = this.projects[index].count;
 
                 if ( onNVR ) {
-                    data      = str2Int(data);
-                    targetArr = this.projects[index].NVR;
+                    data = str2Int(data);
+                    type = "NVR";
                 }
+
                 var item = {
                     name : itemName,
+                    type : type,
                     data : data
                 };
-
-                targetArr.push(item);
+                this.projects[index].data.push(item);
                 this.projects[index].storage   += item.data.display.storage;
                 this.projects[index].bandwidth += item.data.display.bandwidth;
+                this.projects[index].count[type]++;
                 storeData();
             };
 
             this.getPj = function(id) {
                 return this.projects[ id - 1 ];
             };
+
 
             function getPjIndex (pjName) {
                 var index = findByAttr( me.projects, "name", pjName );
@@ -105,11 +109,30 @@ angular.module('calculatorApp')
             };
 
             function findByAttr (arr, attr, value) {
-                for(var i = 0, l = arr.length; i < l; i++) {
-                    if(arr[i][attr] === value) {
+                for( var i = 0, l = arr.length; i < l; i++ ) {
+                    if( arr[i][attr] === value ) {
                         return i;
                     }
                 }
+            };
+
+            // function countAttr (arr, attr, value) {
+            //     var counter = 0, i = 0, l = arr.length;
+            //     for( i; i < l; i++ ) {
+            //         if(arr[i][attr] === value) {
+            //             counter++;
+            //         }
+            //     }
+            //     return counter;
+
+            // };
+
+            function countAttr (arr, attr, value) {
+                var count = 0;
+                angular.forEach( arr, function(item) {
+                    count += item[attr] === value ? 1 : 0;
+                });
+                return count;
             };
 
             function loadData () {
@@ -164,11 +187,15 @@ angular.module('calculatorApp')
 
         // Class NewPJ
         function NewPJ(pjName) {
+            this._id        = 0;
             this.name       = pjName;
             this.storage    = 0;
             this.bandwidth  = 0;
-            this.NVR        = [];
-            this.CMS        = [];
+            this.data       = [];
+            this.count      = {
+                NVR: 0,
+                CMS: 0
+            };
         }
 
         function MyObj() {

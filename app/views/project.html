@@ -16,9 +16,9 @@
       <div class="details">
         <div class="row">
           <div class="col-xs-8">
-            <span ng-show="item.NVR.length">NVR: {{item.NVR.length}}</span>
-            <span ng-show="item.NVR.length && item.CMS.length">, </span>
-            <span ng-show="item.CMS.length">CMS: {{item.CMS.length}}</span>
+            <span ng-show="item.count.NVR">NVR: {{item.count.NVR}}</span>
+            <span ng-show="item.count.NVR && item.count.CMS">, </span>
+            <span ng-show="item.count.CMS">CMS: {{item.count.CMS}}</span>
             <br>Total Storage: {{totalStorage(item)}}
             <br>Total Bandwidth: {{totalBandwidth(item)}}
           </div>

@@ -12,8 +12,9 @@ var myApp = angular.module('calculatorApp');
 myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
     function ($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
         // $scope.pj        = localStorageFactory.getPj();
-        $scope.pjArr = localStorageFactory.pj.projects;
-        $scope.nodata    = !localStorageFactory.pj.hasData;
+        var pj           = localStorageFactory.pj;
+        $scope.pjArr     = pj.projects;
+        $scope.nodata    = !pj.hasData;
         $scope.filtText  = '';
 
         $scope.arrayInit = function () {
@@ -119,13 +120,14 @@ myApp.controller('renameCtrl', ['$scope', '$uibModal',
 
 myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'localStorageFactory',
     function ($scope, $stateParams, unitConvertFactory, localStorageFactory) {
-        console.log($stateParams);
         var project = localStorageFactory.pj.getPj(parseInt($stateParams.id));
         $scope.project       = project;
         $scope.storage       = unitConvertFactory.getStorage(project.storage);
         $scope.bandwidth     = unitConvertFactory.getBandwidth(project.bandwidth);
         $scope.storageUnit   = unitConvertFactory.getStorageUnit();
         $scope.bandwidthUnit = unitConvertFactory.getBandwidthUnit();
+
+
         // $scope.emptyPjName = false;
         // $scope.validCheck = function () {
         //     if ( $scope.renameForm.$error.required ) {
