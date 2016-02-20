@@ -92,7 +92,6 @@ angular.module('calculatorApp')
                 var index = findByAttr( this.projects, "_id", id);
                 if ( undefined !== index ) {
                     this.projects.splice(index, 1);
-                    console.log(this.projects);
                     this.updateStatus();
                     if ( !this.hasData ) {
                         $window.localStorage.removeItem("projects");
@@ -101,6 +100,29 @@ angular.module('calculatorApp')
                     }
                 }
             };
+
+            // TEST!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            this.deleteItem = function (id) {
+                var arr   = this.projects.data;
+                var index = findByAttr( arr, "_id", id);
+
+                if ( undefined !== index ) {
+                    var type = arr.type;
+
+                    if ( "NVR" === type ) {
+                        this.projects.count.NVR--;
+                        this.projects.storage -= arr.data.display.storage;
+                    } else {
+                        this.projects.count.CMS--;
+                    }
+                        this.projects.bandwidth -= arr.data.display.bandwidth;
+
+                    arr.splice(index, 1);
+                    storeData();
+                }
+            };
+
 
 
             function getPjIndex (pjName) {
@@ -133,8 +155,6 @@ angular.module('calculatorApp')
 
             function getNextId (arr, attr) {
                 var l = arr.length;
-                console.log(arr)
-                console.log(arr.length)
                 if ( l > 0 ) {
                     for( var i = 0; i < l; i++ ) {
                         if( arr[i][attr] !== ( i + 1 ) ) {

@@ -198,18 +198,28 @@ myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFac
         };
 
         $scope.clickDelete = function (index) {
-            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
+            console.log(123);
+            var deleteModal = $scope.$parent.openModal( "confirm", "confirmCtrl","sm");
             var id          = pj.projects[index]._id;
 
             deleteModal.result.then(
                 function() {
-                    localStorageFactory.pj.deletePj(id);
+                    localStorageFactory.pj.deleteItem(id);
                 },
                 function() {
                     $scope.clickArr[index] = !$scope.clickArr[index];
                 }
             );
         };
+
+
+
+
+
+
+
+
+
 
 
 }]);
