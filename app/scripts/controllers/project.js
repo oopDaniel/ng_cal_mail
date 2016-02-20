@@ -111,6 +111,7 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         };
 
 
+
         /* ( Need to figure out other ways )
          *  1. O(N^2), fine all id and push them in an array, then delete item
          *  2. Use Array-object: {id:true},
@@ -185,6 +186,29 @@ myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFac
         $scope.convert   = function (num) {
             var result = unitConvertFactory.getStorage(num);
             return result[0] + " " + result[1];
+        };
+
+
+
+        $scope.clickArr  = new Array( project.data.length );
+        $scope.clickArr.fill(false);
+
+        $scope.select = function (index) {
+            $scope.clickArr[index] = !$scope.clickArr[index];
+        };
+
+        $scope.clickDelete = function (index) {
+            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
+            var id          = pj.projects[index]._id;
+
+            deleteModal.result.then(
+                function() {
+                    localStorageFactory.pj.deletePj(id);
+                },
+                function() {
+                    $scope.clickArr[index] = !$scope.clickArr[index];
+                }
+            );
         };
 
 

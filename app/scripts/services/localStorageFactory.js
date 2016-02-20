@@ -69,7 +69,9 @@ angular.module('calculatorApp')
                     type = "NVR";
                 }
 
+                var id = getNextId(this.projects[index].data,"_id");
                 var item = {
+                    _id  : id,
                     name : itemName,
                     type : type,
                     data : data
@@ -105,9 +107,10 @@ angular.module('calculatorApp')
                 var index = findByAttr( me.projects, "name", pjName );
                 if ( undefined === index) {
                     var pj = new NewPJ(pjName);
+                    var id = getNextId(me.projects,"_id");
                     me.projects.push(pj);
                     me.updateStatus();
-                    me.projects[me.length - 1]._id = me.length;
+                    me.projects[me.length - 1]._id = id;
                     return me.length - 1;
                 }
                 return index;
@@ -126,6 +129,21 @@ angular.module('calculatorApp')
                         return i;
                     }
                 }
+            }
+
+            function getNextId (arr, attr) {
+                var l = arr.length;
+                console.log(arr)
+                console.log(arr.length)
+                if ( l > 0 ) {
+                    for( var i = 0; i < l; i++ ) {
+                        if( arr[i][attr] !== ( i + 1 ) ) {
+                            return i;
+                        }
+                    }
+                    return i + 1;
+                }
+                return 1;
             }
 
             function loadData () {

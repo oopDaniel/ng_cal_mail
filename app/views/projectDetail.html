@@ -48,15 +48,26 @@
     <h4>There is no available data now!</h4>
   </div>
   <div class="project" ng-repeat="item in data | orderBy: 'name' | filter: filtText">
-    <span ng-click="rename(item)"><h4>{{item.name}}</h4></span>
-    <div class="details detailBorder">
-      <span>
-        {{item.type}},
-        {{item.data.cameras}} Camera<span ng-show="item.data.cameras>1">s</span>,
-        <span ng-if="item.data.display.storage > 0">{{convert(item.data.display.storage)}},</span>
-        {{convert(item.data.display.bandwidth)}}
-      </span>
-    </div>
+      <div ng-click="select($index)" ng-class="{selectItem:clickArr[$index]}">
+        <span ng-click="rename(item)"><h4>{{item.name}}</h4></span>
+        <div class="details detailBorder">
+          <div class="row">
+            <div class="col-xs-8">
+            <span>
+              {{item.type}},
+              {{item.data.cameras}} Camera<span ng-show="item.data.cameras>1">s</span>,
+              <span ng-if="item.data.display.storage > 0">{{convert(item.data.display.storage)}},</span>
+              {{convert(item.data.display.bandwidth)}}
+            </span>
+            </div>
+            <div class="col-xs-2">
+               <a ui-sref="app.projectdetails({id: item._id})">EDIT</a>
+            </div>
+            <div class="col-xs-2" ng-click="clickDelete($index)">DELETE</div>
+          </div>
+
+        </div>
+      </div>
   </div>
 </section>
 </div>
