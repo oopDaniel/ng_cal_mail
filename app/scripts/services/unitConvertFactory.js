@@ -49,7 +49,7 @@ angular.module('calculatorApp')
         this.setup = function (obj) {
             this.obj = obj;
             this.isObjPassed = true;
-        }
+        };
 
         // this.countStorage = function (num) {
         //     var cv = new Converter(num);
@@ -82,10 +82,10 @@ angular.module('calculatorApp')
 
     Displayer.prototype = {
         isObjPassed : false,
-        obj         : null
+        obj         : null,
 
         //************ This doesn't work ******************
-        ,
+
         doTheMath : function (num) {
             var cv = new Converter(num);
             return [ $filter("number")( cv.result, 1 ), cv.counter ];
@@ -97,7 +97,6 @@ angular.module('calculatorApp')
     function Converter (num) {
         var self     = this;
         this.counter = 0;
-        this.result  = unitConverter(num);
 
         function unitConverter (num) {
             if ( num > 10240 ) {
@@ -105,7 +104,10 @@ angular.module('calculatorApp')
                 return unitConverter( num / 1024 );
             }
             return num;
-        };
+        }
+
+        this.result  = unitConverter(num);
+
     }
 
 

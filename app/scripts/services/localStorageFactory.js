@@ -3,7 +3,6 @@
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
-        var self   = this;
         var nvrObj = new NVRObj();
         var cmsObj = new CMSObj();
         this.pj    = new Projects();
@@ -64,7 +63,6 @@ angular.module('calculatorApp')
             this.pushPjData = function (itemName, pjName, data, onNVR) {
                 var index = getPjIndex(pjName);
                 var type = "CMS";
-                var countTarget = this.projects[index].count;
 
                 if ( onNVR ) {
                     data = str2Int(data);
@@ -84,13 +82,15 @@ angular.module('calculatorApp')
             };
 
             this.getPj = function(id) {
-                return this.projects[ id - 1 ];
+                var index = findByAttr( this.projects, "_id", id);
+                return this.projects[ index ];
             };
 
             this.deletePj = function (id) {
                 var index = findByAttr( this.projects, "_id", id);
                 if ( undefined !== index ) {
                     this.projects.splice(index, 1);
+                    console.log(this.projects);
                     this.updateStatus();
                     if ( !this.hasData ) {
                         $window.localStorage.removeItem("projects");
@@ -111,14 +111,14 @@ angular.module('calculatorApp')
                     return me.length - 1;
                 }
                 return index;
-            };
+            }
 
             function str2Int (obj) {
                 obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
                 obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
                 obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
                 return obj;
-            };
+            }
 
             function findByAttr (arr, attr, value) {
                 for( var i = 0, l = arr.length; i < l; i++ ) {
@@ -126,7 +126,7 @@ angular.module('calculatorApp')
                         return i;
                     }
                 }
-            };
+            }
 
             function loadData () {
                 try {
@@ -134,7 +134,7 @@ angular.module('calculatorApp')
                 } catch(e) {
                     return [];
                 }
-            };
+            }
 
             function storeData () {
                 try {
@@ -143,7 +143,7 @@ angular.module('calculatorApp')
                     console.log("exception: " + e);
                 }
                 me.updateStatus();
-          };
+            }
 
         }
 

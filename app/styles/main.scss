@@ -141,6 +141,11 @@ $font_detail_color: lighten(grey, 10%);
 
 
 
+.selectItem {
+    background: rgba(1,1,1,0.1);
+}
+
+
 .icon-centered {
     display: table;
     margin: 0 auto;
@@ -167,6 +172,11 @@ $font_detail_color: lighten(grey, 10%);
 .padding-bottom {
   padding-bottom: 2em;
 }
+
+.reducePadding {
+  padding-bottom: 0;
+}
+
 .highlight {
   color:$theme_color2;
   font-size:1.5em;
@@ -268,6 +278,8 @@ $font_detail_color: lighten(grey, 10%);
 
 .details {
   color: $font_detail_color;
+}
+.detailBorder {
   max-width:80%;
   border-bottom:.2em ridge;
   padding: .2em
