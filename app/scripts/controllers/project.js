@@ -9,8 +9,8 @@
  */
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorageFactory',
-    function ($scope, $filter, $uibModal, localStorageFactory) {
+myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
+    function ($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
         // $scope.pj        = localStorageFactory.getPj();
         $scope.pjArr = localStorageFactory.pj.projects;
         $scope.nodata    = !localStorageFactory.pj.hasData;
@@ -26,38 +26,44 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorage
         };
         $scope.arrayInit();
 
-        var counter;
-        var storageUnitArr   = ["GB","TB","PB"];
-        var bandwidthUnitArr = ["Mbps","Gbps","Tbps"];
-        var unitConverter = function (num) {
-            if ( num > 10240 ) {
-                counter++;
-                return unitConverter( num / 1024 );
-            }
-            return num;
-        };
+        // var counter;
+        // var storageUnitArr   = ["GB","TB","PB"];
+        // var bandwidthUnitArr = ["Mbps","Gbps","Tbps"];
+        // var unitConverter = function (num) {
+        //     if ( num > 10240 ) {
+        //         counter++;
+        //         return unitConverter( num / 1024 );
+        //     }
+        //     return num;
+        // };
 
         $scope.totalStorage = function (obj) {
-            var storage = 0;
-            for ( var i in obj.NVR ) {
-                storage += parseFloat(obj.NVR[i].data.display.storage);
-            }
-            counter = 0;
-            storage = unitConverter(storage);
-            return $filter("number")(storage, 1) + " " + storageUnitArr[counter];
+            // var storage = 0;
+            // for ( var i in obj.NVR ) {
+            //     storage += parseFloat(obj.NVR[i].data.display.storage);
+            // }
+            // counter = 0;
+            // storage = unitConverter(storage);
+            // return $filter("number")(storage, 1) + " " + storageUnitArr[counter];
+            unitConvertFactory.setData(obj);
+            return unitConvertFactory.getTotalStorage() + " " +
+                    unitConvertFactory.getStorageUnit();
         };
 
         $scope.totalBandwidth = function (obj) {
-            var bandwidth = 0;
-            for ( var i in obj.NVR ) {
-                bandwidth += parseFloat(obj.NVR[i].data.display.bandwidth);
-            }
-            for ( var i in obj.CMS ) {
-                bandwidth += parseFloat(obj.CMS[i].data.display.bandwidth);
-            }
-            counter = 0;
-            bandwidth = unitConverter(bandwidth);
-            return $filter("number")(bandwidth, 1) + " " + bandwidthUnitArr[counter];
+            // var bandwidth = 0;
+            // for ( var i in obj.NVR ) {
+            //     bandwidth += parseFloat(obj.NVR[i].data.display.bandwidth);
+            // }
+            // for ( var i in obj.CMS ) {
+            //     bandwidth += parseFloat(obj.CMS[i].data.display.bandwidth);
+            // }
+            // counter = 0;
+            // bandwidth = unitConverter(bandwidth);
+            // return $filter("number")(bandwidth, 1) + " " + bandwidthUnitArr[counter];
+            unitConvertFactory.setData(obj);
+            return unitConvertFactory.getTotalBandwidth() + " " +
+                    unitConvertFactory.getBandwidthUnit();
         };
 
         $scope.clickRename = function (obj) {
@@ -111,8 +117,15 @@ myApp.controller('renameCtrl', ['$scope', '$uibModal',
 
 
 
-myApp.controller('projectDetailCtrl', ['$scope', '$uibModal','localStorageFactory',
-    function ($scope, $uibModal, localStorageFactory) {
+myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'localStorageFactory',
+    function ($scope, $stateParams, unitConvertFactory, localStorageFactory) {
+        console.log($stateParams);
+        var project = localStorageFactory.pj.getPj(parseInt($stateParams.id));
+        $scope.project       = project;
+        $scope.storage       = unitConvertFactory.getStorage(project.storage);
+        $scope.bandwidth     = unitConvertFactory.getBandwidth(project.bandwidth);
+        $scope.storageUnit   = unitConvertFactory.getStorageUnit();
+        $scope.bandwidthUnit = unitConvertFactory.getBandwidthUnit();
         // $scope.emptyPjName = false;
         // $scope.validCheck = function () {
         //     if ( $scope.renameForm.$error.required ) {

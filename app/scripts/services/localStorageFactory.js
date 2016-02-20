@@ -24,13 +24,20 @@ angular.module('calculatorApp')
             cmsObj = obj;
         };
 
-        this.getPj = function() {
-            return pj;
-        };
+        // this.getPj = function() {
+        //     return pj;
+        // };
 
-        this.setPj = function(pjObj) {
-            pj = pjObj;
-        };
+        // this.setPj = function(pjObj) {
+        //     pj = pjObj;
+        // };
+
+
+        // ********** "this.pj.getPj is not a function" ***********
+        // console.log(this.pj.getPj(1));
+        // console.log(this.pj.getPj.call(this.pj, 1));
+        // console.log(Projects.getPj(1));
+        // ********************************************************
 
 
 //----------------------------------------------------------------------
@@ -38,9 +45,9 @@ angular.module('calculatorApp')
 
 
         function Projects() {
+            var me          = this;
             this.projects   = loadData();
             this.length     = this.projects.length;
-            var me          = this;
 
             this.updateStatus = function () {
                 this.length = this.projects.length;
@@ -69,17 +76,23 @@ angular.module('calculatorApp')
                 };
 
                 targetArr.push(item);
+                this.projects[index].storage   += item.data.display.storage;
+                this.projects[index].bandwidth += item.data.display.bandwidth;
                 storeData();
             };
 
-
+            this.getPj = function(id) {
+                return this.projects[ id - 1 ];
+            };
 
             function getPjIndex (pjName) {
                 var index = findByAttr( me.projects, "name", pjName );
                 if ( undefined === index ) {
                     var pj = new NewPJ(pjName);
-                    me.projects.unshift(pj);
-                    return 0;
+                    me.projects.push(pj);
+                    me.updateStatus();
+                    me.projects[me.length - 1]._id = me.length;
+                    return me.length - 1;
                 }
                 return index;
             };
@@ -92,7 +105,6 @@ angular.module('calculatorApp')
             };
 
             function findByAttr (arr, attr, value) {
-
                 for(var i = 0, l = arr.length; i < l; i++) {
                     if(arr[i][attr] === value) {
                         return i;
@@ -124,12 +136,31 @@ angular.module('calculatorApp')
             hasData  : false,
 
             getPjs : function() {
-                return projects;
-            },
-            getPj : function(index) {
-                return projects[index];
+                return this.projects;
             }
+
+
+            // ******** This doesn't work ************
+            // ,
+            // getPj : function(index) {
+            //     return projects[index];
+            // }
+
+            // ***************************************
+
         };
+
+        // ******** This doesn't work ************
+
+        // Projects.prototype.getPj = function(index) {
+        //         return this.projects[index];
+        // };
+
+        // ***************************************
+
+
+
+
 
         // Class NewPJ
         function NewPJ(pjName) {
