@@ -89,6 +89,12 @@ angular.module('calculatorApp')
                 return this.projects[ index ];
             };
 
+            this.getItem = function(pid, itemid) {
+                var pindex = findByAttr( this.projects, "_id", pid);
+                var index  = findByAttr( this.projects[pindex].data, "_id", itemid);
+                return this.projects[ pindex ].data[ index ];
+            };
+
             this.deletePj = function (id) {
                 var index = findByAttr( this.projects, "_id", id);
                 if ( undefined !== index ) {

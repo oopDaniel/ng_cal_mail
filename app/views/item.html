@@ -1,3 +1,33 @@
-<H1>
-  hellwo
-</H1>
+  <div class="jumbotron reducePadding">
+    <div class="row">
+        <div class="table-showdigit col-xs-12
+                    col-md-6 col-md-offset-3">
+          <table
+            class="table table-hover table-responsive">
+            <caption><h3>{{inf.name}}</h3></caption>
+            <thead>
+              <tr>
+                <th>Total Storage</th>
+                <th>Total Bandwidth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="greyMinus">
+                  {{ storage }}
+                  <sub>{{sUnit}}</sub>
+                </td>
+                <td>
+                  {{ bandwidth }}
+                  <sub>{{bUnit}}</sub>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> <!-- end row -->
+  </div> <!-- end jumbotron -->
+
+
+<div ng-include="dataURL"></div>
