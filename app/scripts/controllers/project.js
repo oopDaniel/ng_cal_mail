@@ -179,9 +179,10 @@ myApp.controller('renameCtrl', ['$scope',
 
 myApp.controller('projectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
     function ($scope, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
-        var project      = localStorageFactory.pj.getPj(parseInt($stateParams.id));
-        $scope.name      = project.name;
-        $scope.data      = project.data;
+        var project   = localStorageFactory.pj.getPj(parseInt($stateParams.id));
+        $scope.name   = project.name;
+        $scope.data   = project.data;
+        $scope.nodata = project.data.length === 0;
 
         function displaySetup () {
             var storage      = unitConvertFactory.getStorage(project.storage);
