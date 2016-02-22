@@ -44,8 +44,8 @@ angular.module('calculatorApp')
 
 
         function Projects() {
-            var me          = this;
             this.projects   = loadData();
+            var me          = this;
 
             this.updateStatus = function () {
                 this.length = this.projects.length;
@@ -60,8 +60,9 @@ angular.module('calculatorApp')
                 storeData();
             };
 
-            this.pushPjData = function (itemName, pjName, data, onNVR) {
+            this.addItem = function (itemName, pjName, data, onNVR) {
                 var index = getPjIndex(pjName);
+                var old   = this.projects[index];
                 var type = "CMS";
 
                 if ( onNVR ) {
@@ -69,7 +70,7 @@ angular.module('calculatorApp')
                     type = "NVR";
                 }
 
-                var id = getNextId(this.projects[index].data,"_id");
+                var id = getNextId(old.data,"_id");
                 var item = {
                     _id  : id,
                     name : itemName,
@@ -77,12 +78,28 @@ angular.module('calculatorApp')
                     data : data
                 };
 
-                this.projects[index].data.push(item);
-                this.projects[index].storage   += item.data.display.storage;
-                this.projects[index].bandwidth += item.data.display.bandwidth;
-                this.projects[index].count[type]++;
+                old.data.push(item);
+                old.storage   += item.data.display.storage;
+                old.bandwidth += item.data.display.bandwidth;
+                old.count[type]++;
                 storeData();
             };
+
+            this.editItem = function ( pId, itemId, data, onNVR ) {
+                var indexP = findByAttr( this.projects, "_id", pId);
+                var old    = this.projects[indexP];
+                var index  = findByAttr( old.data, "_id", itemId);
+                var oldData = old.data[index].data;
+
+                old.storage -= oldData.display.storage;
+                old.storage += data.display.storage;
+                old.bandwidth -= oldData.display.bandwidth;
+                old.bandwidth += data.display.bandwidth;
+
+                oldData = data;
+                storeData();
+
+            }
 
             this.getPj = function(id) {
                 var index = findByAttr( this.projects, "_id", id);

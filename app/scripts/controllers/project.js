@@ -198,8 +198,10 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'u
 
 
 
-        $scope.convert   = function (num) {
-            var result = unitConvertFactory.getStorage(num);
+        $scope.convert   = function (num, onStorage) {
+            var result = onStorage ?
+                unitConvertFactory.getStorage(num) :
+                unitConvertFactory.getBandwidth(num);
             return result[0] + " " + result[1];
         };
 

@@ -55,16 +55,13 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         $scope.showHdd = function() {
             $scope.showOtherHDD = isNaN( parseInt($scope.hdd) );
             if (!$scope.showOtherHDD) {
-                $scope.data.HDDsize = $scope.hdd;
+                data.HDDsize = $scope.hdd;
             }
         };
 
         $scope.editHdd = function() {
-            $scope.data.HDDsize = parseInt($scope.hddInput) + " TB";
+            data.HDDsize = parseInt($scope.hddInput) + " TB";
         };
-
-
-
 
 
     /*****************************************
@@ -97,11 +94,16 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
             data.RAID = RAIDtype;
         };
 
+    //---------------------------------------------
+    //---------------------------------------------
 
 
-
-
-
+    $scope.saveEdit = function () {
+        data.display.storage   = getStorage();
+        data.display.bandwidth = getBandwidth();
+        localStorageFactory.pj.editItem( $scope.id, $scope.itemid,
+                                         data, true );
+    };
 
 
 }]);

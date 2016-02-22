@@ -439,11 +439,11 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
 
             if ( $scope.onNVR ) {
                 $scope.data = refreshDisplay($scope.data);
-                localStorageFactory.pj.pushPjData( $scope.pj4form.itemName,
+                localStorageFactory.pj.addItem( $scope.pj4form.itemName,
                             $scope.pj4form.pjName, $scope.data, true );
             } else {
                 $scope.data = refreshDisplay($scope.data);
-                localStorageFactory.pj.pushPjData( $scope.pj4form.itemName,
+                localStorageFactory.pj.addItem( $scope.pj4form.itemName,
                             $scope.pj4form.pjName, $scope.data, false );
             }
             $scope.closeModal();
