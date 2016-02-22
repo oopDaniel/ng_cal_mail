@@ -11,31 +11,35 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         $scope.dataURL = isNVR ? "views/NVRdata.html" : "views/CMSdata.html"
         var data       = inf.data;
         $scope.data    = data;
-        // var storage    = data.display.storage *  data.cameras;
 
-        function displaySetup (storage, bandwidth) {
-            var tmpS, tmpB;
-            if ( -1 === storage || -1 === bandwidth ) {
-                tmpS         = unitConvertFactory.getStorage(data.display.storage);
-                tmpB         = unitConvertFactory.getBandwidth(data.display.bandwidth);
+
+        $scope.sUnit = "";
+        $scope.bUnit = "";
+        function displaySetup (num, onStorage) {
+            var tmp;
+            if ( onStorage ) {
+                tmp = unitConvertFactory.getStorage(num);
+                $scope.sUnit = tmp[1];
             } else {
-                tmpS         = unitConvertFactory.getStorage(storage);
-                tmpB         = unitConvertFactory.getBandwidth(bandwidth);
+                tmp = unitConvertFactory.getBandwidth(num);
+                $scope.bUnit = tmp[1];
             }
-            $scope.storage   = tmpS[0];
-            $scope.sUnit     = tmpS[1];
-            $scope.bandwidth = tmpB[0];
-            $scope.bUnit     = tmpB[1];
+            return tmp[0];
         }
-        displaySetup(-1, -1);
-
 
         //------------- Counting ----------------
 
+        $scope.getBandwidth = function() {
+            var bandwidthDisplay = data.cameras * data.bitRate.data;
+            return displaySetup( bandwidthDisplay, false );
+        };
 
-
-
-
+        $scope.getStorage = function() {
+            var storageDisplay =
+              $scope.getBandwidth() * 0.125 * // to MB/s
+              60 * 60 * 24 / 1024 * data.estDays.data;
+            return displaySetup( storageDisplay, true );
+        };
 
         //---------------- HDD -------------------
         $scope.showOtherHDD = false;
@@ -54,40 +58,15 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
 
 
 
-
-
-
-
-
-
-
     /*****************************************
      *     Define the RAID rule and
      *     count the HDDs needed
      */
         $scope.getMinHDD = function() {
-            var minHDD = Math.ceil( $scope.getStorage() / $scope.NVRObj.HDDsize / 1024 );
-            switch ( $scope.NVRObj.RAID ) { // RAID Rule
-                case "1":
-                    minHDD *= 2;
-                    break;
-                case "5":
-                    minHDD += 1;
-                    break;
-                case "10":
-                    minHDD += 2;
-                    break;
-                default:
-            }
-            $scope.totalModelSets = Math.ceil( minHDD / 8 );
-            return minHDD > 8 ? 8 : minHDD;
-        };
-
-        $scope.getMinHDD = function() {
             var minHDD = optionsFactory.getMinHDD(
                         $scope.getStorage(),
-                        $scope.NVRObj.HDDsize,
-                        $scope.NVRObj.RAID );
+                        data.HDDsize,
+                        data.RAID );
             $scope.totalModelSets = minHDD[1];
             return minHDD[0];
         };

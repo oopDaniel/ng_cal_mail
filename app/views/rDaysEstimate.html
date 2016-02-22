@@ -37,7 +37,7 @@
                     placeholder="Enter the days"
                     maxlength="3"
                     ng-change="validCheck()"
-                    ng-model="NVRObj.estDays.params.rDays"/>
+                    ng-model="data.estDays.params.rDays"/>
                   <div class="input-group-addon my-addon">
                     Days
                   </div>
@@ -76,7 +76,7 @@
                   onkeyup="value=value.replace(/[^\d]/g,'')"
                   placeholder="Enter the hours"
                   maxlength="2"
-                  ng-model="NVRObj.estDays.params.rHours"
+                  ng-model="data.estDays.params.rHours"
                   ng-change="validCheck()"/>
                 <span
                   ng-show="emptyHours"
@@ -105,12 +105,12 @@
                 <input
                   type="range"
                   class="rangebar"
-                  ng-model="NVRObj.estDays.params.motion"
+                  ng-model="data.estDays.params.motion"
                   min="0"
                   max="100"
                   step="10"/>
                 <span class="percentage">
-                  {{NVRObj.estDays.params.motion}}%
+                  {{data.estDays.params.motion}}%
                 </span>
               </div>
             </div>
