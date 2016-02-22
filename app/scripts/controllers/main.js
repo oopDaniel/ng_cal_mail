@@ -76,26 +76,22 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      *      should be applied in flexbox
      */
         $scope.RAIDArr = optionsFactory.getRAIDArr();
-
-        $scope.HDDArr = optionsFactory.gethddSizeArr();
-        $scope.hdd = optionsFactory.defaultHdd;
+        $scope.HDDArr  = optionsFactory.gethddSizeArr();
+        $scope.hdd     = optionsFactory.defaultHdd;
+        $scope.showOtherHDD = false;
+        $scope.hddInput = '';
 
         $scope.showHdd = function() {
-            var tmp = parseInt($scope.hdd);
-            $scope.showOtherHDD = isNaN(tmp);
-            if (!$scope.showOtherHDD)
-                data.HDDsize = tmp;
+            $scope.showOtherHDD = isNaN(parseInt($scope.hdd));
+            if (!$scope.showOtherHDD) {
+                data.HDDsize = $scope.hdd;
+            }
         };
 
-        $scope.coloringRAID = new Array( $scope.RAIDArr.length );
-        // default RAID type
-        $scope.coloringRAID[ optionsFactory.defaultRAIDindex ] = true;
-        // after clicked on a certain type of RAID
-        $scope.updateRAID = function(index, RAIDtype) {
-            $scope.coloringRAID.fill(false);
-            $scope.coloringRAID[index] = true;
-            data.RAID = RAIDtype;
+        $scope.editHdd = function() {
+            data.HDDsize = parseInt($scope.hddInput) + " TB";
         };
+
 
     /*****************************************
      *      Convert the units displayed
@@ -125,27 +121,19 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.hddInvalid       = false;
         $scope.cameraEmpty      = false;
         $scope.cameraInvalid    = false;
-        $scope.cameraEmptyCMS   = false;
-        $scope.cameraInvalidCMS = false;
 
         $scope.ValidCheck = function() {
-            if ( $scope.NVRForm.HDDsize.$dirty ) {
+            if ( $scope.myForm.HDDsize.$dirty ) {
                 $scope.hddEmpty =
                     "" === data.HDDsize;
                 $scope.hddInvalid =
-                    $scope.NVRForm.HDDsize.$error.pattern;
+                    $scope.myForm.HDDsize.$error.pattern;
             }
-            if ( $scope.NVRForm.num_cameras.$dirty ) {
+            if ( $scope.myForm.num_cameras.$dirty ) {
                 $scope.cameraEmpty =
-                    $scope.NVRForm.num_cameras.$error.required;
+                    $scope.myForm.num_cameras.$error.required;
                 $scope.cameraInvalid =
-                    $scope.NVRForm.num_cameras.$error.pattern;
-            }
-            if ( $scope.CMSForm.num_cameras_cms.$dirty ) {
-                $scope.cameraEmptyCMS =
-                    $scope.CMSForm.num_cameras_cms.$error.required;
-                $scope.cameraInvalidCMS =
-                    $scope.CMSForm.num_cameras_cms.$error.pattern;
+                    $scope.myForm.num_cameras.$error.pattern;
             }
         };
 
@@ -197,16 +185,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
     };
-
-
-
-
-
-
-
-
-
-
 
   }]);
 

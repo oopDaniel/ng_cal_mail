@@ -151,7 +151,7 @@
                     <select
                       class="input form-control"
                       id="HDDsize"
-                      ng-model="$parent.hdd"
+                      ng-model="$parent.$parent.hdd"
                       ng-change="showHdd()"
                       ng-options="opt for opt in HDDArr">
                     </select>
@@ -167,7 +167,7 @@
                           onkeyup="value=value.replace(/[^\d]/g,'')"
                           maxlength="2"
                           placeholder="Enter the size"
-                          ng-model="$parent.hddInput"
+                          ng-model="$parent.$parent.hddInput"
                           ng-change="editHdd()"
                           />
                         <div class="input-group-addon my-addon">TB</div>
@@ -242,79 +242,9 @@
               </div>
             </div> <!-- end row -->
           </section>
-
-
-
-
-
         </form>
       </div>
 
 
       <div ng-include src="'views/recommend.html'"></div>
 
-
-
-      <!-- <div class="row hd-requirement">
-        <h4>Minimin Hardware Requirement</h4>
-        <section class="row section section-require">
-          <div class="col-xs-1 col-xs-offset-1
-                      col-sm-1 col-sm-offset-3">
-            <i class="fa fa-cubes fa-3x"></i>
-          </div>
-          <div class="col-xs-9 col-sm-8">
-            <div class="row">
-              <label class="col-xs-2 col-xs-offset-2">Model</label>
-              <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
-            </div>
-          </div>
-        </section>
-        <section class="row section section-require">
-          <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
-            <i class="fa fa-tachometer fa-3x"></i></div>
-          <div class="col-xs-9 col-sm-8">
-            <div class="row">
-              <label class="col-xs-2 col-xs-offset-2">OS</label>
-              <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
-            </div>
-            <div class="row">
-              <label class="col-xs-2 col-xs-offset-2">CPU</label>
-              <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
-            </div>
-            <div class="row">
-              <label class="col-xs-2 col-xs-offset-2">RAM</label>
-              <div class="col-xs-6 col-xs-offset-1">8 GB</div>
-            </div>
-          </div>
-        </section>
-        <section class="row section section-require">
-          <div
-            class="col-xs-1 col-xs-offset-1
-                   col-sm-1 col-sm-offset-3">
-            <span
-              class="glyphicon glyphicon-hdd"
-              style="font-size:2.5em"></span>
-          </div>
-          <div class="col-xs-9 col-sm-8">
-            <div class="row">
-              <label class="col-xs-2 col-xs-offset-2">Network</label>
-              <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
-            </div>
-            <div class="row">
-              <label class="col-xs-2 col-xs-offset-2">HDDs</label>
-              <div
-                class="col-xs-6 col-xs-offset-1 padding-bottom"
-                ng-model="minHDD">
-                {{data.HDDsize}} x
-                <span class="highlight">{{ getMinHDD()}} </span>
-                <span class="unbreak">as a set</span>
-                <br>
-                Totally
-                <span class="highlight">{{totalModelSets}}</span>
-                {{totalModelSets>1?'sets are':'set is'}} needed
-              </div>
-            </div>
-          </div>
-        </section>
-      </div> <!-- end hd-requirement -->
- -->
