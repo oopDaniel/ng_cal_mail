@@ -47,9 +47,6 @@ angular.module('calculatorApp')
             return RAIDArr;
         };
 
-        this.getRaidIndex = function () {
-
-        }
 
         // Set the default value for the combo boxes
         this.defaultRDays      =
@@ -147,12 +144,14 @@ angular.module('calculatorApp')
                     break;
                 case "10":
                     minHDD *= 2;
-                    if ( minHDD < 4 ) minHDD *= 2;
+                    if ( minHDD < 4 ) {
+                        minHDD *= 2;
+                    }
                     break;
                 default:
             }
             var ModelSets = Math.ceil( minHDD / 8 );
-            minHDD = minHDD > 8 ? 8 : minHDD
+            minHDD = minHDD > 8 ? 8 : minHDD;
             return [ minHDD, ModelSets ];
         };
 //------------------------------------------------

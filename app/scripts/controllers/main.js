@@ -354,7 +354,7 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
                 $scope.data.estDays.params.rDays,
                 $scope.data.estDays.params.rHours,
                 $scope.data.estDays.params.motion
-                )
+                );
             return $scope.data.estDays.data;
         };
 

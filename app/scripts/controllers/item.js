@@ -107,7 +107,6 @@ myApp.controller('ItemCtrl', ['$scope', '$state', '$stateParams', 'unitConvertFa
     };
 
     $scope.refresh = function () {
-        // localStorageFactory.pj.refresh();
         $state.go($state.current, {}, {reload: true});
     }
 
