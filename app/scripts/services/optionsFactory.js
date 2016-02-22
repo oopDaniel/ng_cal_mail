@@ -32,7 +32,7 @@ angular.module('calculatorApp')
         ];
 
         var RAIDArr = [
-          'Non', '1', '5', '10'
+          'Non', '0', '1', '5', '10'
         ];
 
         this.getRDaysArr = function () {
@@ -46,6 +46,10 @@ angular.module('calculatorApp')
         this.getRAIDArr = function () {
             return RAIDArr;
         };
+
+        this.getRaidIndex = function () {
+
+        }
 
         // Set the default value for the combo boxes
         this.defaultRDays      =
@@ -90,9 +94,6 @@ angular.module('calculatorApp')
         var qList = ['Medium'];
         var FPSList = [1,5,10,15,20,25,30];
 
-        this.getBitrate = function(rs, FPS) {
-            return rule[rs].FPS[FPS];
-        };
 
         this.getRsList = function() {
             var rsList = [];
@@ -113,6 +114,47 @@ angular.module('calculatorApp')
         this.getFPSList = function() {
             return FPSList;
         };
+
+//-------------------------------------------------------
+
+
+        this.getBitRate = function( res, fps ) {
+            var RsList = this.getRsList();
+            var bitRate = rule[ RsList.indexOf(res) ].FPS[ FPSList.indexOf(fps) ];
+            return bitRate;
+        };
+
+        this.hoursFix = function (hours) {
+            return hours > 24 ? 24 : hours;
+        };
+
+        this.getEstDays = function(days, hours, motion) {
+            var estDay = days * motion / 100 * hours / 24;
+            return Math.ceil(estDay);
+        };
+
+
+//------------------------------------------------
+        this.getMinHDD = function( storage, HDDsize, RAID ) {
+            var minHDD = Math.ceil( storage / HDDsize / 1024 );
+            switch ( RAID ) { // RAID Rule
+                case "1":
+                    minHDD *= 2;
+                    break;
+                case "5":
+                    minHDD += 1;
+                    break;
+                case "10":
+                    minHDD *= 2;
+                    if ( minHDD < 4 ) minHDD *= 2;
+                    break;
+                default:
+            }
+            var ModelSets = Math.ceil( minHDD / 8 );
+            minHDD = minHDD > 8 ? 8 : minHDD
+            return [ minHDD, ModelSets ];
+        };
+//------------------------------------------------
 
 
 

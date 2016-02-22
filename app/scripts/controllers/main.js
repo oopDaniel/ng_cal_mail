@@ -13,6 +13,7 @@ var myApp = angular.module('calculatorApp');
 myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory',
         function ($scope, $filter, optionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
+        $scope.objStr         = $scope.onNVR ? "NVRObj" : "CMSObj";
         $scope.totalModelSets = 1;
         $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
         $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
@@ -23,7 +24,8 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      *     Track the current tab
      */
         $scope.whereami = function(onNVR) {
-            $scope.onNVR = onNVR;
+            $scope.onNVR  = onNVR;
+            $scope.objStr = $scope.onNVR ? "NVRObj" : "CMSObj";
         };
 
     /*****************************************
@@ -31,10 +33,9 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      */
         $scope.getBandwidth = function() {
             var bandwidthDisplay;
-            if ( $scope.onNVR ) {
-                bandwidthDisplay = $scope.NVRObj.cameras * $scope.getBitRate();
-            } else {
-                bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
+                bandwidthDisplay = $scope[$scope.objStr].cameras * $scope.getBitRate();
+            if ( "CMSObj" === $scope.objStr ) {
+                bandwidthDisplay *= $scope.CMSObj.remoteUsers;
             }
             unitCheck('bandwidth', bandwidthDisplay);
             return bandwidthDisplay;
@@ -53,21 +54,12 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      *     count the HDDs needed
      */
         $scope.getMinHDD = function() {
-            var minHDD = Math.ceil( $scope.getStorage() / $scope.NVRObj.HDDsize / 1024 );
-            switch ( $scope.NVRObj.RAID ) { // RAID Rule
-                case "1":
-                    minHDD *= 2;
-                    break;
-                case "5":
-                    minHDD += 1;
-                    break;
-                case "10":
-                    minHDD += 2;
-                    break;
-                default:
-            }
-            $scope.totalModelSets = Math.ceil( minHDD / 8 );
-            return minHDD > 8 ? 8 : minHDD;
+            var minHDD = optionsFactory.getMinHDD(
+                        $scope.getStorage(),
+                        $scope.NVRObj.HDDsize,
+                        $scope.NVRObj.RAID );
+            $scope.totalModelSets = minHDD[1];
+            return minHDD[0];
         };
 
     /*****************************************
@@ -232,18 +224,10 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  @return (integer) bitRate
          */
             $scope.getBitRate = function() {
-                var bitRate;
-                if ( $scope.$parent.onNVR ) {
-                    bitRate = optionsFactory.getBitrate(
-                        $scope.RSList.indexOf( $scope.NVRObj.bitRate.params.resolution ),
-                        $scope.FPSList.indexOf( $scope.NVRObj.bitRate.params.FPS ));
-                    $scope.NVRObj.bitRate.data = bitRate;
-                } else {
-                    bitRate = optionsFactory.getBitrate(
-                        $scope.RSList.indexOf( $scope.CMSObj.bitRate.params.resolution ),
-                        $scope.FPSList.indexOf( $scope.CMSObj.bitRate.params.FPS ));
-                    $scope.CMSObj.bitRate.data = bitRate;
-                }
+                var bitRate = optionsFactory.getBitRate(
+                                $scope[ $scope.objStr ].bitRate.params.resolution ,
+                                $scope[ $scope.objStr ].bitRate.params.FPS );
+                $scope[$scope.objStr].bitRate.data = bitRate;
                 return bitRate;
             };
 
@@ -343,13 +327,13 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
         };
 
         $scope.getEstDays = function() {
-            $scope.NVRObj.estDays.params.rHours =
-                $scope.NVRObj.estDays.params.rHours > 24 ?
-                    24 : $scope.NVRObj.estDays.params.rHours;
-            $scope.estDays = $scope.NVRObj.estDays.params.rDays *
-                $scope.NVRObj.estDays.params.motion / 100 *
-                $scope.NVRObj.estDays.params.rHours / 24;
-            return Math.ceil($scope.estDays);
+            $scope[$scope.objStr].estDays.params.rHours =
+                optionsFactory.hoursFix( $scope[$scope.objStr].estDays.params.rHours );
+            return optionsFactory.getEstDays(
+                $scope[$scope.objStr].estDays.params.rDays,
+                $scope[$scope.objStr].estDays.params.rHours,
+                $scope[$scope.objStr].estDays.params.motion
+                );
         };
 
         /**
