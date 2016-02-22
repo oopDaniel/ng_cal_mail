@@ -25,7 +25,6 @@
               <select
                 id="codec"
                 ng-model="data.bitRate.params.codec"
-                ng-change="update()"
                 ng-options="opt as opt for opt in codecList"
                 class="input form-control" >
               </select>
@@ -44,7 +43,6 @@
               <select
                 id="quality"
                 ng-model="data.bitRate.params.quality"
-                ng-change="update()"
                 ng-options="opt as opt for opt in qList"
                 class="input form-control">
               </select>

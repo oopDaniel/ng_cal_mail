@@ -8,7 +8,7 @@ angular.module('calculatorApp').controller('ItemCtrl', ['$scope', '$state', '$st
         var inf        = localStorageFactory.pj.getItem($scope.id, $scope.itemid);
         $scope.inf     = inf;
         var isNVR      = inf.type === "NVR";
-        $scope.dataURL = isNVR ? "views/NVRdata.html" : "views/CMSdata.html";
+        $scope.dataURL = isNVR ? "views/dataForm.html" : "views/CMSdata.html";
         var data       = inf.data;
         $scope.data    = data;
 

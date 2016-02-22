@@ -7,21 +7,21 @@ angular.module('calculatorApp')
         // var cmsObj = new CMSObj();
         this.pj    = new Projects();
 
-        this.getDefaultNVRObj = function() {
-            // return nvrObj;
-        };
+        // this.getDefaultNVRObj = function() {
+        //     // return nvrObj;
+        // };
 
-        this.getDefaultCMSObj = function() {
-            // return cmsObj;
-        };
+        // this.getDefaultCMSObj = function() {
+        //     // return cmsObj;
+        // };
 
-        this.setDefaultNVRObj = function(obj) {
-            // nvrObj = obj;
-        };
+        // this.setDefaultNVRObj = function(obj) {
+        //     // nvrObj = obj;
+        // };
 
-        this.setDefaultCMSObj = function(obj) {
-            // cmsObj = obj;
-        };
+        // this.setDefaultCMSObj = function(obj) {
+        //     // cmsObj = obj;
+        // };
 
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
@@ -82,8 +82,7 @@ angular.module('calculatorApp')
 
                 oldData = data;
                 storeData();
-
-            }
+            };
 
             this.getPj = function(id) {
                 var index = findByAttr( this.projects, "_id", id);
@@ -175,7 +174,7 @@ angular.module('calculatorApp')
 
             function loadData () {
                 try {
-                    return JSON.parse($window.localStorage["projects"]);
+                    return JSON.parse($window.localStorage.projects);
                 } catch(e) {
                     return [];
                 }
@@ -183,7 +182,7 @@ angular.module('calculatorApp')
 
             function storeData () {
                 try {
-                    $window.localStorage["projects"] = JSON.stringify(me.projects);
+                    $window.localStorage.projects = JSON.stringify(me.projects);
                 } catch(e) {
                     console.log("exception: " + e);
                 }
@@ -268,7 +267,7 @@ angular.module('calculatorApp')
             };
             this.RAID     = '5';
             this.HDDsize  = "3 TB";
-        }
+        };
         this.NVRObj.prototype = new MyObj();
 
         this.CMSObj = function() {
@@ -276,7 +275,7 @@ angular.module('calculatorApp')
             this.display.storage     = '-';
             this.display.storageUnit = '';
             this.remoteUsers = 10;
-        }
+        };
         this.CMSObj.prototype = new MyObj();
 
     }]);

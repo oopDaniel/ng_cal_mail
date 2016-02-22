@@ -182,6 +182,12 @@ $font_detail_color: lighten(grey, 10%);
   font-size:1.5em;
 }
 
+.highlightCMS {
+  @extend .highlight;
+  color:$theme_color;
+}
+
+
 .my-addon {
   background: rgba(255,255,255,0.1);
   border: 0;
@@ -286,12 +292,12 @@ $font_detail_color: lighten(grey, 10%);
 }
 
 
-.estdays {
+.selectedModelInput {
   background:$theme_color;
   color:white;
 }
-.estdaysCMS {
-  @extend .estdays;
+.selectedModelInputCMS {
+  @extend .selectedModelInput;
   background:$theme_color2;
 }
 

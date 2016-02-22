@@ -14,26 +14,28 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         function ($scope, $filter, optionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
-        // $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
-        $scope.NVRObj         = new localStorageFactory.NVRObj();
-        // $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
-        $scope.CMSObj         = new localStorageFactory.CMSObj();
-        var data              = $scope.onNVR ? $scope.NVRObj : $scope.CMSObj;
-        $scope.data           = data;
-        $scope.storageUnit    = $scope.NVRObj.display.storageUnit;
-        $scope.bandwidthUnit  = $scope.NVRObj.display.bandwidthUnit;
+        $scope.dataURL        = "views/dataForm.html";
+        var NVRObj            = new localStorageFactory.NVRObj();
+        var CMSObj            = new localStorageFactory.CMSObj();
+        var data;
         $scope.invalidForm    = true;
 
 
     /*****************************************
      *     Track the current tab
      */
-        $scope.whereami = function(onNVR) {
+        $scope.updatePos = function(onNVR) {
             $scope.onNVR  = onNVR;
-            data          = $scope.onNVR ? $scope.NVRObj : $scope.CMSObj;
+            data          = onNVR ? NVRObj : CMSObj;
             $scope.data   = data;
+
+            //-----------------------------------
+            $scope.storageUnit    = $scope.data.display.storageUnit;
+            $scope.bandwidthUnit  = $scope.data.display.bandwidthUnit;
+            //-----------------------------------
+
         };
-        $scope.whereami($scope.onNVR);
+        $scope.updatePos($scope.onNVR);
 
     /*****************************************
      *     Display the info of bandwidth and storage
@@ -179,9 +181,9 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
     /********************************************
      *      CMS local user identifier
      */
-        $scope.isLocal = true;
-        $scope.selectLocal = function(onLocal) {
-            $scope.isLocal = onLocal;
+
+        $scope.selectLocal = function(isLocal) {
+            data.local = isLocal;
         };
 
 
@@ -229,16 +231,6 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
             $scope.FPSList   = optionsFactory.getFPSList();
 
         /**
-         *  Update the object data in "localStorageFactory"
-         */
-            $scope.update = function() {
-                if ( $scope.$parent.onNVR )
-                    localStorageFactory.setDefaultNVRObj($scope.data);
-                else
-                    localStorageFactory.setDefaultCMSObj($scope.data);
-            };
-
-        /**
          *  Counting the bit rate using the data in the object
          *
          *  @return (integer) bitRate
@@ -265,8 +257,8 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
             $scope.open = function (size) {
                 var onNVR = $scope.$parent.onNVR;
 
-                $scope.bitRateColorFill    = true;
-                $scope.bitRateColorFillCMS = true;
+                $scope.bitRateColorFill    = onNVR;
+                $scope.bitRateColorFillCMS = !onNVR;
 
                 var templateStr = onNVR ?
                     'views/bitRateEstimate.html' :
@@ -280,7 +272,7 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
 
                 // Remove the filled color
                 modalInstance.result.then( null, function () {
-                    $scope.bitRateColorFill    = false;
+                   $scope.bitRateColorFill     = false;
                     $scope.bitRateColorFillCMS = false;
                 });
             };
@@ -297,6 +289,7 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
 myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
         'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
         optionsFactory, localStorageFactory) {
+
 
         $scope.estDayColorFill   = false;
         $scope.showOtherDuration = false;
@@ -340,21 +333,19 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
             if (!$scope.showOtherDuration) {
                 // for cross-controller display
                 optionsFactory.defaultRDays = $scope.rDays;
-                // for storage
                 $scope.data.estDays.params.rDays = tmp;
             }
-            localStorageFactory.setDefaultNVRObj($scope.data);
         };
 
         $scope.getEstDays = function() {
-            $scope.data.estDays.params.rHours =
-                optionsFactory.hoursFix( $scope.data.estDays.params.rHours );
-            $scope.data.estDays.data = optionsFactory.getEstDays(
-                $scope.data.estDays.params.rDays,
-                $scope.data.estDays.params.rHours,
-                $scope.data.estDays.params.motion
-                );
-            return $scope.data.estDays.data;
+                $scope.data.estDays.params.rHours =
+                    optionsFactory.hoursFix( $scope.data.estDays.params.rHours );
+                $scope.data.estDays.data = optionsFactory.getEstDays(
+                    $scope.data.estDays.params.rDays,
+                    $scope.data.estDays.params.rHours,
+                    $scope.data.estDays.params.motion
+                    );
+                return $scope.data.estDays.data;
         };
 
         /**
@@ -458,23 +449,14 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.pj4form.pjName = $scope.pjNameOption.name;
             }
 
-            if ( $scope.onNVR ) {
-                $scope.data = refreshDisplay($scope.data);
-                localStorageFactory.pj.addItem( $scope.pj4form.itemName,
-                            $scope.pj4form.pjName, $scope.data, true );
-            } else {
-                $scope.data = refreshDisplay($scope.data);
-                localStorageFactory.pj.addItem( $scope.pj4form.itemName,
-                            $scope.pj4form.pjName, $scope.data, false );
-            }
+            $scope.data.display.storage   = $scope.getStorage();
+            $scope.data.display.bandwidth = $scope.getBandwidth();
+
+            localStorageFactory.pj.addItem( $scope.pj4form.itemName,
+                        $scope.pj4form.pjName, $scope.data, $scope.onNVR );
+
             $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
             $scope.closeModal();
-        };
-
-        var refreshDisplay = function(obj) {
-            obj.display.storage       = $scope.getStorage();
-            obj.display.bandwidth     = $scope.getBandwidth();
-            return obj;
         };
 
         $scope.openModal = function (size) {

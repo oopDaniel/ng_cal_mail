@@ -1,8 +1,7 @@
- <div class="row customization">
+ <div class="row">
         <form
           class="form-horizontal"
-          name="NVRForm"
-          ng-submit="submitNVR()"
+          name="myForm"
           novalidate="">
 
           <section class="col-xs-12 section">
@@ -25,6 +24,7 @@
                     <input
                       type="tel"
                       class="form-control input"
+                      ng-class="{cmsBdr:!onNVR}"
                       id="num_cameras"
                       name="num_cameras"
                       pattern="\d{1,5}"
@@ -63,8 +63,12 @@
                     class="col-xs-6 col-sm-4 col-sm-offset-1">
                     <div
                       class="input form-control"
+
                       ng-click="open()"
-                      ng-class="{estdays:bitRateColorFill}">{{getBitRate()}}
+                      ng-class="{selectedModelInput    : bitRateColorFill,
+                                 selectedModelInputCMS : bitRateColorFillCMS,
+                                 cmsBdr:!onNVR }">
+                      {{getBitRate()}}
                     </div>
                   </div>
                   <div class="col-sm-2"></div>
@@ -75,6 +79,8 @@
           </section>
 
 <!-- ----------------------------- -->
+
+          <div ng-if="onNVR">
 
           <section class="col-xs-12 section">
             <div class="row">
@@ -97,7 +103,7 @@
                     <div
                       class="input form-control"
                       ng-click="open()"
-                      ng-class="{estdays:estDayColorFill}">
+                      ng-class="{selectedModelInput:estDayColorFill}">
                       {{getEstDays()}}
                     </div>
                   </div>
@@ -185,10 +191,76 @@
               </div>
             </div>
           </section>
+
+          </div> <!-- /ng-if:onNVR -->
+
+
+            <section class="col-xs-12 section">
+            <div class="row">
+              <div class="col-xs-12 col-sm-1 col-sm-push-2">
+                <i class="fa fa-user fa-3x icon-centered"></i>
+              </div>
+              <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="row form-group">
+                  <label
+                    for="local-client"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
+                    Local Client
+                  </label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <div class="flex"
+                         id="local-client">
+                      <div
+                        class="flex1"
+                        ng-class="{cmsFlex:!onNVR}"
+                        ng-click="selectLocal(true)"
+                        ng-class="{selected:data.local}">
+                        Yes
+                      </div>
+                      <div
+                        class="flex1"
+                        ng-class="{cmsFlex:!onNVR}"
+                        ng-click="selectLocal(false)"
+                        ng-class="{selected:!data.local}">
+                        No
+                      </div>
+                    </div> <!-- end local-client -->
+                  </div>
+                </div> <!-- end row -->
+
+                <div class="row form-group range-div" ng-if="!onNVR">
+                  <label
+                    for="remote-user"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
+                    Concurrent Remote Users
+                  </label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input
+                      type="range"
+                      class="rangebar-cms"
+                      min="1"
+                      max="10"
+                      ng-model="data.remoteUsers" />
+                    <span class="percentage">{{data.remoteUsers}}</span>
+                  </div>
+                </div> <!-- /ng-if:onCMS -->
+              </div>
+            </div> <!-- end row -->
+          </section>
+
+
+
+
+
         </form>
       </div>
 
-      <div class="row hd-requirement">
+
+      <div ng-include src="'views/recommend.html'"></div>
+
+
+
+      <!-- <div class="row hd-requirement">
         <h4>Minimin Hardware Requirement</h4>
         <section class="row section section-require">
           <div class="col-xs-1 col-xs-offset-1
@@ -250,3 +322,4 @@
           </div>
         </section>
       </div> <!-- end hd-requirement -->
+ -->
