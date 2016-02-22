@@ -131,15 +131,12 @@
                     RAID Type
                   </label>
                   <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="flex" id="RAID">
-                      <div
-                        class="flex1"
-                        ng-repeat="raid in RAIDArr"
-                        ng-click="updateRAID($index,raid)"
-                        ng-class="{selected:coloringRAID[$index]}">
-                        {{raid}}
-                      </div>
-                    </div> <!-- end flex -->
+                    <select
+                      class="input form-control"
+                      id="RAID"
+                      ng-model="data.RAID"
+                      ng-options="opt for opt in RAIDArr">
+                    </select>
                   </div>
                 </div> <!-- end row -->
 
@@ -212,16 +209,14 @@
                          id="local-client">
                       <div
                         class="flex1"
-                        ng-class="{cmsFlex:!onNVR}"
                         ng-click="selectLocal(true)"
-                        ng-class="{selected:data.local}">
+                        ng-class="{selected:data.local,cmsFlex:!onNVR}">
                         Yes
                       </div>
                       <div
                         class="flex1"
-                        ng-class="{cmsFlex:!onNVR}"
                         ng-click="selectLocal(false)"
-                        ng-class="{selected:!data.local}">
+                        ng-class="{selected:!data.local,cmsFlex:!onNVR}">
                         No
                       </div>
                     </div> <!-- end local-client -->
