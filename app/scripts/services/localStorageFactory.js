@@ -23,22 +23,6 @@ angular.module('calculatorApp')
             cmsObj = obj;
         };
 
-        // this.getPj = function() {
-        //     return pj;
-        // };
-
-        // this.setPj = function(pjObj) {
-        //     pj = pjObj;
-        // };
-
-
-        // ********** "this.pj.getPj is not a function" ***********
-        // console.log(this.pj.getPj(1));
-        // console.log(this.pj.getPj.call(this.pj, 1));
-        // console.log(Projects.getPj(1));
-        // ********************************************************
-
-
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
 
@@ -256,6 +240,8 @@ angular.module('calculatorApp')
             this.display  = {
                 bandwidth:64,
                 bandwidthUnit:'Mbps',
+                storage     : 960,
+                storageUnit : 'TB'
             };
             this.cameras  = 16;
             this.bitRate  = {
@@ -267,12 +253,11 @@ angular.module('calculatorApp')
                   FPS:30
                 }
             };
+            this.local    = true;
         }
 
         function NVRObj() {
             MyObj.call(this);
-            this.display.storage     = 960;
-            this.display.storageUnit = 'TB';
             this.estDays  = {
                 data:10,
                 params:{
@@ -288,16 +273,8 @@ angular.module('calculatorApp')
 
         function CMSObj() {
             MyObj.call(this);
-            this.display.storage = '-';
-            this.estDays  = {
-                data:10,
-                params:{
-                  rDays:30,
-                  rHours:16,
-                  motion:50,
-                }
-            };
-            this.local       = true;
+            this.display.storage     = '-';
+            this.display.storageUnit = '';
             this.remoteUsers = 10;
         }
         CMSObj.prototype = new MyObj();

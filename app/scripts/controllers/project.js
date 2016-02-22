@@ -11,7 +11,6 @@ var myApp = angular.module('calculatorApp');
 
 myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
     function ($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
-        // $scope.pj        = localStorageFactory.getPj();
         var pj           = localStorageFactory.pj;
         $scope.pjArr     = pj.projects;
         $scope.nodata    = !pj.hasData;
@@ -25,16 +24,6 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         }
         arrayInit();
 
-        // var counter;
-        // var storageUnitArr   = ["GB","TB","PB"];
-        // var bandwidthUnitArr = ["Mbps","Gbps","Tbps"];
-        // var unitConverter = function (num) {
-        //     if ( num > 10240 ) {
-        //         counter++;
-        //         return unitConverter( num / 1024 );
-        //     }
-        //     return num;
-        // };
 
         $scope.select = function (index) {
             $scope.clickArr[index] = !$scope.clickArr[index];
@@ -42,29 +31,12 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
 
 
         $scope.totalStorage = function (obj) {
-            // var storage = 0;
-            // for ( var i in obj.NVR ) {
-            //     storage += parseFloat(obj.NVR[i].data.display.storage);
-            // }
-            // counter = 0;
-            // storage = unitConverter(storage);
-            // return $filter("number")(storage, 1) + " " + storageUnitArr[counter];
             unitConvertFactory.setData(obj);
             var result = unitConvertFactory.getTotalStorage();
             return result[0] + " " + result[1];
         };
 
         $scope.totalBandwidth = function (obj) {
-            // var bandwidth = 0;
-            // for ( var i in obj.NVR ) {
-            //     bandwidth += parseFloat(obj.NVR[i].data.display.bandwidth);
-            // }
-            // for ( var i in obj.CMS ) {
-            //     bandwidth += parseFloat(obj.CMS[i].data.display.bandwidth);
-            // }
-            // counter = 0;
-            // bandwidth = unitConverter(bandwidth);
-            // return $filter("number")(bandwidth, 1) + " " + bandwidthUnitArr[counter];
             unitConvertFactory.setData(obj);
             var result = unitConvertFactory.getTotalBandwidth();
             return result[0] + " " + result[1];
@@ -90,7 +62,6 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         };
 
 //********************************************************************
-
 //********************************************************************
 
         $scope.closeModal = function () {
@@ -197,7 +168,6 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'u
         displaySetup();
 
 
-
         $scope.convert   = function (num, onStorage) {
             var result = onStorage ?
                 unitConvertFactory.getStorage(num) :
@@ -238,12 +208,5 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'u
                 scope: $scope
             });
         };
-
-
-
-
-
-
-
 
 }]);
