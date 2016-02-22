@@ -3,24 +3,24 @@
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
-        var nvrObj = new NVRObj();
-        var cmsObj = new CMSObj();
+        // var nvrObj = new NVRObj();
+        // var cmsObj = new CMSObj();
         this.pj    = new Projects();
 
         this.getDefaultNVRObj = function() {
-            return nvrObj;
+            // return nvrObj;
         };
 
         this.getDefaultCMSObj = function() {
-            return cmsObj;
+            // return cmsObj;
         };
 
         this.setDefaultNVRObj = function(obj) {
-            nvrObj = obj;
+            // nvrObj = obj;
         };
 
         this.setDefaultCMSObj = function(obj) {
-            cmsObj = obj;
+            // cmsObj = obj;
         };
 
 //----------------------------------------------------------------------
@@ -256,7 +256,7 @@ angular.module('calculatorApp')
             this.local    = true;
         }
 
-        function NVRObj() {
+        this.NVRObj = function() {
             MyObj.call(this);
             this.estDays  = {
                 data:10,
@@ -269,14 +269,14 @@ angular.module('calculatorApp')
             this.RAID     = '5';
             this.HDDsize  = "3 TB";
         }
-        NVRObj.prototype = new MyObj();
+        this.NVRObj.prototype = new MyObj();
 
-        function CMSObj() {
+        this.CMSObj = function() {
             MyObj.call(this);
             this.display.storage     = '-';
             this.display.storageUnit = '';
             this.remoteUsers = 10;
         }
-        CMSObj.prototype = new MyObj();
+        this.CMSObj.prototype = new MyObj();
 
     }]);

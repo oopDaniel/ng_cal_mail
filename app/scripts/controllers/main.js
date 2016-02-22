@@ -14,16 +14,15 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         function ($scope, $filter, optionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
-        $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
-        $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
+        // $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
+        $scope.NVRObj         = new localStorageFactory.NVRObj();
+        // $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
+        $scope.CMSObj         = new localStorageFactory.CMSObj();
         var data              = $scope.onNVR ? $scope.NVRObj : $scope.CMSObj;
         $scope.data           = data;
         $scope.storageUnit    = $scope.NVRObj.display.storageUnit;
         $scope.bandwidthUnit  = $scope.NVRObj.display.bandwidthUnit;
         $scope.invalidForm    = true;
-
-        var test = "HELLOWORLD";
-         $scope.test = test;
 
 
     /*****************************************
