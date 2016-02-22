@@ -71,27 +71,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
             return minHDD[0];
         };
 
-    /*****************************************
-     *      Checking whether the 'selected' class
-     *      should be applied in flexbox
-     */
-        $scope.RAIDArr = optionsFactory.getRAIDArr();
-        $scope.HDDArr  = optionsFactory.gethddSizeArr();
-        $scope.hdd     = optionsFactory.defaultHdd;
-        $scope.showOtherHDD = false;
-        $scope.hddInput = '';
-
-        $scope.showHdd = function() {
-            $scope.showOtherHDD = isNaN(parseInt($scope.hdd));
-            if (!$scope.showOtherHDD) {
-                data.HDDsize = $scope.hdd;
-            }
-        };
-
-        $scope.editHdd = function() {
-            data.HDDsize = parseInt($scope.hddInput) + " TB";
-        };
-
 
     /*****************************************
      *      Convert the units displayed
@@ -113,29 +92,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
             else return onStorage ? 'G' : 'M';
         };
 
-
-    /***************************************
-     *      Input validation
-     */
-        $scope.hddEmpty         = false;
-        $scope.hddInvalid       = false;
-        $scope.cameraEmpty      = false;
-        $scope.cameraInvalid    = false;
-
-        $scope.ValidCheck = function() {
-            if ( $scope.myForm.HDDsize.$dirty ) {
-                $scope.hddEmpty =
-                    "" === data.HDDsize;
-                $scope.hddInvalid =
-                    $scope.myForm.HDDsize.$error.pattern;
-            }
-            if ( $scope.myForm.num_cameras.$dirty ) {
-                $scope.cameraEmpty =
-                    $scope.myForm.num_cameras.$error.required;
-                $scope.cameraInvalid =
-                    $scope.myForm.num_cameras.$error.pattern;
-            }
-        };
 
 
     /********************************************
@@ -166,14 +122,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         });
 
 
-    /********************************************
-     *      CMS local user identifier
-     */
-
-        $scope.selectLocal = function(isLocal) {
-            data.local = isLocal;
-        };
-
 
 
     /********************************************
@@ -190,11 +138,75 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
 
 
 
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Form Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// Inherit {$scope.data} from parent controller
+
+
+myApp.controller('formCtrl', ['$scope','optionsFactory',
+    function($scope, optionsFactory) {
+        var data            = $scope.data;
+        $scope.showOtherHDD = false;
+        $scope.hddInput     = '';
+        $scope.HDDArr       = optionsFactory.gethddSizeArr();
+        $scope.hdd          = $scope.HDDArr[ $scope.HDDArr.indexOf(data.HDDsize) ];
+        $scope.RAIDArr      = optionsFactory.getRAIDArr();
+
+        $scope.showHdd = function() {
+            $scope.showOtherHDD = isNaN(parseInt($scope.hdd));
+            if (!$scope.showOtherHDD) {
+                data.HDDsize = $scope.hdd;
+            }
+        };
+
+        $scope.editHdd = function() {
+            data.HDDsize = parseInt($scope.hddInput) + " TB";
+            $scope.ValidCheck();
+        };
+
+
+        $scope.hddEmpty         = false;
+        $scope.hddInvalid       = false;
+        $scope.cameraEmpty      = false;
+        $scope.cameraInvalid    = false;
+        // To access the form in the child scope 'ng-include'
+        $scope.formHolder = {};
+
+        $scope.ValidCheck = function() {
+            if ( $scope.formHolder.myForm.HDDsize.$dirty ) {
+                $scope.hddEmpty =
+                    "" === $scope.hddInput;
+                $scope.hddInvalid =
+                    $scope.formHolder.myForm.HDDsize.$error.pattern;
+            }
+            if ( $scope.formHolder.myForm.num_cameras.$dirty ) {
+                $scope.cameraEmpty =
+                    $scope.formHolder.myForm.num_cameras.$error.required;
+                $scope.cameraInvalid =
+                    $scope.formHolder.myForm.num_cameras.$error.pattern;
+            }
+        };
+
+        $scope.selectLocal = function(isLocal) {
+            data.local = isLocal;
+        };
+
+
+}]);
+
+
+
+
+
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     Bit Rate Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 // Inherit {$scope.data} from parent controller
+
 
 myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
             'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
@@ -233,17 +245,13 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  Modal handler
          */
             $scope.open = function (size) {
-                var onNVR = $scope.$parent.onNVR;
+                var onNVR = $scope.onNVR;
 
                 $scope.bitRateColorFill    = onNVR;
                 $scope.bitRateColorFillCMS = !onNVR;
 
-                var templateStr = onNVR ?
-                    'views/bitRateEstimate.html' :
-                    'views/bitRateEstimateCMS.html';
-
                 var modalInstance = $uibModal.open({
-                    templateUrl: templateStr,
+                    templateUrl: 'views/bitRateEstimate.html',
                     size       : size,
                     scope      : $scope
                 });
@@ -261,8 +269,8 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     Estimated-days Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 // Inherit {$scope.data} from parent controller
+
 
 myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
         'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
@@ -361,7 +369,7 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         Save Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+// Inherit {$scope.data} from parent controller
 
 
 myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',

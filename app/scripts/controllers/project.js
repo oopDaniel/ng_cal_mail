@@ -156,22 +156,32 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'u
         $scope.data   = project.data;
         $scope.nodata = project.data.length === 0;
 
-        function displaySetup () {
-            var storage      = unitConvertFactory.getStorage(project.storage);
-            var bandwidth    = unitConvertFactory.getBandwidth(project.bandwidth);
-            $scope.storage   = storage[0];
-            $scope.sUnit     = storage[1];
-            $scope.bandwidth = bandwidth[0];
-            $scope.bUnit     = bandwidth[1];
+        function displaySetup (onStorage) {
+            if ( onStorage ) {
+                var num      = unitConvertFactory.getStorage(project.storage);
+                $scope.sUnit = num[1];
+            } else {
+                var num      = unitConvertFactory.getBandwidth(project.bandwidth);
+                $scope.bUnit = num[1];
+            }
+            return num[0];
         }
 
-        displaySetup();
+        $scope.showBandwidth = function () {
+            return displaySetup( false );
+        };
+
+        $scope.showStorage = function () {
+            return displaySetup( true );
+        };
 
 
         $scope.convert   = function (num, onStorage) {
-            var result = onStorage ?
-                unitConvertFactory.getStorage(num) :
-                unitConvertFactory.getBandwidth(num);
+            if ( onStorage ) {
+                var result = unitConvertFactory.getStorage(num);
+            } else {
+                var result = unitConvertFactory.getBandwidth(num);
+            }
             return result[0] + " " + result[1];
         };
 
