@@ -1,5 +1,9 @@
+  <div class="alert">
+    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+  </div>
   <div class="jumbotron reducePadding">
     <div class="row">
+
         <div class="table-showdigit col-xs-12
                     col-md-6 col-md-offset-3">
           <table
@@ -33,7 +37,9 @@
 <div ng-include="dataURL"></div>
 
 <div class="row">
-  <div class="col-xs-6 col-xs-push-6">
-    <button class='btn btn-info' ng-click="saveEdit()">Save</button>
+  <div class="col-xs-6 col-xs-push-5">
+    <button class='btn btn-primary' ng-click="saveEdit()">Save</button>
   </div>
+  <div class="col-xs-6">
+    <button class='btn btn-info' ng-click="refresh()">Refresh</button>
 </div>

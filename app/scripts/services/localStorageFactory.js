@@ -44,8 +44,8 @@ angular.module('calculatorApp')
 
 
         function Projects() {
-            this.projects   = loadData();
             var me          = this;
+            this.projects = loadData();
 
             this.updateStatus = function () {
                 this.length = this.projects.length;
@@ -282,7 +282,7 @@ angular.module('calculatorApp')
                 }
             };
             this.RAID     = '5';
-            this.HDDsize  = 3;
+            this.HDDsize  = "3 TB";
         }
         NVRObj.prototype = new MyObj();
 

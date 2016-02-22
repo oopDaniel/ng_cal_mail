@@ -1,8 +1,8 @@
 'use strict';
 
 
-myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'localStorageFactory', 'optionsFactory',
-    function ($scope, $stateParams, unitConvertFactory, localStorageFactory, optionsFactory) {
+myApp.controller('ItemCtrl', ['$scope', '$state', '$stateParams', 'unitConvertFactory', 'localStorageFactory', 'optionsFactory',
+    function ($scope, $state, $stateParams, unitConvertFactory, localStorageFactory, optionsFactory) {
         $scope.id      = parseInt($stateParams.id);
         $scope.itemid  = parseInt($stateParams.itemid);
         var inf        = localStorageFactory.pj.getItem($scope.id, $scope.itemid);
@@ -13,8 +13,6 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         $scope.data    = data;
 
 
-        $scope.sUnit = "";
-        $scope.bUnit = "";
         function displaySetup (num, onStorage) {
             var tmp;
             if ( onStorage ) {
@@ -49,7 +47,9 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         //---------------- HDD -------------------
         $scope.showOtherHDD = false;
         $scope.HDDArr       = optionsFactory.gethddSizeArr();
-        $scope.hdd = $scope.HDDArr[ $scope.HDDArr.indexOf(data.HDDsize) ];
+        var t = $scope.HDDArr.indexOf(data.HDDsize);
+        console.log(data)
+        $scope.hdd = $scope.HDDArr[ t ];
         $scope.hddInput = ''
 
         $scope.showHdd = function() {
@@ -103,7 +103,20 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         data.display.bandwidth = getBandwidth();
         localStorageFactory.pj.editItem( $scope.id, $scope.itemid,
                                          data, true );
+        $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
     };
 
+    $scope.refresh = function () {
+        // localStorageFactory.pj.refresh();
+        $state.go($state.current, {}, {reload: true});
+    }
+
+
+    //--------------  alert   ----------------
+    $scope.alerts = [];
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 
 }]);

@@ -185,6 +185,28 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
             $scope.isLocal = onLocal;
         };
 
+
+
+    /********************************************
+     *              Notification
+     */
+
+    $scope.alerts = [];
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+
+
+
+
+
+
+
+
+
+
   }]);
 
 
@@ -446,6 +468,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 localStorageFactory.pj.addItem( $scope.pj4form.itemName,
                             $scope.pj4form.pjName, $scope.data, false );
             }
+            $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
             $scope.closeModal();
         };
 
