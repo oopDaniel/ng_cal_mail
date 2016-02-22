@@ -10,8 +10,8 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'localStorageFactory',
-        function ($scope, $filter, formOptionsFactory, localStorageFactory) {
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory',
+        function ($scope, $filter, optionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
         $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
@@ -74,7 +74,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
      *      Checking whether the 'selected' class
      *      should be applied in flexbox
      */
-        $scope.RAIDArr = formOptionsFactory.getRAIDArr();
+        $scope.RAIDArr = optionsFactory.getRAIDArr();
 
         $scope.showHdd = function() {
             var tmp = parseInt($scope.hdd);
@@ -85,7 +85,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
 
         $scope.coloringRAID = new Array( $scope.RAIDArr.length );
         // default RAID type
-        $scope.coloringRAID[ formOptionsFactory.defaultRAIDindex ] = true;
+        $scope.coloringRAID[ optionsFactory.defaultRAIDindex ] = true;
         // after clicked on a certain type of RAID
         $scope.updateRAID = function(index, RAIDtype) {
             $scope.coloringRAID.fill(false);
@@ -149,8 +149,8 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
      *      Deal with the selection of HDD,
      *      check if 'other option' was selected.
      */
-        $scope.HDDArr = formOptionsFactory.gethddSizeArr();
-        $scope.hdd = formOptionsFactory.defaultHdd;
+        $scope.HDDArr = optionsFactory.gethddSizeArr();
+        $scope.hdd = optionsFactory.defaultHdd;
 
         $scope.showHdd = function() {
             var tmp = parseInt($scope.hdd);
@@ -205,16 +205,16 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
 
 
 myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
-            'bitrateFactory', 'localStorageFactory', function($scope, $uibModal,
-            bitrateFactory, localStorageFactory) {
+            'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
+            optionsFactory, localStorageFactory) {
 
             $scope.bitRateColorFill    = false;
             $scope.bitRateColorFillCMS = false;
 
-            $scope.codecList = bitrateFactory.getCodecList();
-            $scope.qList     = bitrateFactory.getQList();
-            $scope.RSList    = bitrateFactory.getRsList();
-            $scope.FPSList   = bitrateFactory.getFPSList();
+            $scope.codecList = optionsFactory.getCodecList();
+            $scope.qList     = optionsFactory.getQList();
+            $scope.RSList    = optionsFactory.getRsList();
+            $scope.FPSList   = optionsFactory.getFPSList();
 
         /**
          *  Update the object data in "localStorageFactory"
@@ -234,12 +234,12 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
             $scope.getBitRate = function() {
                 var bitRate;
                 if ( $scope.$parent.onNVR ) {
-                    bitRate = bitrateFactory.getBitrate(
+                    bitRate = optionsFactory.getBitrate(
                         $scope.RSList.indexOf( $scope.NVRObj.bitRate.params.resolution ),
                         $scope.FPSList.indexOf( $scope.NVRObj.bitRate.params.FPS ));
                     $scope.NVRObj.bitRate.data = bitRate;
                 } else {
-                    bitRate = bitrateFactory.getBitrate(
+                    bitRate = optionsFactory.getBitrate(
                         $scope.RSList.indexOf( $scope.CMSObj.bitRate.params.resolution ),
                         $scope.FPSList.indexOf( $scope.CMSObj.bitRate.params.FPS ));
                     $scope.CMSObj.bitRate.data = bitRate;
@@ -291,15 +291,15 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
 
 
 myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
-        'formOptionsFactory', 'localStorageFactory', function($scope, $uibModal,
-        formOptionsFactory, localStorageFactory) {
+        'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
+        optionsFactory, localStorageFactory) {
 
         $scope.estDayColorFill   = false;
         $scope.showOtherDuration = false;
 
-        $scope.rDaysArr = formOptionsFactory.getRDaysArr();
+        $scope.rDaysArr = optionsFactory.getRDaysArr();
         // Keep the data in the modal available for display
-        $scope.rDays    = formOptionsFactory.defaultRDays;
+        $scope.rDays    = optionsFactory.defaultRDays;
 
         $scope.invalidHours = false;
         $scope.invalidDays  = false;
@@ -335,7 +335,7 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
             // Do the update if getting a number
             if (!$scope.showOtherDuration) {
                 // for cross-controller display
-                formOptionsFactory.defaultRDays = $scope.rDays;
+                optionsFactory.defaultRDays = $scope.rDays;
                 // for storage
                 $scope.NVRObj.estDays.params.rDays = tmp;
             }

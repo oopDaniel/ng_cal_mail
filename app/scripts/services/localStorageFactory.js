@@ -236,7 +236,6 @@ angular.module('calculatorApp')
         }
 
         function MyObj() {
-            this.itemName = '';
             this.display  = {
                 bandwidth:64,
                 bandwidthUnit:'Mbps',
