@@ -13,7 +13,6 @@ var myApp = angular.module('calculatorApp');
 myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory',
         function ($scope, $filter, optionsFactory, localStorageFactory) {
         $scope.onNVR          = true;  // else on CMS
-        $scope.objStr         = $scope.onNVR ? "NVRObj" : "CMSObj";
         $scope.totalModelSets = 1;
         $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
         $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
@@ -32,8 +31,8 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      */
         $scope.whereami = function(onNVR) {
             $scope.onNVR  = onNVR;
-            $scope.objStr = $scope.onNVR ? "NVRObj" : "CMSObj";
             data          = $scope.onNVR ? $scope.NVRObj : $scope.CMSObj;
+            $scope.data   = data;
         };
         $scope.whereami($scope.onNVR);
 
@@ -43,7 +42,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.getBandwidth = function() {
             var bandwidthDisplay;
                 bandwidthDisplay = data.cameras * $scope.getBitRate();
-            if ( "CMSObj" === $scope.objStr ) {
+            if ( !$scope.onNVR ) {
                 bandwidthDisplay *= data.remoteUsers;
             }
             unitCheck('bandwidth', bandwidthDisplay);
@@ -76,6 +75,9 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      *      should be applied in flexbox
      */
         $scope.RAIDArr = optionsFactory.getRAIDArr();
+
+        $scope.HDDArr = optionsFactory.gethddSizeArr();
+        $scope.hdd = optionsFactory.defaultHdd;
 
         $scope.showHdd = function() {
             var tmp = parseInt($scope.hdd);
@@ -128,7 +130,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.ValidCheck = function() {
             if ( $scope.NVRForm.HDDsize.$dirty ) {
                 $scope.hddEmpty =
-                    "" === $scope.NVRObj.HDDsize;
+                    "" === data.HDDsize;
                 $scope.hddInvalid =
                     $scope.NVRForm.HDDsize.$error.pattern;
             }
@@ -146,19 +148,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
             }
         };
 
-    /********************************************
-     *      Deal with the selection of HDD,
-     *      check if 'other option' was selected.
-     */
-        $scope.HDDArr = optionsFactory.gethddSizeArr();
-        $scope.hdd = optionsFactory.defaultHdd;
-
-        $scope.showHdd = function() {
-            var tmp = parseInt($scope.hdd);
-            $scope.showOtherHDD = isNaN(tmp);
-            if (!$scope.showOtherHDD)
-                data.HDDsize = tmp;
-        };
 
     /********************************************
      *      Communication with the Bit Rate modal
@@ -204,6 +193,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
                     Bit Rate Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+// Inherit {$scope.data} from parent controller
 
 myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
             'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
@@ -281,7 +271,7 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
                     Estimated-days Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-
+// Inherit {$scope.data} from parent controller
 
 myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
         'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
@@ -332,17 +322,18 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
                 // for storage
                 $scope.data.estDays.params.rDays = tmp;
             }
-            localStorageFactory.setDefaultNVRObj($scope.NVRObj);
+            localStorageFactory.setDefaultNVRObj($scope.data);
         };
 
         $scope.getEstDays = function() {
             $scope.data.estDays.params.rHours =
                 optionsFactory.hoursFix( $scope.data.estDays.params.rHours );
-            return optionsFactory.getEstDays(
+            $scope.data.estDays.data = optionsFactory.getEstDays(
                 $scope.data.estDays.params.rDays,
                 $scope.data.estDays.params.rHours,
                 $scope.data.estDays.params.motion
-                );
+                )
+            return $scope.data.estDays.data;
         };
 
         /**

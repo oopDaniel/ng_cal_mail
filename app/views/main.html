@@ -222,7 +222,7 @@
                           onkeyup="value=value.replace(/[^\d]/g,'')"
                           maxlength="2"
                           placeholder="Enter the size"
-                          ng-model="NVRObj.HDDsize"
+                          ng-model="data.HDDsize"
                           ng-change="ValidCheck()"
                           />
                         <div class="input-group-addon my-addon">TB</div>
@@ -351,7 +351,7 @@
                       maxlength="5"
                       required
                       placeholder="Enter the number"
-                      ng-model="CMSObj.cameras"
+                      ng-model="data.cameras"
                       ng-change="ValidCheck()" />
                     <span
                       class="help-block"

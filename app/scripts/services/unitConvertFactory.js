@@ -23,17 +23,7 @@ angular.module('calculatorApp')
         return [ result[0], unit ];
     };
 
-    this.getStorage = function (num) {
-        var result = display.doTheMath(num);
-        var unit   = storageUnitArr[ result[1] ];
-        return [ result[0], unit ];
-    };
 
-    this.getBandwidth = function (num) {
-        var result = display.doTheMath(num);
-        var unit   = bandwidthUnitArr[ result[1] ];
-        return [ result[0], unit ];
-    };
 
     // this.getStorageUnit = function () {
     //     return display.storageUnit;
@@ -87,40 +77,88 @@ angular.module('calculatorApp')
         //************ This doesn't work ******************
 
         doTheMath : function (num) {
-            var cv = new Converter(num);
-            return [ $filter("number")( cv.result, 1 ), cv.counter ];
+            var counter = 0;
+            var result = unitConverter(num);
+
+            // function unitConverter (n) {
+            //     // if ( num > 10240 ) {
+            //     if ( n <= 1024 ) return n;
+            //     counter++;
+            //     n = unitConverter( n / 1024 );
+            //     return n;
+            // }
+            function unitConverter (n) {
+                for ( var i = n; i > 1024; counter++ ) {
+                    i /= 1024;
+                }
+                return i;
+            }
+
+            // console.log("counter: "+counter)
+
+            return [ $filter("number")( result, 1 ), counter ];
         }
         //**************************************************
     };
 
 
-    function Converter (num) {
-        var self     = this;
-        this.counter = 0;
+    // function Converter (num) {
+    //     var self     = this;
+    //     this.counter = 0;
 
-        function unitConverter (num) {
-            if ( num > 10240 ) {
-                self.counter++;
-                return unitConverter( num / 1024 );
-            }
-            return num;
-        }
+        // function unitConverter (num) {
+        //     // if ( num > 10240 ) {
+        //     if ( num > 1024 ) {
+        //         self.counter++;
+        //         return unitConverter( num / 1024 );
+        //     }
+        //     return num;
+        // }
+    //     function unitConverter (n) {
+    //         for ( var i = n; i > 1024; self.counter++ ) {
+    //             i /= 1024;
+    //         }
+    //         return i;
+    //     }
+    //         console.log(self.counter)
+    //     this.result  = unitConverter(num);
+    // }
 
-        this.result  = unitConverter(num);
+//--------------------------------------------------------------
 
-    }
-
-
-
+//--------------------------------------------------------------
 
     // Can't new an instance b4 its definitions
     var display = new Displayer();
 
 
+    function unitConverter (n) {
+        var num = n
+        var i = 0;
+        for ( i; num > 1024;  i++) {
+            num /= 1024;
+        }
+
+        return [num,i];
+    }
 
 
+    this.getStorage = function (num) {
+        // var c = new Converter(num);
+        var arr = unitConverter(num)
+        var unit = storageUnitArr[ arr[1] ];
+        console.log(arr)
+        return [ $filter("number")( arr[0], 1 ), unit ];
+    };
 
-
+    this.getBandwidth = function (num) {
+        // var result = display.doTheMath(num);
+        var arr = unitConverter(num)
+        // var unit   = bandwidthUnitArr[ result[1] ];
+        var unit   = bandwidthUnitArr[ arr[1] ];
+        // return [ result[0], unit ];
+        return [ $filter("number")( arr[0], 1 ), unit ]
+    };
 
 
 

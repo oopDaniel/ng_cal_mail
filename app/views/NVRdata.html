@@ -27,8 +27,8 @@
                       class="form-control input"
                       id="num_cameras"
                       name="num_cameras"
-                      pattern="\d{1,5}"
-                      maxlength="5"
+                      pattern="\d{1,10}"
+                      maxlength="99"
                       onkeyup="value=value.replace(/[^\d]/g,'')"
                       placeholder="Enter the number"
                       required
@@ -148,7 +148,7 @@
                     <select
                       class="input form-control"
                       id="HDDsize"
-                      ng-model="hdd"
+                      ng-model="$parent.hdd"
                       ng-change="showHdd()"
                       ng-options="opt for opt in HDDArr">
                     </select>
@@ -164,8 +164,8 @@
                           onkeyup="value=value.replace(/[^\d]/g,'')"
                           maxlength="2"
                           placeholder="Enter the size"
-                          ng-model="NVRObj.HDDsize"
-                          ng-change="ValidCheck()"
+                          ng-model="$parent.hddInput"
+                          ng-change="editHdd()"
                           />
                         <div class="input-group-addon my-addon">TB</div>
                       </div>
@@ -238,7 +238,7 @@
               <div
                 class="col-xs-6 col-xs-offset-1 padding-bottom"
                 ng-model="minHDD">
-                {{NVRObj.HDDsize}} TB x
+                {{data.HDDsize}} x
                 <span class="highlight">{{ getMinHDD()}} </span>
                 <span class="unbreak">as a set</span>
                 <br>

@@ -44,14 +44,18 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         //---------------- HDD -------------------
         $scope.showOtherHDD = false;
         $scope.HDDArr       = optionsFactory.gethddSizeArr();
-        $scope.hdd          = optionsFactory.defaultHdd;
+        $scope.hdd = $scope.HDDArr[ $scope.HDDArr.indexOf(data.HDDsize) ];
+        $scope.hddInput = ''
 
         $scope.showHdd = function() {
-            var tmp = parseInt($scope.hdd);
-            $scope.showOtherHDD = isNaN(tmp);
+            $scope.showOtherHDD = isNaN( parseInt($scope.hdd) );
             if (!$scope.showOtherHDD) {
-                data.HDDsize = tmp;
+                $scope.data.HDDsize = $scope.hdd;
             }
+        };
+
+        $scope.editHdd = function() {
+            $scope.data.HDDsize = parseInt($scope.hddInput) + " TB";
         };
 
 
@@ -63,6 +67,7 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
      *     count the HDDs needed
      */
         $scope.getMinHDD = function() {
+            // console.log($scope.getStorage()+" "+data.HDDsize+" "+data.RAID)
             var minHDD = optionsFactory.getMinHDD(
                         $scope.getStorage(),
                         data.HDDsize,

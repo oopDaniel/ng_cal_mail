@@ -11,7 +11,7 @@ angular.module('calculatorApp')
     .service('optionsFactory', function () {
 
         var defaultRDaysStr = '30 days (1 month)';
-        var defaultHddStr   = '3TB';
+        var defaultHddStr   = '3 TB';
         var defaultRAIDStr  = '5';
 
         var rDaysArr = [
@@ -27,8 +27,8 @@ angular.module('calculatorApp')
         ];
 
         var hddSizeArr = [
-          '1TB', '2TB', '3TB',
-          '4TB', '6TB', 'Other'
+          '1 TB', '2 TB', '3 TB',
+          '4 TB', '6 TB', 'Other'
         ];
 
         var RAIDArr = [
@@ -136,7 +136,8 @@ angular.module('calculatorApp')
 
 //------------------------------------------------
         this.getMinHDD = function( storage, HDDsize, RAID ) {
-            var minHDD = Math.ceil( storage / HDDsize / 1024 );
+            var hdd = parseInt(HDDsize);
+            var minHDD = Math.ceil( storage / hdd / 1024 );
             switch ( RAID ) { // RAID Rule
                 case "1":
                     minHDD *= 2;
