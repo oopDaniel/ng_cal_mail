@@ -99,7 +99,7 @@ angular.module('calculatorApp')
         this.counter = 0;
 
         function unitConverter (num) {
-            if ( num > 10240 ) {
+            if ( num > 1024 ) {
                 self.counter++;
                 return unitConverter( num / 1024 );
             }

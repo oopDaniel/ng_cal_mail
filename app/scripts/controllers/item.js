@@ -29,17 +29,22 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
 
         //------------- Counting ----------------
 
-        $scope.getBandwidth = function() {
-            var bandwidthDisplay = data.cameras * data.bitRate.data;
-            return displaySetup( bandwidthDisplay, false );
+        function getBandwidth() {
+            return data.cameras * data.bitRate.data;
         };
 
-        $scope.getStorage = function() {
-            var storageDisplay =
-              $scope.getBandwidth() * 0.125 * // to MB/s
-              60 * 60 * 24 / 1024 * data.estDays.data;
-            return displaySetup( storageDisplay, true );
+        $scope.showBandwidth = function () {
+            return displaySetup( getBandwidth(), false );
         };
+
+        function getStorage () {
+            return getBandwidth() * 0.125 * // to MB/s
+              60 * 60 * 24 / 1024 * data.estDays.data;
+        };
+
+        $scope.showStorage = function () {
+            return displaySetup( getStorage(), true );
+        }
 
         //---------------- HDD -------------------
         $scope.showOtherHDD = false;
@@ -69,7 +74,7 @@ myApp.controller('ItemCtrl', ['$scope', '$stateParams', 'unitConvertFactory', 'l
         $scope.getMinHDD = function() {
             // console.log($scope.getStorage()+" "+data.HDDsize+" "+data.RAID)
             var minHDD = optionsFactory.getMinHDD(
-                        $scope.getStorage(),
+                        getStorage(),
                         data.HDDsize,
                         data.RAID );
             $scope.totalModelSets = minHDD[1];
