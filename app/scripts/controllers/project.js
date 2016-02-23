@@ -171,8 +171,8 @@ myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'ol
 // Inherit {$scope.data} from parent controller
 
 
-myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
-    function ($scope, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
+myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
+    function ($scope, $state, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
         $scope.id     = parseInt($stateParams.id);
         var project   = localStorageFactory.pj.getPj($scope.id);
         $scope.name   = project.name;
@@ -233,13 +233,33 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'u
         };
 
 
-        $scope.openModal = function (template, ctrl, size) {
+        $scope.openModal = function  (template, ctrl, size, isPjName, oldName ) {
             return $uibModal.open({
                 templateUrl: "views/" + template + ".html",
                 size: size,
                 controller: ctrl,
-                scope: $scope
+                scope: $scope,
+                resolve: {
+                    isPjName: function() {
+                        return isPjName;
+                    },
+                    oldPjName: function() {
+                        return oldName;
+                    }
+                }
             });
+        };
+
+        $scope.closeModal = function () {
+            $scope.modalInstance.close();
+        };
+
+        $scope.clickRename = function (name) {
+            $scope.modalInstance = $scope.openModal( "rename", "renameCtrl", "sm", true, name );
+            $scope.modalInstance.result.then(
+                function() {
+                    $state.reload();
+                });
         };
 
 }]);
