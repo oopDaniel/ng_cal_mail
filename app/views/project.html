@@ -15,9 +15,10 @@
     <h4>There is no available data now!</h4>
   </div>
   <div class="project" ng-repeat="item in pjArr | orderBy: 'name' | filter: filtText">
-    <span ng-click="clickRename(item.name)"><h4>{{item.name}}</h4></span>
+    <div ng-click="select($index)" ng-class="{selectItem:clickArr[$index]}">
+      <span ng-click="clickRename(item.name)"><h4>{{item.name}}</h4></span>
       <div class="details detailBorder">
-        <div class="row" ng-click="select($index)" ng-class="{selectItem:clickArr[$index]}">
+        <div class="row">
           <div class="col-xs-8">
             <span ng-show="item.count.NVR">NVR: {{item.count.NVR}}</span>
             <span ng-show="item.count.NVR && item.count.CMS">, </span>
@@ -31,6 +32,7 @@
           <div class="col-xs-2" ng-click="clickDelete($index)">DELETE</div>
         </div>
       </div>
+    </div>
   </div>
 </section>
 </div>

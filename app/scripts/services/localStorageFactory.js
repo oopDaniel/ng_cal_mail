@@ -3,50 +3,34 @@
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
-        // var nvrObj = new NVRObj();
-        // var cmsObj = new CMSObj();
+
         this.pj    = new Projects();
 
-        // this.getDefaultNVRObj = function() {
-        //     // return nvrObj;
-        // };
-
-        // this.getDefaultCMSObj = function() {
-        //     // return cmsObj;
-        // };
-
-        // this.setDefaultNVRObj = function(obj) {
-        //     // nvrObj = obj;
-        // };
-
-        // this.setDefaultCMSObj = function(obj) {
-        //     // cmsObj = obj;
-        // };
 
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
 
 
         function Projects() {
-            var me          = this;
-            this.projects = loadData();
+            var self      = this;
+            self.projects = loadData();
 
             this.updateStatus = function () {
-                this.length = this.projects.length;
-                this.hasData = ( this.length > 0 );
+                self.length = self.projects.length;
+                self.hasData = ( self.length > 0 );
             };
 
-            this.updateStatus();
+            self.updateStatus();
 
             this.renamePj = function (oldName, newName) {
                 var index = getPjIndex(oldName);
-                this.projects[index].name = newName;
+                self.projects[index].name = newName;
                 storeData();
             };
 
             this.addItem = function (itemName, pjName, data, onNVR) {
                 var index = getPjIndex(pjName);
-                var old   = this.projects[index];
+                var old   = self.projects[index];
                 var type = "CMS";
 
                 if ( onNVR ) {
@@ -69,38 +53,37 @@ angular.module('calculatorApp')
                 storeData();
             };
 
-            this.editItem = function ( pId, itemId, data, onNVR ) {
-                var indexP = findByAttr( this.projects, "_id", pId);
-                var old    = this.projects[indexP];
-                var index  = findByAttr( old.data, "_id", itemId);
-                var oldData = old.data[index].data;
+            this.editItem = function ( pId, itemId, data ) {
+                var indexP = findByAttr( self.projects, "_id", pId);
+                var pj     = self.projects[indexP];
+                var old    = loadData();
+                var index  = findByAttr( pj.data, "_id", itemId);
+                var oldData = old[indexP].data[index].data;
+                pj.storage -= oldData.display.storage;
+                pj.storage += data.display.storage;
+                pj.bandwidth -= oldData.display.bandwidth;
+                pj.bandwidth += data.display.bandwidth;
 
-                old.storage -= oldData.display.storage;
-                old.storage += data.display.storage;
-                old.bandwidth -= oldData.display.bandwidth;
-                old.bandwidth += data.display.bandwidth;
-
-                oldData = data;
                 storeData();
             };
 
             this.getPj = function(id) {
-                var index = findByAttr( this.projects, "_id", id);
-                return this.projects[ index ];
+                var index = findByAttr( self.projects, "_id", id);
+                return self.projects[ index ];
             };
 
             this.getItem = function(pid, itemid) {
-                var pindex = findByAttr( this.projects, "_id", pid);
-                var index  = findByAttr( this.projects[pindex].data, "_id", itemid);
-                return this.projects[ pindex ].data[ index ];
+                var pindex = findByAttr( self.projects, "_id", pid);
+                var index  = findByAttr( self.projects[pindex].data, "_id", itemid);
+                return self.projects[ pindex ].data[ index ];
             };
 
             this.deletePj = function (id) {
-                var index = findByAttr( this.projects, "_id", id);
-                if ( undefined !== index ) {
-                    this.projects.splice(index, 1);
-                    this.updateStatus();
-                    if ( !this.hasData ) {
+                var index = findByAttr( self.projects, "_id", id);
+                if ( -1 !== index ) {
+                    self.projects.splice(index, 1);
+                    self.updateStatus();
+                    if ( !self.hasData ) {
                         $window.localStorage.removeItem("projects");
                     } else {
                         storeData();
@@ -110,19 +93,19 @@ angular.module('calculatorApp')
 
 
             this.deleteItem = function (id, pid) {
-                var indexP = findByAttr( this.projects, "_id", pid);
-                var arr    = this.projects[indexP].data;
+                var indexP = findByAttr( self.projects, "_id", pid);
+                var arr    = self.projects[indexP].data;
                 var index  = findByAttr( arr, "_id", id);
 
-                if ( undefined !== index ) {
+                if ( -1 !== index ) {
                     var type = arr[index].type;
                     if ( "NVR" === type ) {
-                        this.projects[indexP].count.NVR--;
-                        this.projects[indexP].storage -= arr[index].data.display.storage;
+                        self.projects[indexP].count.NVR--;
+                        self.projects[indexP].storage -= arr[index].data.display.storage;
                     } else {
-                        this.projects[indexP].count.CMS--;
+                        self.projects[indexP].count.CMS--;
                     }
-                        this.projects[indexP].bandwidth -= arr[index].data.display.bandwidth;
+                        self.projects[indexP].bandwidth -= arr[index].data.display.bandwidth;
 
                     arr.splice(index, 1);
                     storeData();
@@ -132,14 +115,14 @@ angular.module('calculatorApp')
 
 
             function getPjIndex (pjName) {
-                var index = findByAttr( me.projects, "name", pjName );
-                if ( undefined === index) {
+                var index = findByAttr( self.projects, "name", pjName );
+                if ( -1 === index) {
                     var pj = new NewPJ(pjName);
-                    var id = getNextId(me.projects,"_id");
-                    me.projects.push(pj);
-                    me.updateStatus();
-                    me.projects[me.length - 1]._id = id;
-                    return me.length - 1;
+                    var id = getNextId(self.projects,"_id");
+                    self.projects.push(pj);
+                    self.updateStatus();
+                    self.projects[self.length - 1]._id = id;
+                    return self.length - 1;
                 }
                 return index;
             }
@@ -157,6 +140,7 @@ angular.module('calculatorApp')
                         return i;
                     }
                 }
+                return -1;
             }
 
             function getNextId (arr, attr) {
@@ -182,11 +166,11 @@ angular.module('calculatorApp')
 
             function storeData () {
                 try {
-                    $window.localStorage.projects = JSON.stringify(me.projects);
+                    $window.localStorage.projects = JSON.stringify(self.projects);
                 } catch(e) {
                     console.log("exception: " + e);
                 }
-                me.updateStatus();
+                self.updateStatus();
             }
 
         }
@@ -200,25 +184,7 @@ angular.module('calculatorApp')
             }
 
 
-            // ******** This doesn't work ************
-            // ,
-            // getPj : function(index) {
-            //     return projects[index];
-            // }
-
-            // ***************************************
-
         };
-
-        // ******** This doesn't work ************
-
-        // Projects.prototype.getPj = function(index) {
-        //         return this.projects[index];
-        // };
-
-        // ***************************************
-
-
 
 
 

@@ -72,7 +72,7 @@ angular.module('calculatorApp').controller('ItemCtrl',
         data.display.storage   = getStorage();
         data.display.bandwidth = getBandwidth();
         localStorageFactory.pj.editItem( $scope.id, $scope.itemid,
-                                         data, true );
+                                         data);
         $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
     };
 
