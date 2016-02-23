@@ -28,6 +28,13 @@ angular.module('calculatorApp')
                 storeData();
             };
 
+            this.renameItem = function ( oldPjName, oldName, newName ) {
+                var indexP = getPjIndex(oldPjName);
+                var index  = findByAttr( self.projects[indexP].data, "name", oldName);
+                self.projects[indexP].data[index].name = newName;
+                storeData();
+            };
+
             this.addItem = function (itemName, pjName, data, onNVR) {
                 var index = getPjIndex(pjName);
                 var old   = self.projects[index];

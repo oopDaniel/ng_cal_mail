@@ -42,34 +42,6 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         };
 
 
-/*********************************************************************
-                          Redundant
-*********************************************************************/
-        $scope.openModal = function  (template, ctrl, size, isPjName, oldName ) {
-            return $uibModal.open({
-                templateUrl: "views/" + template + ".html",
-                size: size,
-                controller: ctrl,
-                scope: $scope,
-                resolve: {
-                    isPjName: function() {
-                        return isPjName;
-                    },
-                    oldPjName: function() {
-                        return oldName;
-                    }
-                }
-            });
-        };
-
-//********************************************************************
-//********************************************************************
-
-        $scope.closeModal = function () {
-            $scope.modalInstance.close();
-        };
-
-
         $scope.clickDelete = function (index) {
             var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
             var id          = pj.projects[index]._id;
@@ -83,6 +55,34 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
                 }
             );
         };
+
+/*********************************************************************
+                          Redundant
+*********************************************************************/
+        $scope.openModal = function  (template, ctrl, size, isPjName, oldPjName ) {
+            return $uibModal.open({
+                templateUrl: "views/" + template + ".html",
+                size: size,
+                controller: ctrl,
+                scope: $scope,
+                resolve: {
+                    isPjName: function() {
+                        return isPjName;
+                    },
+                    oldPjName: function() {
+                        return oldPjName;
+                    },
+                    oldName: function() {
+                        return '';
+                    }
+                }
+            });
+        };
+
+
+//********************************************************************
+//********************************************************************
+
 
 
 
@@ -108,7 +108,6 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         //         }
         //     );
         // };
-
 }]);
 
 
@@ -145,9 +144,9 @@ myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
 
 
 
-myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'oldPjName',
-    function ($scope, localStorageFactory, isPjName, oldPjName) {
-        $scope.pjRename  = oldPjName;
+myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'oldPjName', 'oldName', '$uibModalInstance',
+    function ($scope, localStorageFactory, isPjName, oldPjName, oldName, $uibModalInstance) {
+        $scope.pjRename  = isPjName ? oldPjName : oldName;
         $scope.emptyPjName = false;
 
         $scope.validCheck = function () {
@@ -155,8 +154,12 @@ myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'ol
         };
 
         $scope.renameSubmit = function () {
-            localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename);
-            $scope.closeModal();
+            if ( isPjName ) {
+                localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename);
+            } else {
+                localStorageFactory.pj.renameItem( oldPjName, oldName, $scope.pjRename );
+            }
+            $uibModalInstance.close();
         };
 
 }]);
@@ -180,11 +183,12 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
         $scope.nodata = project.data.length === 0;
 
         function displaySetup (onStorage) {
+            var num;
             if ( onStorage ) {
-                var num      = unitConvertFactory.getStorage(project.storage);
+                num = unitConvertFactory.getStorage(project.storage);
                 $scope.sUnit = num[1];
             } else {
-                var num      = unitConvertFactory.getBandwidth(project.bandwidth);
+                num = unitConvertFactory.getBandwidth(project.bandwidth);
                 $scope.bUnit = num[1];
             }
             return num[0];
@@ -200,10 +204,11 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
 
 
         $scope.convert   = function (num, onStorage) {
+            var result;
             if ( onStorage ) {
-                var result = unitConvertFactory.getStorage(num);
+                result = unitConvertFactory.getStorage(num);
             } else {
-                var result = unitConvertFactory.getBandwidth(num);
+                result = unitConvertFactory.getBandwidth(num);
             }
             return result[0] + " " + result[1];
         };
@@ -233,7 +238,7 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
         };
 
 
-        $scope.openModal = function  (template, ctrl, size, isPjName, oldName ) {
+        $scope.openModal = function  (template, ctrl, size, isPjName, oldPjName, oldName ) {
             return $uibModal.open({
                 templateUrl: "views/" + template + ".html",
                 size: size,
@@ -244,18 +249,21 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
                         return isPjName;
                     },
                     oldPjName: function() {
+                        return oldPjName;
+                    },
+                    oldName: function() {
                         return oldName;
                     }
+
                 }
             });
         };
 
-        $scope.closeModal = function () {
-            $scope.modalInstance.close();
-        };
+        $scope.clickRename = function (name, isPjName) {
+            $scope.modalInstance = isPjName ?
+                $scope.openModal( "rename", "renameCtrl", "sm", isPjName, name ) :
+                $scope.openModal( "rename", "renameCtrl", "sm", isPjName, project.name, name );
 
-        $scope.clickRename = function (name) {
-            $scope.modalInstance = $scope.openModal( "rename", "renameCtrl", "sm", true, name );
             $scope.modalInstance.result.then(
                 function() {
                     $state.reload();

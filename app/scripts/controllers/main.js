@@ -76,20 +76,24 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      *      Convert the units displayed
      */
         var unitCheck = function(index, capacity) {
-            if ( 'storage' === index )
+            if ( 'storage' === index ) {
                 $scope.storageUnit =
                     unitConverter(capacity, true) + 'B';
-            if ( 'bandwidth' === index )
+                }
+            if ( 'bandwidth' === index ) {
                 $scope.bandwidthUnit =
                     unitConverter(capacity, false) + 'bps';
+                }
         };
 
         var unitConverter = function( num, onStorage ) {
-            if ( num > 1024 * 1024 * 10 )
-                 return onStorage ? 'P' : 'T';
-            else if ( num > 10240 )
-                 return onStorage ? 'T' : 'G';
-            else return onStorage ? 'G' : 'M';
+            if ( num > 1024 * 1024 * 10 ) {
+                return onStorage ? 'P' : 'T';
+            } else if ( num > 10240 ) {
+                return onStorage ? 'T' : 'G';
+            } else {
+                return onStorage ? 'G' : 'M';
+            }
         };
 
 
@@ -209,8 +213,8 @@ myApp.controller('formCtrl', ['$scope','optionsFactory',
 
 
 myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
-            'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
-            optionsFactory, localStorageFactory) {
+            'optionsFactory', function($scope, $uibModal,
+            optionsFactory) {
 
             $scope.bitRateColorFill    = false;
             $scope.bitRateColorFillCMS = false;
@@ -273,8 +277,8 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
 
 
 myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
-        'optionsFactory', 'localStorageFactory', function($scope, $uibModal,
-        optionsFactory, localStorageFactory) {
+        'optionsFactory', function($scope, $uibModal,
+        optionsFactory) {
 
 
         $scope.estDayColorFill   = false;

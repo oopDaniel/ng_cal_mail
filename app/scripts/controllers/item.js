@@ -2,10 +2,11 @@
 
 
 angular.module('calculatorApp').controller('ItemCtrl',
-    ['$scope', '$state', '$stateParams', 'unitConvertFactory', 'localStorageFactory', 'optionsFactory',
-    function ($scope, $state, $stateParams, unitConvertFactory, localStorageFactory, optionsFactory) {
+    ['$scope', '$state', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory', 'optionsFactory',
+    function ($scope, $state, $stateParams, $uibModal, unitConvertFactory, localStorageFactory, optionsFactory) {
         $scope.id      = parseInt($stateParams.id);
         $scope.itemid  = parseInt($stateParams.itemid);
+        var pj         = localStorageFactory.pj.getPj($scope.id);
         var inf        = localStorageFactory.pj.getItem($scope.id, $scope.itemid);
         var onNVR      = inf.type === "NVR";
         var data       = inf.data;
@@ -87,5 +88,35 @@ angular.module('calculatorApp').controller('ItemCtrl',
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
     };
+
+
+    //--------------  Rename  ----------------
+
+    $scope.clickRename = function (name) {
+        $scope.modalInstance =
+            $scope.openModal( "rename", "renameCtrl", "sm", pj.name , name );
+    };
+
+    $scope.openModal = function  (template, ctrl, size, oldPjName, oldName ) {
+        return $uibModal.open({
+            templateUrl: "views/" + template + ".html",
+            size: size,
+            controller: ctrl,
+            scope: $scope,
+            resolve: {
+                isPjName: function() {
+                    return false;
+                },
+                oldPjName: function() {
+                    return oldPjName;
+                },
+                oldName: function() {
+                    return oldName;
+                }
+
+            }
+        });
+    };
+
 
 }]);
