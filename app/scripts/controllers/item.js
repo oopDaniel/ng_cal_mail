@@ -116,9 +116,9 @@ angular.module('calculatorApp').controller('ItemCtrl',
     };
 
 
-    $scope.$on('$locationChangeStart', function( event ) {
+    $scope.$on('$locationChangeStart', function() {
         localStorageFactory.refresh();
-        $state.go($state.current, {}, {reload: true});
+        $state.reload();
     });
 
 }]);

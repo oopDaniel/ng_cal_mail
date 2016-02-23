@@ -241,7 +241,7 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  In response to parent's demand of "getBitRate()",
          *  return the result of bit rate counted.
          */
-            $scope.$on('parentGetBitRate', function(e) {
+            $scope.$on('parentGetBitRate', function() {
                 $scope.$emit('childSendBitRate', $scope.getBitRate());
             });
 
@@ -341,7 +341,7 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
         /**
          *  In response to parent's "getEstDays" demand
          */
-        $scope.$on('parentGetEstDays', function(e) {
+        $scope.$on('parentGetEstDays', function() {
             $scope.$emit('childSendEstDays', $scope.getEstDays());
         });
 

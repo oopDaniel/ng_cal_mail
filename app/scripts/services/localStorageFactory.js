@@ -6,6 +6,7 @@ angular.module('calculatorApp')
 
         this.pj    = new Projects();
 
+        // Used in leaving the edit page
         this.refresh = function() {
             var newPJ = new Projects();
             this.pj   = newPJ;
@@ -133,9 +134,6 @@ angular.module('calculatorApp')
                     var type = arr[index].type;
                     if ( "NVR" === type ) {
                         self.projects[indexP].count.NVR--;
-
-                    // BUG ????????????????????????????
-
                         self.projects[indexP].storage -= arr[index].data.display.storage;
                     } else {
                         self.projects[indexP].count.CMS--;
@@ -213,12 +211,6 @@ angular.module('calculatorApp')
         Projects.prototype = {
             projects : null,
             hasData  : false,
-
-            getPjs : function() {
-                return this.projects;
-            }
-
-
         };
 
 
