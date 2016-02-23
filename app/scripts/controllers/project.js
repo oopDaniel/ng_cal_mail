@@ -18,11 +18,6 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         $scope.clickArr  = new Array( pj.projects.length );
         $scope.clickArr.fill(false);
 
-        function arrayInit () {
-            $scope.pjRename  = '';
-            $scope.pjOldName = '';
-        }
-        arrayInit();
 
 
         $scope.select = function (index) {
@@ -43,21 +38,27 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         };
 
         $scope.clickRename = function (name) {
-            $scope.pjOldName = name;
-            $scope.pjRename  = name;
-            $scope.modalInstance = $scope.openModal( "rename", "renameCtrl", "sm" );
+            $scope.modalInstance = $scope.openModal( "rename", "renameCtrl", "sm", true, name );
         };
 
 
 /*********************************************************************
                           Redundant
 *********************************************************************/
-        $scope.openModal = function (template, ctrl, size) {
+        $scope.openModal = function  (template, ctrl, size, isPjName, oldName ) {
             return $uibModal.open({
                 templateUrl: "views/" + template + ".html",
                 size: size,
                 controller: ctrl,
-                scope: $scope
+                scope: $scope,
+                resolve: {
+                    isPjName: function() {
+                        return isPjName;
+                    },
+                    oldPjName: function() {
+                        return oldName;
+                    }
+                }
             });
         };
 
@@ -68,10 +69,6 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
             $scope.modalInstance.close();
         };
 
-        $scope.$on('fireRename', function(e, newName) {
-            localStorageFactory.pj.renamePj($scope.pjOldName, newName);
-            arrayInit();
-        });
 
         $scope.clickDelete = function (index) {
             var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
@@ -115,8 +112,18 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
 }]);
 
 
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Confirm Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+
 myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
-    function ($scope, $uibModalInstance) {
+    function ($scope, $uibModalInstance ) {
+
         $scope.confirm = function () {
             $uibModalInstance.close();
         };
@@ -128,24 +135,40 @@ myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
 }]);
 
 
-myApp.controller('renameCtrl', ['$scope',
-    function ($scope) {
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Rename Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+
+myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'oldPjName',
+    function ($scope, localStorageFactory, isPjName, oldPjName) {
+        $scope.pjRename  = oldPjName;
         $scope.emptyPjName = false;
+
         $scope.validCheck = function () {
             $scope.emptyPjName = $scope.renameForm.$error.required;
         };
 
         $scope.renameSubmit = function () {
-            $scope.$emit('fireRename', returnName());
+            localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename);
             $scope.closeModal();
         };
 
-        var returnName = function () {
-            return $scope.pjRename;
-        };
 }]);
 
 
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                Project details Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// Inherit {$scope.data} from parent controller
 
 
 myApp.controller('ProjectDetailCtrl', ['$scope', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
