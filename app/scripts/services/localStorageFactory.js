@@ -6,6 +6,11 @@ angular.module('calculatorApp')
 
         this.pj    = new Projects();
 
+        this.refresh = function() {
+            var newPJ = new Projects();
+            this.pj   = newPJ;
+            newPJ     = null;
+        };
 
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
@@ -45,7 +50,7 @@ angular.module('calculatorApp')
                         return false;
                     } else {            // Second round
                         // pjDisplayCorrect( oldData.display, data.display);
-                        self.deleteItem(old.data[index]._id , old._id)
+                        self.deleteItem(old.data[index]._id , old._id);
                     }
                 }
 
@@ -78,11 +83,16 @@ angular.module('calculatorApp')
                 var index  = findByAttr( pj.data, "_id", itemId);
                 var oldData = old[indexP].data[index].data;
 
-                pjDisplayCorrect( oldData.display, data.display);
+                pjDisplayCorrect( pj, oldData.display, data.display);
+                // pj.storage   -= oldData.display.storage;
+                // pj.bandwidth -= oldData.display.bandwidth;
+                // pj.storage   += data.display.storage;
+                // pj.bandwidth += data.display.bandwidth;
                 storeData();
+                return true;
             };
 
-            function pjDisplayCorrect(subtrahend, addend) {
+            function pjDisplayCorrect( pj, subtrahend, addend ) {
                 pj.storage   -= subtrahend.storage;
                 pj.bandwidth -= subtrahend.bandwidth;
                 pj.storage   += addend.storage;

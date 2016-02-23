@@ -72,13 +72,10 @@ angular.module('calculatorApp').controller('ItemCtrl',
     $scope.saveEdit = function () {
         data.display.storage   = getStorage();
         data.display.bandwidth = getBandwidth();
-        localStorageFactory.pj.editItem( $scope.id, $scope.itemid,
-                                         data);
-        $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
-    };
-
-    $scope.refresh = function () {
-        $state.go($state.current, {}, {reload: true});
+        if (localStorageFactory.pj.editItem(
+            $scope.id, $scope.itemid, data)) {
+            $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
+        }
     };
 
 
@@ -118,5 +115,10 @@ angular.module('calculatorApp').controller('ItemCtrl',
         });
     };
 
+
+    $scope.$on('$locationChangeStart', function( event ) {
+        localStorageFactory.refresh();
+        $state.go($state.current, {}, {reload: true});
+    });
 
 }]);
