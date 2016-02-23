@@ -391,6 +391,9 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         $scope.emptyPjName        = true;
         $scope.emptyPjNameClass   = false;
 
+        $scope.overwriteAlert     = [];
+        $scope.saveAgain          = false;
+
         $scope.pj4form = {
             pjName:"",
             itemName:"",
@@ -433,7 +436,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         };
 
 
-        $scope.submit = function () {
+        $scope.submit = function (overwrite) {
             // Refresh the result from the combo box
             if ( !$scope.isAddingNewPj && !$scope.isFirstTimeCreate ) {
                 $scope.pj4form.pjName = $scope.pjNameOption.name;
@@ -442,11 +445,15 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
             $scope.data.display.storage   = $scope.getStorage();
             $scope.data.display.bandwidth = $scope.getBandwidth();
 
-            localStorageFactory.pj.addItem( $scope.pj4form.itemName,
-                        $scope.pj4form.pjName, $scope.data, $scope.onNVR );
-
-            $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
-            $scope.closeModal();
+            if (!localStorageFactory.pj.addItem( $scope.pj4form.itemName,
+                    $scope.pj4form.pjName, $scope.data, $scope.onNVR, overwrite )){
+                $scope.overwriteAlert.push({ type: 'warning', msg: "The name already exists!" });
+                $scope.saveAgain = true;
+            } else {
+                $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
+                $scope.saveAgain = false;
+                $scope.closeModal();
+            }
         };
 
         $scope.openModal = function (size) {

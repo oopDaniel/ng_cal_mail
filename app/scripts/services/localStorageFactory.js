@@ -35,11 +35,21 @@ angular.module('calculatorApp')
                 storeData();
             };
 
-            this.addItem = function (itemName, pjName, data, onNVR) {
-                var index = getPjIndex(pjName);
-                var old   = self.projects[index];
-                var type = "CMS";
+            this.addItem = function ( itemName, pjName, data, onNVR, overwrite ) {
+                var indexP = getPjIndex(pjName);
+                var old    = self.projects[indexP];
+                var index  = findByAttr( old.data, "name", itemName);
 
+                if ( -1 !== index ) {
+                    if ( !overwrite ) { // The name already exists
+                        return false;
+                    } else {            // Second round
+                        // pjDisplayCorrect( oldData.display, data.display);
+                        self.deleteItem(old.data[index]._id , old._id)
+                    }
+                }
+
+                var type = "CMS";
                 if ( onNVR ) {
                     data = str2Int(data);
                     type = "NVR";
@@ -58,6 +68,7 @@ angular.module('calculatorApp')
                 old.bandwidth += item.data.display.bandwidth;
                 old.count[type]++;
                 storeData();
+                return true;
             };
 
             this.editItem = function ( pId, itemId, data ) {
@@ -66,13 +77,17 @@ angular.module('calculatorApp')
                 var old    = loadData();
                 var index  = findByAttr( pj.data, "_id", itemId);
                 var oldData = old[indexP].data[index].data;
-                pj.storage -= oldData.display.storage;
-                pj.storage += data.display.storage;
-                pj.bandwidth -= oldData.display.bandwidth;
-                pj.bandwidth += data.display.bandwidth;
 
+                pjDisplayCorrect( oldData.display, data.display);
                 storeData();
             };
+
+            function pjDisplayCorrect(subtrahend, addend) {
+                pj.storage   -= subtrahend.storage;
+                pj.bandwidth -= subtrahend.bandwidth;
+                pj.storage   += addend.storage;
+                pj.bandwidth += addend.bandwidth;
+            }
 
             this.getPj = function(id) {
                 var index = findByAttr( self.projects, "_id", id);
@@ -108,6 +123,9 @@ angular.module('calculatorApp')
                     var type = arr[index].type;
                     if ( "NVR" === type ) {
                         self.projects[indexP].count.NVR--;
+
+                    // BUG ????????????????????????????
+
                         self.projects[indexP].storage -= arr[index].data.display.storage;
                     } else {
                         self.projects[indexP].count.CMS--;
