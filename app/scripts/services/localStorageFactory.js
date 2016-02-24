@@ -161,7 +161,7 @@ angular.module('calculatorApp')
             }
 
             function str2Int (obj) {
-                obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
+                obj.cameras                = parseInt(obj.cameras);
                 obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
                 obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
                 return obj;
@@ -199,7 +199,8 @@ angular.module('calculatorApp')
 
             function storeData () {
                 try {
-                    $window.localStorage.projects = JSON.stringify(self.projects);
+                    $window.localStorage.projects = JSON.stringify(self.projects,undefined,'\t');
+                    console.log($window.localStorage.projects);
                 } catch(e) {
                     console.log("exception: " + e);
                 }
@@ -230,10 +231,10 @@ angular.module('calculatorApp')
 
         function MyObj() {
             this.display  = {
-                bandwidth:64,
-                bandwidthUnit:'Mbps',
                 storage     : 960,
-                storageUnit : 'TB'
+                storageUnit : 'TB',
+                bandwidth:64,
+                bandwidthUnit:'Mbps'
             };
             this.cameras  = 16;
             this.bitRate  = {
