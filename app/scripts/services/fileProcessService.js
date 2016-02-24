@@ -31,14 +31,18 @@ angular.module('calculatorApp')
       "Remote Users"
     ];
 
-    var commas    = [];
-    commas.length = 26;  // length = (25+1) for displaying 25 commas
-
-    var titleStr  = title.join();
-    var dataStr   = "";
+    var titleStr  = title.join() + "\n";
 
 
 
+
+
+
+    function addComma(len) {
+        var commas    = [];
+        commas.length = len + 1;  // length = (25+1) for displaying 25 commas
+        return commas.join();
+    }
 
     function loadData () {
         try {
@@ -47,6 +51,7 @@ angular.module('calculatorApp')
             return [];
         }
     }
+
 
 
 
@@ -62,7 +67,7 @@ angular.module('calculatorApp')
                        obj[i].name      + "," +
                        obj[i].storage   + "," +
                        obj[i].bandwidth;
-            tmp     += commas.join();
+            tmp     += addComma(19) + "\n" + addComma(6);
             for ( var j in obj[i].data ) {
                 var inf     = obj[i].data[j];
                 var type    = inf.type;
@@ -89,24 +94,24 @@ angular.module('calculatorApp')
                               data.RAID                 + "," +
                               data.HDDsize              + "," +
                               data.local              :
-                              ",,,,,,"                  +
+                              addComma(6)               +
                               data.local                + "," +
                               data.remoteUsers;
+                tmp     += "\n";
             }
         }
         return tmp;
     }
 
+// var fs = require('fs')
+//
 
 
 
 
 
     this.foo = function() {
-      // processData()
-      // var obj = loadData ();
-        console.log(dataStr+storedData2Str());
-      // console.log($window.localStorage.projects)
+        console.log( titleStr + storedData2Str() );
     };
 
 
