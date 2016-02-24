@@ -1,0 +1,46 @@
+  <div class="alert">
+    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+  </div>
+  <div class="jumbotron reducePadding">
+    <div class="row">
+
+        <div class="table-showdigit col-xs-12
+                    col-md-6 col-md-offset-3">
+          <table
+            class="table table-hover table-responsive">
+            <caption ng-click="clickRename(inf.name)"><h3>{{inf.name}}</h3></caption>
+            <thead>
+              <tr>
+                <th>Total Storage</th>
+                <th>Total Bandwidth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="greyMinus">
+                  {{ showStorage() }}
+                  <sub>{{sUnit}}</sub>
+                </td>
+                <td>
+                  {{ showBandwidth() }}
+                  <sub>{{bUnit}}</sub>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> <!-- end row -->
+  </div> <!-- end jumbotron -->
+
+
+<div ng-include="dataURL" ng-controller="formCtrl"></div>
+
+<div class="row">
+  <div class="col-xs-6 col-xs-push-5">
+    <button class='btn btn-primary' ng-click="saveEdit()">Save</button>
+  </div>
+  <div class="col-xs-6">
+    <a class='btn btn-warning' ui-sref="app.projectdetails({id: id})">Cancel</a>
+  </div>
+</div>

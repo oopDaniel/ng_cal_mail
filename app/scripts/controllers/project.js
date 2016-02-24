@@ -9,123 +9,265 @@
  */
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'localStorageFactory',
-    function ($scope, $filter, $uibModal, localStorageFactory) {
-        // $scope.pj        = localStorageFactory.getPj();
-        $scope.pjArr = localStorageFactory.pj.projects;
-        $scope.nodata    = !localStorageFactory.pj.hasData;
+myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
+    function ($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
+        var pj           = localStorageFactory.pj;
+        $scope.pjArr     = pj.projects;
+        $scope.nodata    = !pj.hasData;
         $scope.filtText  = '';
+        $scope.clickArr  = new Array( pj.projects.length );
+        $scope.clickArr.fill(false);
 
-        $scope.arrayInit = function () {
-            $scope.pjRename  = '';
-            $scope.pjOldName = '';
-            // if ( 0 === length ) {
-            //     $scope.nodata = true;
-            // }
-            // Remove the option of 'create' from pj array
-        };
-        $scope.arrayInit();
 
-        var counter;
-        var storageUnitArr   = ["GB","TB","PB"];
-        var bandwidthUnitArr = ["Mbps","Gbps","Tbps"];
-        var unitConverter = function (num) {
-            if ( num > 10240 ) {
-                counter++;
-                return unitConverter( num / 1024 );
-            }
-            return num;
+
+        $scope.select = function (index) {
+            $scope.clickArr[index] = !$scope.clickArr[index];
         };
+
 
         $scope.totalStorage = function (obj) {
-            var storage = 0;
-            for ( var i in obj.NVR ) {
-                storage += parseFloat(obj.NVR[i].data.display.storage);
-            }
-            counter = 0;
-            storage = unitConverter(storage);
-            return $filter("number")(storage, 1) + " " + storageUnitArr[counter];
+            unitConvertFactory.setData(obj);
+            var result = unitConvertFactory.getTotalStorage();
+            return result[0] + " " + result[1];
         };
 
         $scope.totalBandwidth = function (obj) {
-            var bandwidth = 0;
-            for ( var i in obj.NVR ) {
-                bandwidth += parseFloat(obj.NVR[i].data.display.bandwidth);
-            }
-            for ( var i in obj.CMS ) {
-                bandwidth += parseFloat(obj.CMS[i].data.display.bandwidth);
-            }
-            counter = 0;
-            bandwidth = unitConverter(bandwidth);
-            return $filter("number")(bandwidth, 1) + " " + bandwidthUnitArr[counter];
+            unitConvertFactory.setData(obj);
+            var result = unitConvertFactory.getTotalBandwidth();
+            return result[0] + " " + result[1];
         };
 
-        $scope.clickRename = function (obj) {
-            $scope.pjOldName = obj.name;
-            $scope.pjRename  = obj.name;
-            $scope.openModal( "rename", "renameCtrl", "sm" );
+        $scope.clickRename = function (name) {
+            $scope.modalInstance = $scope.openModal( "rename", "renameCtrl", "sm", true, name );
         };
 
 
+        $scope.clickDelete = function (index) {
+            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
+            var id          = pj.projects[index]._id;
 
-        $scope.openModal = function (template, ctrl, size) {
-            $scope.modalInstance = $uibModal.open({
+            deleteModal.result.then(
+                function() {
+                    localStorageFactory.pj.deletePj(id);
+                },
+                function() {
+                    $scope.clickArr[index] = !$scope.clickArr[index];
+                }
+            );
+        };
+
+/*********************************************************************
+                          Redundant
+*********************************************************************/
+        $scope.openModal = function  (template, ctrl, size, isPjName, oldPjName ) {
+            return $uibModal.open({
                 templateUrl: "views/" + template + ".html",
                 size: size,
                 controller: ctrl,
-                scope: $scope
+                scope: $scope,
+                resolve: {
+                    isPjName: function() {
+                        return isPjName;
+                    },
+                    oldPjName: function() {
+                        return oldPjName;
+                    },
+                    oldName: function() {
+                        return '';
+                    }
+                }
             });
         };
 
-        $scope.closeModal = function () {
-            $scope.modalInstance.close();
+
+//********************************************************************
+//********************************************************************
+
+
+
+
+        /* ( Need to figure out other ways )
+         *  1. O(N^2), fine all id and push them in an array, then delete item
+         *  2. Use Array-object: {id:true},
+         *     search all object in the array that has id=true property, then delete item
+         */
+        // $scope.deleteSelect = function () {
+        //     var deleteModal = $scope.openModal( "confirm", "confirmCtrl");
+
+        //     deleteModal.result.then(
+        //         function() {
+        //             for ( var i in $scope.clickArr ) {
+        //                 console.log( "i: "+i);
+        //                 if ( $scope.clickArr[i] ) {
+        //                     $scope.clickArr[i] = false;
+        //                     console.log( "the arr: "+pj.projects[i]);
+        //                     var id = pj.projects[i]._id;
+        //                     localStorageFactory.pj.deletePj(id);
+        //                 }
+        //             }
+        //         }
+        //     );
+        // };
+}]);
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Confirm Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+
+myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
+    function ($scope, $uibModalInstance ) {
+
+        $scope.confirm = function () {
+            $uibModalInstance.close();
         };
 
-        $scope.$on('fireRename', function(e, newName) {
-            localStorageFactory.pj.renamePj($scope.pjOldName, newName);
-            // localStorageFactory.setPj( $scope.pj );
-            $scope.arrayInit();
-        });
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
 
 }]);
 
 
-myApp.controller('renameCtrl', ['$scope', '$uibModal',
-    function ($scope, $uibModal) {
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Rename Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+
+
+myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'oldPjName', 'oldName', '$uibModalInstance',
+    function ($scope, localStorageFactory, isPjName, oldPjName, oldName, $uibModalInstance) {
+        $scope.pjRename  = isPjName ? oldPjName : oldName;
         $scope.emptyPjName = false;
+
         $scope.validCheck = function () {
             $scope.emptyPjName = $scope.renameForm.$error.required;
         };
 
         $scope.renameSubmit = function () {
-            $scope.$emit('fireRename', returnName());
-            $scope.closeModal();
+            if ( isPjName ) {
+                localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename);
+            } else {
+                localStorageFactory.pj.renameItem( oldPjName, oldName, $scope.pjRename );
+            }
+            $uibModalInstance.close();
         };
-
-        var returnName = function () {
-            return $scope.pjRename;
-        }
 
 }]);
 
 
 
 
-myApp.controller('projectDetailCtrl', ['$scope', '$uibModal','localStorageFactory',
-    function ($scope, $uibModal, localStorageFactory) {
-        // $scope.emptyPjName = false;
-        // $scope.validCheck = function () {
-        //     if ( $scope.renameForm.$error.required ) {
-        //         $scope.emptyPjName = true;
-        //     } else {
-        //         $scope.emptyPjName = false;
-        //     }
-        // };
 
-        // $scope.renameSubmit = function () {
-        //     localStorageFactory.renamePj($scope.pjOldName, $scope.pjRename);
-        //     $scope.$emit('refreshArr');
-        //     $scope.closeModal();
-        // };
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                Project details Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// Inherit {$scope.data} from parent controller
+
+
+myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
+    function ($scope, $state, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
+        $scope.id     = parseInt($stateParams.id);
+        var project   = localStorageFactory.pj.getPj($scope.id);
+        $scope.name   = project.name;
+        $scope.data   = project.data;
+        $scope.nodata = project.data.length === 0;
+
+        function displaySetup (onStorage) {
+            var num;
+            if ( onStorage ) {
+                num = unitConvertFactory.getStorage(project.storage);
+                $scope.sUnit = num[1];
+            } else {
+                num = unitConvertFactory.getBandwidth(project.bandwidth);
+                $scope.bUnit = num[1];
+            }
+            return num[0];
+        }
+
+        $scope.showBandwidth = function () {
+            return displaySetup( false );
+        };
+
+        $scope.showStorage = function () {
+            return displaySetup( true );
+        };
+
+
+        $scope.convert   = function (num, onStorage) {
+            var result;
+            if ( onStorage ) {
+                result = unitConvertFactory.getStorage(num);
+            } else {
+                result = unitConvertFactory.getBandwidth(num);
+            }
+            return result[0] + " " + result[1];
+        };
+
+
+
+        $scope.clickArr  = new Array( project.data.length );
+        $scope.clickArr.fill(false);
+
+        $scope.select = function (index) {
+            $scope.clickArr[index] = !$scope.clickArr[index];
+        };
+
+        $scope.clickDelete = function (index) {
+            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
+            var id          = project.data[index]._id;
+
+            deleteModal.result.then(
+                function() {
+                    localStorageFactory.pj.deleteItem(id, project._id);
+                    displaySetup();
+                },
+                function() {
+                    $scope.clickArr[index] = !$scope.clickArr[index];
+                }
+            );
+        };
+
+
+        $scope.openModal = function  (template, ctrl, size, isPjName, oldPjName, oldName ) {
+            return $uibModal.open({
+                templateUrl: "views/" + template + ".html",
+                size: size,
+                controller: ctrl,
+                scope: $scope,
+                resolve: {
+                    isPjName: function() {
+                        return isPjName;
+                    },
+                    oldPjName: function() {
+                        return oldPjName;
+                    },
+                    oldName: function() {
+                        return oldName;
+                    }
+
+                }
+            });
+        };
+
+        $scope.clickRename = function (name, isPjName) {
+            $scope.modalInstance = isPjName ?
+                $scope.openModal( "rename", "renameCtrl", "sm", isPjName, name ) :
+                $scope.openModal( "rename", "renameCtrl", "sm", isPjName, project.name, name );
+
+            $scope.modalInstance.result.then(
+                function() {
+                    $state.reload();
+                });
+        };
 
 }]);

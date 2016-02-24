@@ -48,7 +48,17 @@ angular
                 views: {
                     'content@': {
                         templateUrl: 'views/projectDetail.html',
-                        controller: 'projectDetailCtrl'
+                        controller: 'ProjectDetailCtrl'
+                    }
+                }
+            })
+
+            .state('app.item', {
+                url:'project/:id/:itemid',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/item.html',
+                        controller: 'ItemCtrl'
                     }
                 }
             })

@@ -3,148 +3,239 @@
 angular.module('calculatorApp')
     .service('localStorageFactory', ['$window', function($window) {
 
-        var self   = this;
-        var nvrObj = new NVRObj();
-        var cmsObj = new CMSObj();
+
         this.pj    = new Projects();
 
-        this.getDefaultNVRObj = function() {
-            return nvrObj;
+        // Used in leaving the edit page
+        this.refresh = function() {
+            var newPJ = new Projects();
+            this.pj   = newPJ;
+            newPJ     = null;
         };
-
-        this.getDefaultCMSObj = function() {
-            return cmsObj;
-        };
-
-        this.setDefaultNVRObj = function(obj) {
-            nvrObj = obj;
-        };
-
-        this.setDefaultCMSObj = function(obj) {
-            cmsObj = obj;
-        };
-
-        this.getPj = function() {
-            return pj;
-        };
-
-        this.setPj = function(pjObj) {
-            pj = pjObj;
-        };
-
 
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
 
 
         function Projects() {
-            this.projects   = loadData();
-            this.length     = this.projects.length;
-            var me          = this;
+            var self      = this;
+            self.projects = loadData();
 
             this.updateStatus = function () {
-                this.length = this.projects.length;
-                this.hasData = ( this.length > 0 );
+                self.length = self.projects.length;
+                self.hasData = ( self.length > 0 );
             };
 
-            this.updateStatus();
+            self.updateStatus();
 
             this.renamePj = function (oldName, newName) {
                 var index = getPjIndex(oldName);
-                this.projects[index].name = newName;
+                self.projects[index].name = newName;
                 storeData();
             };
 
-            this.pushPjData = function (itemName, pjName, data, onNVR) {
-                var index = getPjIndex(pjName);
-                var targetArr = this.projects[index].CMS;
+            this.renameItem = function ( oldPjName, oldName, newName ) {
+                var indexP = getPjIndex(oldPjName);
+                var index  = findByAttr( self.projects[indexP].data, "name", oldName);
+                self.projects[indexP].data[index].name = newName;
+                storeData();
+            };
 
-                if ( onNVR ) {
-                    data      = str2Int(data);
-                    targetArr = this.projects[index].NVR;
+            this.addItem = function ( itemName, pjName, data, onNVR, overwrite ) {
+                var indexP = getPjIndex(pjName);
+                var old    = self.projects[indexP];
+                var index  = findByAttr( old.data, "name", itemName);
+
+                if ( -1 !== index ) {
+                    if ( !overwrite ) { // The name already exists
+                        return false;
+                    } else {            // Second round
+                        // pjDisplayCorrect( oldData.display, data.display);
+                        self.deleteItem(old.data[index]._id , old._id);
+                    }
                 }
+
+                var type = "CMS";
+                if ( onNVR ) {
+                    data = str2Int(data);
+                    type = "NVR";
+                }
+
+                var id = getNextId(old.data,"_id");
                 var item = {
+                    _id  : id,
                     name : itemName,
+                    type : type,
                     data : data
                 };
 
-                targetArr.push(item);
+                old.data.push(item);
+                old.storage   += item.data.display.storage;
+                old.bandwidth += item.data.display.bandwidth;
+                old.count[type]++;
                 storeData();
+                return true;
+            };
+
+            this.editItem = function ( pId, itemId, data ) {
+                var indexP = findByAttr( self.projects, "_id", pId);
+                var pj     = self.projects[indexP];
+                var old    = loadData();
+                var index  = findByAttr( pj.data, "_id", itemId);
+                var oldData = old[indexP].data[index].data;
+
+                pjDisplayCorrect( pj, oldData.display, data.display);
+                // pj.storage   -= oldData.display.storage;
+                // pj.bandwidth -= oldData.display.bandwidth;
+                // pj.storage   += data.display.storage;
+                // pj.bandwidth += data.display.bandwidth;
+                storeData();
+                return true;
+            };
+
+            function pjDisplayCorrect( pj, subtrahend, addend ) {
+                pj.storage   -= subtrahend.storage;
+                pj.bandwidth -= subtrahend.bandwidth;
+                pj.storage   += addend.storage;
+                pj.bandwidth += addend.bandwidth;
+            }
+
+            this.getPj = function(id) {
+                var index = findByAttr( self.projects, "_id", id);
+                return self.projects[ index ];
+            };
+
+            this.getItem = function(pid, itemid) {
+                var pindex = findByAttr( self.projects, "_id", pid);
+                var index  = findByAttr( self.projects[pindex].data, "_id", itemid);
+                return self.projects[ pindex ].data[ index ];
+            };
+
+            this.deletePj = function (id) {
+                var index = findByAttr( self.projects, "_id", id);
+                if ( -1 !== index ) {
+                    self.projects.splice(index, 1);
+                    self.updateStatus();
+                    if ( !self.hasData ) {
+                        $window.localStorage.removeItem("projects");
+                    } else {
+                        storeData();
+                    }
+                }
+            };
+
+
+            this.deleteItem = function (id, pid) {
+                var indexP = findByAttr( self.projects, "_id", pid);
+                var arr    = self.projects[indexP].data;
+                var index  = findByAttr( arr, "_id", id);
+
+                if ( -1 !== index ) {
+                    var type = arr[index].type;
+                    if ( "NVR" === type ) {
+                        self.projects[indexP].count.NVR--;
+                        self.projects[indexP].storage -= arr[index].data.display.storage;
+                    } else {
+                        self.projects[indexP].count.CMS--;
+                    }
+                        self.projects[indexP].bandwidth -= arr[index].data.display.bandwidth;
+
+                    arr.splice(index, 1);
+                    storeData();
+                }
             };
 
 
 
             function getPjIndex (pjName) {
-                var index = findByAttr( me.projects, "name", pjName );
-                if ( undefined === index ) {
+                var index = findByAttr( self.projects, "name", pjName );
+                if ( -1 === index) {
                     var pj = new NewPJ(pjName);
-                    me.projects.unshift(pj);
-                    return 0;
+                    var id = getNextId(self.projects,"_id");
+                    self.projects.push(pj);
+                    self.updateStatus();
+                    self.projects[self.length - 1]._id = id;
+                    return self.length - 1;
                 }
                 return index;
-            };
+            }
 
             function str2Int (obj) {
-                obj.estDays.params.cameras = parseInt(obj.estDays.params.cameras);
+                obj.cameras                = parseInt(obj.cameras);
                 obj.estDays.params.motion  = parseInt(obj.estDays.params.motion);
                 obj.estDays.params.rHours  = parseInt(obj.estDays.params.rHours);
                 return obj;
-            };
+            }
 
             function findByAttr (arr, attr, value) {
-
-                for(var i = 0, l = arr.length; i < l; i++) {
-                    if(arr[i][attr] === value) {
+                for( var i = 0, l = arr.length; i < l; i++ ) {
+                    if( arr[i][attr] === value ) {
                         return i;
                     }
                 }
-            };
+                return -1;
+            }
+
+            function getNextId (arr, attr) {
+                var l = arr.length;
+                if ( l > 0 ) {
+                    for( var i = 0; i < l; i++ ) {
+                        if( arr[i][attr] !== ( i + 1 ) ) {
+                            return i;
+                        }
+                    }
+                    return i + 1;
+                }
+                return 1;
+            }
 
             function loadData () {
                 try {
-                    return JSON.parse($window.localStorage["projects"]);
+                    return JSON.parse($window.localStorage.projects);
                 } catch(e) {
                     return [];
                 }
-            };
+            }
 
             function storeData () {
                 try {
-                    $window.localStorage["projects"] = JSON.stringify(me.projects);
+                    // $window.localStorage.projects = JSON.stringify(self.projects);
+                    $window.localStorage.projects = JSON.stringify(self.projects,undefined,'\t');
+                    console.log($window.localStorage.projects);
                 } catch(e) {
                     console.log("exception: " + e);
                 }
-                me.updateStatus();
-          };
+                self.updateStatus();
+            }
 
         }
 
         Projects.prototype = {
             projects : null,
             hasData  : false,
-
-            getPjs : function() {
-                return projects;
-            },
-            getPj : function(index) {
-                return projects[index];
-            }
         };
+
+
 
         // Class NewPJ
         function NewPJ(pjName) {
+            this._id        = 0;
             this.name       = pjName;
             this.storage    = 0;
             this.bandwidth  = 0;
-            this.NVR        = [];
-            this.CMS        = [];
+            this.data       = [];
+            this.count      = {
+                NVR: 0,
+                CMS: 0
+            };
         }
 
         function MyObj() {
-            this.itemName = '';
             this.display  = {
+                storage     : 960,
+                storageUnit : 'TB',
                 bandwidth:64,
-                bandwidthUnit:'Mbps',
+                bandwidthUnit:'Mbps'
             };
             this.cameras  = 16;
             this.bitRate  = {
@@ -156,12 +247,11 @@ angular.module('calculatorApp')
                   FPS:30
                 }
             };
+            this.local    = true;
         }
 
-        function NVRObj() {
+        this.NVRObj = function() {
             MyObj.call(this);
-            this.display.storage     = 960;
-            this.display.storageUnit = 'TB';
             this.estDays  = {
                 data:10,
                 params:{
@@ -171,24 +261,16 @@ angular.module('calculatorApp')
                 }
             };
             this.RAID     = '5';
-            this.HDDsize  = 3;
-        }
-        NVRObj.prototype = new MyObj();
+            this.HDDsize  = "3 TB";
+        };
+        this.NVRObj.prototype = new MyObj();
 
-        function CMSObj() {
+        this.CMSObj = function() {
             MyObj.call(this);
-            this.display.storage = '-';
-            this.estDays  = {
-                data:10,
-                params:{
-                  rDays:30,
-                  rHours:16,
-                  motion:50,
-                }
-            };
-            this.local       = true;
+            this.display.storage     = '-';
+            this.display.storageUnit = '';
             this.remoteUsers = 10;
-        }
-        CMSObj.prototype = new MyObj();
+        };
+        this.CMSObj.prototype = new MyObj();
 
     }]);
