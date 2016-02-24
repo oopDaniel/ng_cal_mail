@@ -24,9 +24,9 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="codec"
-                ng-model="NVRObj.bitRate.params.codec"
-                ng-change="update()"
+                ng-model="data.bitRate.params.codec"
                 ng-options="opt as opt for opt in codecList"
+                ng-class="{cmsBdr:!onNVR}"
                 class="input form-control" >
               </select>
             </div>
@@ -43,9 +43,9 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="quality"
-                ng-model="NVRObj.bitRate.params.quality"
-                ng-change="update()"
+                ng-model="data.bitRate.params.quality"
                 ng-options="opt as opt for opt in qList"
+                ng-class="{cmsBdr:!onNVR}"
                 class="input form-control">
               </select>
             </div>
@@ -62,9 +62,10 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="rs"
-                ng-model="NVRObj.bitRate.params.resolution"
+                ng-model="data.bitRate.params.resolution"
                 ng-change="update()"
                 ng-options="opt as opt for opt in RSList"
+                ng-class="{cmsBdr:!onNVR}"
                 class="input form-control">
               </select>
             </div>
@@ -81,9 +82,10 @@
             <div class="col-xs-12 col-sm-5 col-sm-pull-1">
               <select
                 id="fps"
-                ng-model="NVRObj.bitRate.params.FPS"
+                ng-model="data.bitRate.params.FPS"
                 ng-change="update()"
                 ng-options="opt as opt for opt in FPSList"
+                ng-class="{cmsBdr:!onNVR}"
                 class="input form-control">
               </select>
             </div>

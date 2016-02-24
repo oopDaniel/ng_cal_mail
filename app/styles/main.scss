@@ -141,6 +141,11 @@ $font_detail_color: lighten(grey, 10%);
 
 
 
+.selectItem {
+    background: rgba(1,1,1,0.1);
+}
+
+
 .icon-centered {
     display: table;
     margin: 0 auto;
@@ -167,10 +172,21 @@ $font_detail_color: lighten(grey, 10%);
 .padding-bottom {
   padding-bottom: 2em;
 }
+
+.reducePadding {
+  padding-bottom: 0;
+}
+
 .highlight {
   color:$theme_color2;
   font-size:1.5em;
 }
+
+.highlightCMS {
+  @extend .highlight;
+  color:$theme_color;
+}
+
 
 .my-addon {
   background: rgba(255,255,255,0.1);
@@ -268,18 +284,20 @@ $font_detail_color: lighten(grey, 10%);
 
 .details {
   color: $font_detail_color;
+}
+.detailBorder {
   max-width:80%;
   border-bottom:.2em ridge;
   padding: .2em
 }
 
 
-.estdays {
+.selectedModelInput {
   background:$theme_color;
   color:white;
 }
-.estdaysCMS {
-  @extend .estdays;
+.selectedModelInputCMS {
+  @extend .selectedModelInput;
   background:$theme_color2;
 }
 
@@ -370,6 +388,13 @@ $font_detail_color: lighten(grey, 10%);
   padding: 2em 0 4em;
   color: grey;
 }
+
+
+.alert {
+  width: 80%;
+  margin: 0 auto;
+}
+
 
 
 // --------- for Range bar ------------------

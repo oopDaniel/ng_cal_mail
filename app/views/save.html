@@ -1,8 +1,11 @@
 <div class="modal-header" ng-controller="saveModalCtrl">
+  <div class="alert">
+    <uib-alert ng-repeat="alert in overwriteAlert" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+  </div>
   <div class="modal-body">
     <div class="myPanel row">
           <div class="form-group">
-          <form class="form-horizontal" name="saveForm" ng-submit="submit()" novalidate="">
+          <form class="form-horizontal" name="saveForm" novalidate>
 
 
             <section class="panelItem">
@@ -76,8 +79,18 @@
               <button
                 type="submit"
                 class="btn btn-primary"
+                ng-click="submit(false)"
+                ng-if="!saveAgain"
                 ng-disabled="$parent.invalidForm">
                 Save
+              </button>
+              <button
+                type="submit"
+                class="btn btn-warning"
+                ng-click="submit(true)"
+                ng-if="saveAgain"
+                ng-disabled="$parent.invalidForm">
+                Overwrite
               </button>
               <a
                 class="btn btn-warning"
