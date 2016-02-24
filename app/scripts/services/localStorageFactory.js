@@ -199,6 +199,7 @@ angular.module('calculatorApp')
 
             function storeData () {
                 try {
+                    // $window.localStorage.projects = JSON.stringify(self.projects);
                     $window.localStorage.projects = JSON.stringify(self.projects,undefined,'\t');
                     console.log($window.localStorage.projects);
                 } catch(e) {

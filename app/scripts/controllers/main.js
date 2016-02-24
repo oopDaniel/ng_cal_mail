@@ -10,8 +10,8 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory',
-        function ($scope, $filter, optionsFactory, localStorageFactory) {
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory','fileProcessService',
+        function ($scope, $filter, optionsFactory, localStorageFactory,fileProcessService) {
         $scope.onNVR          = true;  // else on CMS
         $scope.totalModelSets = 1;
         $scope.dataURL        = "views/dataForm.html";
@@ -20,7 +20,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         var data;
         $scope.invalidForm    = true;
 
-
+        fileProcessService.foo();
     /*****************************************
      *     Track the current tab
      */
