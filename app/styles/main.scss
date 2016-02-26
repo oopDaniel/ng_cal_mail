@@ -1,5 +1,5 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-$fa-font-path: "../bower_components/font-awesome/fonts/";
+// $fa-font-path: "../bower_components/font-awesome/fonts/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 @import "font-awesome/scss/font-awesome.scss";
@@ -210,7 +210,7 @@ $font_detail_color: lighten(grey, 10%);
 
 .highlightCMS {
   @extend .highlight;
-  color:$theme_color;
+  color:white;
 }
 
 
@@ -533,22 +533,6 @@ $font_detail_color: lighten(grey, 10%);
   @include add_padding(1em,0);
 }
 
-
-
-
-// .modal {
-//     display: block;
-// }
-// .modal-body:before,
-// .modal-body:after {
-//     display: table;
-//     content: " ";
-// }
-// .modal-header:before,
-// .modal-header:after {
-//     display: table;
-//     content: " ";
-// }
 
 
 
