@@ -105,6 +105,20 @@ $font_detail_color: lighten(grey, 10%);
   padding: $h $w $b;
 }
 
+@mixin width_restrict($w:80%) {
+  max-width: $w;
+  margin: 0 auto;
+}
+
+.savebtn{
+  @include  width_restrict(55%);
+  margin-top:2.5em;
+  margin-bottom:2em;
+  .btnfont{
+    font-size:2em;
+  }
+}
+
 .unbreak{
   white-space: nowrap;
 }
