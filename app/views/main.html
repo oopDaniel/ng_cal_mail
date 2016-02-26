@@ -1,54 +1,34 @@
 
-<div ng-controller="MainCtrl">
+<div>
   <div class="alert">
     <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
   </div>
   <div class="jumbotron">
     <div class="row">
-
-      <div class="col-md-12">
-        <ul class="nav nav-pills">
-          <li class="active">
-            <a href="#nvr"
-              ng-click="updatePos(true)">
-              NVR
-            </a>
-          </li>
-          <li>
-            <a href="#cms"
-              ng-click="updatePos(false)">
-              CMS
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="row">
-        <div class="table-showdigit col-xs-12
-                    col-md-6 col-md-offset-3">
-          <table
-            class="table table-hover table-responsive"
-            ng-class="{cmsTB:!onNVR}">
-            <thead>
-              <tr>
-                <th>Total Storage</th>
-                <th>Total Bandwidth</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="greyMinus">
-                  {{ getStorage() | displayFilter }}
-                  <sub>{{storageUnit}}</sub>
-                </td>
-                <td>
-                  {{ getBandwidth() | displayFilter }}
-                  <sub>{{bandwidthUnit}}</sub>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="table-showdigit col-xs-12
+                  col-md-6 col-md-offset-3">
+        <table
+          class="table table-hover table-responsive"
+          ng-class="{cmsTB:!onNVR}">
+          <thead>
+            <tr>
+              <th>Total Storage</th>
+              <th>Total Bandwidth</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="greyMinus">
+                {{ getStorage() | displayFilter }}
+                <sub>{{storageUnit}}</sub>
+              </td>
+              <td>
+                {{ getBandwidth() | displayFilter }}
+                <sub>{{bandwidthUnit}}</sub>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div> <!-- end row -->
   </div> <!-- end jumbotron -->

@@ -10,32 +10,17 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory','fileProcessService',
-        function ($scope, $filter, optionsFactory, localStorageFactory,fileProcessService) {
-        $scope.onNVR          = true;  // else on CMS
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory','fileProcessService', 'onNVR',
+        function ($scope, $filter, optionsFactory, localStorageFactory, fileProcessService, onNVR) {
+        var data              = onNVR ? new localStorageFactory.NVRObj() : new localStorageFactory.CMSObj();
+        $scope.data           = data;
+        $scope.onNVR          = onNVR;  // else on CMS
         $scope.totalModelSets = 1;
         $scope.dataURL        = "views/dataForm.html";
-        var NVRObj            = new localStorageFactory.NVRObj();
-        var CMSObj            = new localStorageFactory.CMSObj();
-        var data;
         $scope.invalidForm    = true;
+        $scope.storageUnit    = $scope.data.display.storageUnit;
+        $scope.bandwidthUnit  = $scope.data.display.bandwidthUnit;
 
-
-    /*****************************************
-     *     Track the current tab
-     */
-        $scope.updatePos = function(onNVR) {
-            $scope.onNVR  = onNVR;
-            data          = onNVR ? NVRObj : CMSObj;
-            $scope.data   = data;
-
-            //-----------------------------------
-            $scope.storageUnit    = $scope.data.display.storageUnit;
-            $scope.bandwidthUnit  = $scope.data.display.bandwidthUnit;
-            //-----------------------------------
-
-        };
-        $scope.updatePos($scope.onNVR);
 
     /*****************************************
      *     Display the info of bandwidth and storage

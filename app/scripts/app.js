@@ -25,10 +25,30 @@ angular
                     },
                     'content': {
                         templateUrl: 'views/main.html',
-                        controller: 'MainCtrl'
+                        controller: 'MainCtrl',
+                        resolve: {
+                            onNVR: function() {
+                                return true;
+                            }
+                        }
                     },
                     'footer': {
                         templateUrl: 'views/footer.html'
+                    }
+                }
+            })
+
+            .state('app.cms', {
+                url:'cms',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/main.html',
+                        controller: 'MainCtrl',
+                        resolve: {
+                           onNVR: function() {
+                                return false;
+                            }
+                        }
                     }
                 }
             })
