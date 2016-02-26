@@ -63,10 +63,16 @@
                   {{convert(item.data.display.bandwidth, false)}}
                 </span>
                 </div>
-                <div class="col-xs-2">
-                   <a ui-sref="app.item({id: id, itemid: item._id})">EDIT</a>
-                </div>
-                <div class="col-xs-2" ng-click="clickDelete($index)">DELETE</div>
+                <span class="col-xs-2" ui-sref="app.item({id: id, itemid: item._id})">
+
+                      <span class="glyphicon glyphicon-edit icon-pj"></span>
+
+                </span>
+                <span class="col-xs-2" ng-click="clickDelete($index)">
+
+                   <span class="glyphicon glyphicon-trash icon-pj"></span>
+
+                </span>
               </div>
 
             </div>

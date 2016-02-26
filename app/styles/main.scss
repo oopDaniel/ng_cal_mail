@@ -159,7 +159,7 @@ $font_detail_color: lighten(grey, 10%);
   @media screen and (min-width: 800px) {
     max-width: 60%;
     .recommend {
-      margin:0 auto;
+      margin:2em auto;
       max-width: 90%;
     }
   }
@@ -598,10 +598,10 @@ margin-right: -15px !important;
 float: right!important;
 }
 
-// .centerify {
-//   width:100%;
-//   margin:0 auto;
-//   li {
+.icon {
+  font-size:2.5em;
+}
 
-//   }
-// }
+.icon-pj {
+  font-size:2em;
+}
