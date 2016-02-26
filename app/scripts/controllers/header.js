@@ -2,9 +2,7 @@
 
 
 angular.module('calculatorApp').controller('HeaderCtrl',
-    ['$scope', '$state', '$stateParams',
-    function ($scope, $state, $stateParams) {
-
+    ['$scope', function ($scope) {
 
       $scope.activeArr        = [];
       $scope.activeArr.length = 3;
