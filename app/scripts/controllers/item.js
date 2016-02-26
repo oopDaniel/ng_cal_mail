@@ -60,8 +60,16 @@ angular.module('calculatorApp').controller('ItemCtrl',
                         getStorage(),
                         data.HDDsize,
                         data.RAID );
+            minHDD[1]  = minHDD[1] || 1;
+            minHDD[0]  = minHDD[0] || 1;
             $scope.totalModelSets = minHDD[1];
             return minHDD[0];
+        };
+
+        // Fix the display bug in CMS tab
+        $scope.hddSizeDisplay = function() {
+            data.HDDsize = data.HDDsize || "1 TB";
+            return data.HDDsize;
         };
 
 
