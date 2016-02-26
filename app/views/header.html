@@ -2,19 +2,9 @@
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
-
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-
-        <a class="navbar-brand" ui-sref="app">Calculator</a>
+        <a class="navbar-brand hidden-xs" ui-sref="app">Calculator</a>
       </div>
-
-      <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
+      <div >
         <ul class="nav navbar-nav">
           <li
             ng-class="{active:activeArr[0]}"
@@ -31,47 +21,8 @@
             ng-click="activate(2)"><a ui-sref="app.project">Projects</a>
           </li>
         </ul>
-<!--         <ul class="nav navbar-nav navbar-right">
-          <li><a data-toggle="modal" data-target="#signinModal">Sign In</a></li>
-        </ul> -->
+
       </div>
     </div>
   </nav>
-
-
-
-  <!-- login -->
-
-<!--   <div id="signinModal" class="modal fade">
-    <div class="modal-dialog modal-sm"> -->
-    <!-- Modal content-->
-      <!-- <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Signin </h4>
-          </div>
-          <div class="modal-body"> -->
-
-
-
-<!--           <form class="form">
-              <div class="form-group">
-                  <label class="sr-only" for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" placeholder="Email">
-              </div>
-              <div class="form-group">
-                  <label class="sr-only" for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password">
-              </div>
-              <div class="checkbox">
-                  <label><input type="checkbox"> Remember me</label>
-              </div>
-              <button type="submit" class="btn btn-info">Sign in</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-          </form> -->
-
-          </div>
-      </div>
-    </div>
-  </div>
 </header>
