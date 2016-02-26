@@ -71,6 +71,12 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
             return minHDD[0];
         };
 
+        // Fix the display bug in CMS tab
+        $scope.hddSizeDisplay = function() {
+            $scope.data.HDDsize = $scope.data.HDDsize || "1 TB";
+            return  $scope.data.HDDsize;
+        };
+
 
     /*****************************************
      *      Convert the units displayed
