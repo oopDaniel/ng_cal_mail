@@ -46,7 +46,7 @@ angular.module('calculatorApp').controller('ItemCtrl',
         }
 
         $scope.showStorage = function () {
-            return displaySetup( getStorage(), true );
+            return parseInt(displaySetup( getStorage(), true )) || "- ";
         };
 
 
