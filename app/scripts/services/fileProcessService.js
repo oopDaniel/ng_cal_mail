@@ -110,8 +110,10 @@ angular.module('calculatorApp')
 
 
 
-    this.foo = function() {
-        console.log( titleStr + storedData2Str() );
+    this.saveFile = function() {
+        var fileStr = titleStr + storedData2Str(),
+            file    = new Blob([fileStr], {type: "text/plain;charset=utf-8"});
+        saveAs(file, "data.csv");
     };
 
 

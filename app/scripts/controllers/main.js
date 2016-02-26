@@ -20,7 +20,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         var data;
         $scope.invalidForm    = true;
 
-        fileProcessService.foo();
+
     /*****************************************
      *     Track the current tab
      */
@@ -137,6 +137,16 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
     $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
     };
+
+
+
+    /*****************************************
+     *             File Process
+     */
+        $scope.saveFile = function() {
+            return fileProcessService.saveFile();
+        };
+
 
   }]);
 
