@@ -139,6 +139,17 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
+.maxwidth {
+  margin:0 auto;
+  max-width: 100%;
+  @media screen and (min-width: 800px) {
+    max-width: 60%;
+    .recommend {
+      margin:0 auto;
+      max-width: 90%;
+    }
+  }
+}
 
 
 .selectItem {
@@ -158,10 +169,6 @@ $font_detail_color: lighten(grey, 10%);
   }
 }
 .hd-requirement {
-    @media screen and (min-width: 800px) {
-      width:68vw;
-      margin: 2em auto;
-    }
     background: $theme_color;
     color: white;
     text-align: center;
