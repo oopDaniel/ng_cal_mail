@@ -521,3 +521,32 @@ $font_detail_color: lighten(grey, 10%);
 //     display: table;
 //     content: " ";
 // }
+
+
+
+
+//--------- Checkbox -----------
+input[type=checkbox].css-checkbox {
+    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+  padding-left:37px;
+  height:32px;
+  display:inline-block;
+  line-height:32px;
+  background-repeat:no-repeat;
+  background-position: 0 0;
+  font-size:32px;
+  vertical-align:middle;
+  cursor:pointer;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+  background-position: 0 -32px;
+}
+label.css-label {
+  background-image:url(/images/checkbox.png);
+  user-select: none;
+}

@@ -213,13 +213,7 @@ myApp.controller('formCtrl', ['$scope','optionsFactory',
             }
         };
 
-        $scope.selectLocal = function(isLocal) {
-            data.local = isLocal;
-        };
-
-
 }]);
-
 
 
 

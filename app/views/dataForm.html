@@ -198,31 +198,6 @@
                 <i class="fa fa-user fa-3x icon-centered"></i>
               </div>
               <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                <div class="row form-group">
-                  <label
-                    for="local-client"
-                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
-                    Local Client
-                  </label>
-                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
-                    <div class="flex"
-                         id="local-client">
-                      <div
-                        class="flex1"
-                        ng-click="selectLocal(true)"
-                        ng-class="{selected:data.local,cmsFlex:!onNVR}">
-                        Yes
-                      </div>
-                      <div
-                        class="flex1"
-                        ng-click="selectLocal(false)"
-                        ng-class="{selected:!data.local,cmsFlex:!onNVR}">
-                        No
-                      </div>
-                    </div> <!-- end local-client -->
-                  </div>
-                </div> <!-- end row -->
-
                 <div class="row form-group range-div" ng-if="!onNVR">
                   <label
                     for="remote-user"
@@ -239,6 +214,25 @@
                     <span class="percentage">{{data.remoteUsers}}</span>
                   </div>
                 </div> <!-- /ng-if:onCMS -->
+
+                <div class="row form-group">
+                  <label
+                    for="local-client"
+                    class="col-xs-6 col-sm-2 col-sm-offset-3 input-label">
+                    Local Client
+                  </label>
+                  <div class="col-xs-6 col-sm-4 col-sm-offset-1">
+                    <input
+                      id="local-client"
+                      type="checkbox"
+                      class="css-checkbox"
+                      ng-model="data.local">
+                    <!-- display the checkbox image -->
+                    <label for="local-client" class="css-label"></label>
+                  </div>
+                </div> <!-- end row -->
+
+
               </div>
             </div> <!-- end row -->
           </section>
