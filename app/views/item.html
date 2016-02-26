@@ -1,7 +1,7 @@
   <div class="alert">
     <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
   </div>
-  <div class="jumbotron reducePadding">
+  <div class="jumbotron">
     <div class="row">
 
         <div class="table-showdigit col-xs-12
@@ -35,13 +35,9 @@
   </div> <!-- end jumbotron -->
 
 
-<div ng-include="dataURL" ng-controller="formCtrl"></div>
+<div ng-include="dataURL" ng-controller="formCtrl" class="maxwidth"></div>
 
-<div class="row">
-  <div class="col-xs-6 col-xs-push-5">
-    <button class='btn btn-primary' ng-click="saveEdit()">Save</button>
-  </div>
-  <div class="col-xs-6">
-    <a class='btn btn-warning' ui-sref="app.projectdetails({id: id})">Cancel</a>
-  </div>
+<div class="savebtn">
+    <button class='btn btn-block btn-default' ng-click="saveEdit()"><span class="btnfont">Save</span></button>
+    <a class='btn btn-block btn-default' ui-sref="app.projectdetails({id: id})"><span class="btnfont">Cancel</span></a>
 </div>

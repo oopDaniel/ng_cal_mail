@@ -125,7 +125,7 @@ $font_detail_color: lighten(grey, 10%);
 
 // padding for container
 .in-content {
-  @include add_padding(3em,3em);
+  @include add_padding(1em,3em);
 }
 .hidden-input {
   @include add_padding(1em,0,1em);
@@ -196,6 +196,11 @@ $font_detail_color: lighten(grey, 10%);
 
 .reducePadding {
   padding-bottom: 0;
+}
+
+.fixtoppadding {
+  marign-top:0;
+  padding-top:0
 }
 
 .highlight {
@@ -296,7 +301,8 @@ $font_detail_color: lighten(grey, 10%);
   }
 }
 .jumbotron {
-  padding-top: 0;
+  padding-top: 0 !important;
+  margin-top:0 !important;
 }
 
 .hr {
