@@ -142,7 +142,7 @@ $font_detail_color: lighten(grey, 10%);
 
 
 .selectItem {
-    background: rgba(1,1,1,0.1);
+    background: rgba(1,1,1,0.05);
 }
 
 
@@ -286,11 +286,12 @@ $font_detail_color: lighten(grey, 10%);
   color: $font_detail_color;
 }
 .detailBorder {
-  max-width:80%;
   border-bottom:.2em ridge;
   padding: .2em
 }
-
+.itemDiv{
+  max-width: 80%;
+}
 
 .selectedModelInput {
   background:$theme_color;
@@ -569,3 +570,11 @@ margin-right: -15px !important;
 .navbar-right {
 float: right!important;
 }
+
+// .centerify {
+//   width:100%;
+//   margin:0 auto;
+//   li {
+
+//   }
+// }
