@@ -67,8 +67,17 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
                         $scope.getStorage(),
                         data.HDDsize,
                         data.RAID );
+            // Set default value
+            minHDD[1]  = minHDD[1] || 1;
+            minHDD[0]  = minHDD[0] || 1;
             $scope.totalModelSets = minHDD[1];
             return minHDD[0];
+        };
+
+        // Fix the display bug in CMS tab
+        $scope.hddSizeDisplay = function() {
+            data.HDDsize = data.HDDsize || "1 TB";
+            return data.HDDsize;
         };
 
 
