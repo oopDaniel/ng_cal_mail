@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row padding-bottom">
     <div class="col-md-7 col-md-offset-3 col-xs-push-1 col-md-push-0">
         <section class="row">
             <div class="col-xs-8">
@@ -15,7 +15,6 @@
             </div>
         </section>
 
-        <hr class="hr">
 
         <section>
 
@@ -31,7 +30,7 @@
                 <div
                   ng-click="select($index)"
                   ng-class="{selectItem:clickArr[$index]}"
-                  class="itemDiv">
+                  class="itemDiv hoverable">
                     <span ng-click="clickRename(item.name)"><h4>{{item.name}}</h4></span>
                     <div class="details detailBorder">
                         <div class="row">
@@ -43,7 +42,7 @@
                                 <br>Total Bandwidth: {{totalBandwidth(item)}}
                             </div>
                             <span
-                              class="col-xs-2"
+                              class="col-xs-2 show-on-hover"
                               ui-sref="app.projectdetails({id: item._id})">
 
                       <!-- -----------------------------
@@ -53,14 +52,18 @@
 
                             </span>
 
-                            <span class="col-xs-2" ng-click="clickDelete($index)">
+
+                            <span
+                              class="col-xs-2 show-on-hover"
+                              ng-click="clickDelete($index)">
 
                       <!-- -----------------------------
                                   DELETE ICON
                           ----------------------------- -->
-                <span class="glyphicon glyphicon-trash icon-pj"></span>
+                <span class="glyphicon glyphicon-trash icon-pj "></span>
 
                             </span>
+
                         </div>
                     </div> <!-- /detail -->
                 </div> <!-- /itemDiv -->

@@ -30,7 +30,7 @@
 
 
 <!-- ----------------------------- -->
-<div class="row">
+<div class="row padding-bottom">
     <div class="col-md-8 col-md-push-3 col-xs-push-1 col-md-push-0">
         <section>
             <div class="filter">
@@ -55,7 +55,7 @@
                 <div
                   ng-click="select($index)"
                   ng-class="{selectItem:clickArr[$index]}"
-                  class="itemDiv">
+                  class="itemDiv hoverable">
                     <span ng-click="clickRename(item.name, false)"><h4>{{item.name}}</h4></span>
                     <div class="details detailBorder">
                         <div class="row">
@@ -70,7 +70,7 @@
                                 </span>
                             </div>
                             <span
-                              class="col-xs-2"
+                              class="col-xs-2 show-on-hover"
                               ui-sref="app.item({id: id, itemid: item._id})">
 
                       <!-- -----------------------------
@@ -81,7 +81,7 @@
 
                             </span>
                             <span
-                              class="col-xs-2"
+                              class="col-xs-2 show-on-hover"
                               ng-click="clickDelete($index)">
 
                       <!-- -----------------------------
