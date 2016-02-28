@@ -10,38 +10,52 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory','fileProcessService', 'onNVR',
-        function ($scope, $filter, optionsFactory, localStorageFactory, fileProcessService, onNVR) {
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'fileProcessService', 'onNVR',
+        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, fileProcessService, onNVR) {
         var data              = onNVR ? new localStorageFactory.NVRObj() : new localStorageFactory.CMSObj();
         $scope.data           = data;
         $scope.onNVR          = onNVR;  // else on CMS
         $scope.totalModelSets = 1;
         $scope.dataURL        = 'views/dataForm.html';
         $scope.invalidForm    = true;
-        $scope.storageUnit    = $scope.data.display.storageUnit;
-        $scope.bandwidthUnit  = $scope.data.display.bandwidthUnit;
+
 
 
     /*****************************************
      *     Display the info of bandwidth and storage
      */
-        $scope.getBandwidth = function() {
-            var bandwidthDisplay;
-                bandwidthDisplay = data.cameras * $scope.getBitRate();
-            if ( !$scope.onNVR ) {
-                bandwidthDisplay *= data.remoteUsers;
+        function displaySetup (num, onStorage) {
+            var tmp;
+            if ( onStorage ) {
+                tmp = unitConvertFactory.getStorage(num);
+                $scope.sUnit = tmp[1];
+            } else {
+                tmp = unitConvertFactory.getBandwidth(num);
+                $scope.bUnit = tmp[1];
             }
-            unitCheck('bandwidth', bandwidthDisplay);
-            return bandwidthDisplay;
+            return tmp[0];
+        }
+
+        $scope.getBandwidth = function () {
+            return onNVR ?
+                data.cameras * data.bitRate.data :
+                data.cameras * data.bitRate.data * data.remoteUsers;
+        }
+
+        $scope.showBandwidth = function () {
+            return displaySetup( $scope.getBandwidth(), false );
         };
 
-        $scope.getStorage = function() {
-            var storageDisplay = $scope.onNVR ?
-              $scope.getBandwidth() * 0.125 * // to MB/s
-              60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
-            unitCheck('storage', storageDisplay);
-            return storageDisplay;
+        $scope.getStorage = function () {
+            return onNVR ? $scope.getBandwidth() * 0.125 * // to MB/s
+              60 * 60 * 24 / 1024 * data.estDays.data : 0;
+        }
+
+        $scope.showStorage = function () {
+            return displaySetup( $scope.getStorage(), true ) || "- ";
         };
+
+
 
     /*****************************************
      *     Define the RAID rule and
@@ -63,31 +77,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.hddSizeDisplay = function() {
             data.HDDsize = data.HDDsize || '1 TB';
             return data.HDDsize;
-        };
-
-
-    /*****************************************
-     *      Convert the units displayed
-     */
-        var unitCheck = function(index, capacity) {
-            if ( 'storage' === index ) {
-                $scope.storageUnit =
-                    unitConverter(capacity, true) + 'B';
-                }
-            if ( 'bandwidth' === index ) {
-                $scope.bandwidthUnit =
-                    unitConverter(capacity, false) + 'bps';
-                }
-        };
-
-        var unitConverter = function( num, onStorage ) {
-            if ( num > 1024 * 1024 * 10 ) {
-                return onStorage ? 'P' : 'T';
-            } else if ( num > 10240 ) {
-                return onStorage ? 'T' : 'G';
-            } else {
-                return onStorage ? 'G' : 'M';
-            }
         };
 
 
@@ -180,7 +169,7 @@ myApp.controller('formCtrl', ['$scope','optionsFactory',
         $scope.hddInvalid       = false;
         $scope.cameraEmpty      = false;
         $scope.cameraInvalid    = false;
-        // To access the form in the child scope 'ng-include'
+        // Access the form in the child scope 'ng-include'
         $scope.formHolder = {};
 
         $scope.ValidCheck = function() {

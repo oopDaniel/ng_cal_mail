@@ -233,9 +233,7 @@ angular.module('calculatorApp')
         function MyObj() {
             this.display  = {
                 storage     : 960,
-                storageUnit : 'TB',
-                bandwidth:64,
-                bandwidthUnit:'Mbps'
+                bandwidth:64
             };
             this.cameras  = 16;
             this.bitRate  = {
