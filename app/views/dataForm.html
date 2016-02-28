@@ -27,7 +27,7 @@
                   ng-class="{ 'has-error' :
                                cameraEmpty || cameraInvalid }">
                   <label
-                    for="num_cameras"
+                    for="cameras"
                     class="col-xs-6 col-sm-2 col-sm-offset-3
                            input-label">
                     Number of Cameras
@@ -37,8 +37,8 @@
                       type="tel"
                       class="form-control input"
                       ng-class="{cmsBdr:!onNVR}"
-                      id="num_cameras"
-                      name="num_cameras"
+                      id="cameras"
+                      name="cameras"
                       pattern="\d{1,5}"
                       maxlength="5"
                       onkeyup="value=value.replace(/[^\d]/g,'')"

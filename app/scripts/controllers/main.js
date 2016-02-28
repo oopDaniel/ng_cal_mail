@@ -16,7 +16,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.data           = data;
         $scope.onNVR          = onNVR;  // else on CMS
         $scope.totalModelSets = 1;
-        $scope.dataURL        = "views/dataForm.html";
+        $scope.dataURL        = 'views/dataForm.html';
         $scope.invalidForm    = true;
         $scope.storageUnit    = $scope.data.display.storageUnit;
         $scope.bandwidthUnit  = $scope.data.display.bandwidthUnit;
@@ -61,7 +61,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
 
         // Fix the display bug in CMS tab
         $scope.hddSizeDisplay = function() {
-            data.HDDsize = data.HDDsize || "1 TB";
+            data.HDDsize = data.HDDsize || '1 TB';
             return data.HDDsize;
         };
 
@@ -171,7 +171,7 @@ myApp.controller('formCtrl', ['$scope','optionsFactory',
         };
 
         $scope.editHdd = function() {
-            data.HDDsize = parseInt($scope.hddInput) + " TB";
+            data.HDDsize = parseInt($scope.hddInput) + ' TB';
             $scope.ValidCheck();
         };
 
@@ -184,17 +184,18 @@ myApp.controller('formCtrl', ['$scope','optionsFactory',
         $scope.formHolder = {};
 
         $scope.ValidCheck = function() {
-            if ( $scope.formHolder.myForm.HDDsize.$dirty ) {
+            if ( $scope.formHolder.myForm.HDDsize !== undefined &&
+                 $scope.formHolder.myForm.HDDsize.$dirty ) {
                 $scope.hddEmpty =
-                    "" === $scope.hddInput;
+                    '' === $scope.hddInput;
                 $scope.hddInvalid =
                     $scope.formHolder.myForm.HDDsize.$error.pattern;
             }
-            if ( $scope.formHolder.myForm.num_cameras.$dirty ) {
+            if ( $scope.formHolder.myForm.cameras.$dirty ) {
                 $scope.cameraEmpty =
-                    $scope.formHolder.myForm.num_cameras.$error.required;
+                    $scope.formHolder.myForm.cameras.$error.required;
                 $scope.cameraInvalid =
-                    $scope.formHolder.myForm.num_cameras.$error.pattern;
+                    $scope.formHolder.myForm.cameras.$error.pattern;
             }
         };
 
@@ -299,13 +300,13 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
                 $scope.invalidDays =
                     $scope.rDayForm.myrdays.$error.pattern;
                 $scope.emptyDays =
-                    "" === $scope.data.estDays.params.rDays;
+                    '' === $scope.data.estDays.params.rDays;
             }
-            if ( $scope.rDayForm.num_rhours.$dirty ) {
+            if ( $scope.rDayForm.rHours.$dirty ) {
                 $scope.invalidHours =
-                    $scope.rDayForm.num_rhours.$error.pattern;
+                    $scope.rDayForm.rHours.$error.pattern;
                 $scope.emptyHours =
-                    "" === $scope.data.estDays.params.rHours;
+                    '' === $scope.data.estDays.params.rHours;
             }
         };
 
@@ -393,8 +394,8 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         $scope.saveAgain          = false;
 
         $scope.pj4form = {
-            pjName:"",
-            itemName:"",
+            pjName:'',
+            itemName:'',
             data:[]
         };
 
@@ -415,7 +416,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.emptyItemName;
 
             $scope.emptyPjName =
-                "" === $scope.pj4form.pjName;
+                '' === $scope.pj4form.pjName;
             $scope.emptyPjNameClass =
                 $scope.saveForm.pjName.$dirty &&
                 $scope.emptyPjName;
@@ -445,7 +446,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
 
             if (!localStorageFactory.pj.addItem( $scope.pj4form.itemName,
                     $scope.pj4form.pjName, $scope.data, $scope.onNVR, overwrite )){
-                $scope.overwriteAlert.push({ type: 'warning', msg: "The name already exists!" });
+                $scope.overwriteAlert.push({ type: 'warning', msg: 'The name already exists!' });
                 $scope.saveAgain = true;
             } else {
                 $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
