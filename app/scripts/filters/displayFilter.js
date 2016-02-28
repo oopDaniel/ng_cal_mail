@@ -3,10 +3,8 @@
 /**
  * @ngdoc filter
  * @name calculatorApp.filter:displayFilter
- * @function
  * @description
- * # displayFilter
- * Filter in the calculatorApp.
+ *   Filter the zero in display
  */
 
 angular.module('calculatorApp')

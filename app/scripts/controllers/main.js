@@ -24,6 +24,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
     /*****************************************
      *     Display the info of bandwidth and storage
      */
+
         function displaySetup (num, onStorage) {
             var tmp;
             if ( onStorage ) {
@@ -61,6 +62,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
      *     Define the RAID rule and
      *     count the HDDs needed
      */
+
         $scope.getMinHDD = function() {
             var minHDD = optionsFactory.getMinHDD(
                         $scope.getStorage(),
@@ -84,6 +86,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
     /********************************************
      *      Communication with the Bit Rate modal
      */
+
         $scope.bRate = 0;
         $scope.getBitRate = function() {
             $scope.$broadcast('parentGetBitRate');
@@ -95,9 +98,11 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         });
 
 
+
     /***************************************************
      *      Communication with the estimated-days modal
      */
+
         $scope.estDays = 0;
         $scope.getEstDays = function() {
             $scope.$broadcast('parentGetEstDays');
@@ -367,10 +372,8 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
 myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
     function($scope, $uibModal, localStorageFactory) {
 
-        $scope.pjArr = localStorageFactory.pj.projects;
+        $scope.pjArr              = localStorageFactory.pj.projects;
 
-        // Only contain '(Create New Project)'
-        // $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;
         $scope.isFirstTimeCreate  = !localStorageFactory.pj.hasData;
         $scope.isAddingNewPj      = false;
 
