@@ -1,11 +1,11 @@
-<div class="row padding-bottom">
+<div class="row padding-bottom-2">
     <div class="col-md-7 col-md-offset-3 col-xs-push-1 col-md-push-0">
         <section class="row">
             <div class="col-xs-8">
                 <h3>Project List</h3>
             </div>
             <!-- <div class="col-xs-3 col-xs-pull-1 details" ng-click="deleteSelect()">Delete selected item</div> -->
-            <div class="filter">
+            <div class="filter padding-bottom-1">
                 <input
                   type="text"
                   class="form-control"
@@ -30,7 +30,7 @@
                 <div
                   ng-click="select($index)"
                   ng-class="{selectItem:clickArr[$index]}"
-                  class="itemDiv hoverable">
+                  class="max-width-80 hoverable">
                     <span ng-click="clickRename(item.name)"><h4>{{item.name}}</h4></span>
                     <div class="details detailBorder">
                         <div class="row">
@@ -66,7 +66,7 @@
 
                         </div>
                     </div> <!-- /detail -->
-                </div> <!-- /itemDiv -->
+                </div> <!-- /max-width-80 -->
             </div> <!-- /ng-repeat -->
         </section>
     </div>

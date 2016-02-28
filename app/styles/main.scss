@@ -100,19 +100,34 @@ body {
     }
 }
 
+
+
+
 //------------------------------------------------------------
+
+
+
+
 $theme_color: #3F0D3A;
 $theme_color2: #8cb128;
 $table_bgcolor: white;
 $font_detail_color: lighten(grey, 10%);
-@mixin add_padding($h: 2em, $w:0, $b:0) {
-    padding: $h $w $b;
+
+@mixin add_padding($t: 2em, $w:0, $b:0) {
+    padding: $t $w $b;
 }
 
 @mixin width_restrict($w:80%) {
     max-width: $w;
     margin: 0 auto;
 }
+
+@mixin height-adjust($h) {
+    padding-top: 0;
+    margin-top: 0;
+    height: $h;
+}
+
 
 .savebtn {
     @include width_restrict(55%);
@@ -123,24 +138,13 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
-.unbreak {
-    white-space: nowrap;
-}
-
 // padding for container
 .in-content {
-    @include add_padding(1em, 3em);
+    @include add_padding(0, 3em, 1em);
 }
 
 .hidden-input {
     @include add_padding(1em, 0, 1em);
-}
-
-.sub-label-indent {
-    text-indent: 1em;
-    @media screen and (max-width: 500px) {
-        text-indent: 0;
-    }
 }
 
 .vcenter {
@@ -200,18 +204,7 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
-.padding-bottom {
-    padding-bottom: 2em;
-}
 
-.reducePadding {
-    padding-bottom: 0;
-}
-
-.fixtoppadding {
-    marign-top: 0;
-    padding-top: 0
-}
 
 .highlight {
     color: $theme_color2;
@@ -237,9 +230,6 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
-.input-label {
-    padding-top: 0.1em;
-}
 
 .filter {
     text-align: center;
@@ -250,36 +240,7 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
-.section {
-    padding: 0.2em;
-    &.section-require {
-        text-align: left;
-    }
-}
 
-// .flex {
-//   display: -webkit-flex;
-//   display: flex;
-//   .flex1 {
-//     -webkit-flex: 1;
-//     flex: 1;
-//     background: rgba(1,1,1,0.2);
-//     border-style: solid;
-//     text-align: center;
-//     &:hover{
-//       background: rgba(1,1,1,0.5);
-//     }
-//     &.selected {
-//       background: $theme_color;
-//       opacity: 0.9;
-//       color:white;
-//       border-color: lighten(black, 10%);
-//       &.cmsFlex {
-//         background: $theme_color2;
-//       }
-//     }
-//   }
-// }
 .table-showdigit {
     .table {
         background: $table_bgcolor;
@@ -310,14 +271,6 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
-.jumbotron {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-}
-
-.hr {
-    margin-top: 0;
-}
 
 .details {
     color: $font_detail_color;
@@ -328,9 +281,6 @@ $font_detail_color: lighten(grey, 10%);
     padding: .2em
 }
 
-.itemDiv {
-    max-width: 80%;
-}
 
 .selectedModelInput {
     background: $theme_color;
@@ -343,7 +293,7 @@ $font_detail_color: lighten(grey, 10%);
 }
 
 .bigDays {
-    @extend .unbreak;
+    white-space: nowrap;
     text-align: center;
     font-size: 3em;
     sub {
@@ -357,11 +307,19 @@ $font_detail_color: lighten(grey, 10%);
     }
 }
 
-@mixin height-adjust($h) {
-    padding-top: 0;
-    margin-top: 0;
-    height: $h;
+.nodata {
+    padding: 2em 0 4em;
+    color: grey;
 }
+
+.alert {
+    width: 80%;
+    margin: 0 auto;
+    position: fixed;
+}
+
+
+//---------- myPanel ------------
 
 .myPanel {
     height: 38vh;
@@ -422,17 +380,9 @@ $font_detail_color: lighten(grey, 10%);
     opacity: 0;
 }
 
-.nodata {
-    padding: 2em 0 4em;
-    color: grey;
-}
 
-.alert {
-    width: 80%;
-    margin: 0 auto;
-}
+// --------- Range bar ------------------
 
-// --------- for Range bar ------------------
 @mixin pseudoRange {
     position: absolute;
     top: 3px;
@@ -537,7 +487,10 @@ $font_detail_color: lighten(grey, 10%);
     @include add_padding(1em, 0);
 }
 
-//--------- Checkbox -----------
+
+
+//------------ Checkbox --------------
+
 input[type=checkbox].css-checkbox {
     position: absolute;
     z-index: -1000;
@@ -572,7 +525,9 @@ label.css-label {
     user-select: none;
 }
 
-// --------  Disable collapse  --------
+
+
+// --------  Disable collapse in Nav --------
 .navbar-collapse.collapse {
     display: block!important;
 }
@@ -598,6 +553,11 @@ label.css-label {
     font-size: 2em;
 }
 
+
+//---------------- Hover Icon --------------------
+
+
+
 @media screen and (min-width: 1025px) {
     .show-on-hover {
         display: none;
@@ -605,4 +565,53 @@ label.css-label {
     .hoverable:hover .show-on-hover {
         display: inline-block;
     }
+}
+
+
+//---------------- Adjust Pos ---------------------
+
+.padding-bottom-2 {
+    padding-bottom: 2em;
+}
+
+.padding-bottom-1 {
+    padding-bottom: 1em;
+}
+
+.padding-top-1 {
+    padding-top: 1em;
+}
+
+.padding-top-2 {
+    padding-top: 2em;
+}
+
+.padding-top-3 {
+    padding-top: 3em;
+}
+
+.padding-top-01 {
+    padding-top: 0.1em;
+}
+
+.padding-top-02 {
+    padding-top: 0.2em;
+}
+
+.reducePadding {
+    padding-bottom: 0;
+}
+
+.killTop {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.fixtoppadding {
+    margin-top: 0;
+    padding-top: 0
+}
+
+.max-width-80 {
+    max-width: 80%;
 }

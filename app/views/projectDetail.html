@@ -1,10 +1,13 @@
-<div class="jumbotron reducePadding">
+<div class="jumbotron reducePadding killTop">
     <div class="row">
         <div class="table-showdigit col-xs-12
                     col-md-6 col-md-offset-3">
             <table class="table table-hover table-responsive">
-                <caption ng-click="clickRename(name, true)">
-                    <h3>{{name}}</h3></caption>
+                <caption
+                  class="padding-bottom-2"
+                  ng-click="clickRename(name, true)">
+                    <h2>{{name}}</h2>
+                </caption>
                 <thead>
                     <tr>
                         <th>Total Storage</th>
@@ -30,10 +33,10 @@
 
 
 <!-- ----------------------------- -->
-<div class="row padding-bottom">
+<div class="row">
     <div class="col-md-8 col-md-push-3 col-xs-push-1 col-md-push-0">
         <section>
-            <div class="filter">
+            <div class="filter padding-bottom-1">
                 <input
                   type="text"
                   class="form-control"
@@ -42,7 +45,6 @@
                   maxlength="10">
             </div>
         </section>
-        <hr class="hr">
         <section>
             <div
               class="nodata"
@@ -55,7 +57,7 @@
                 <div
                   ng-click="select($index)"
                   ng-class="{selectItem:clickArr[$index]}"
-                  class="itemDiv hoverable">
+                  class="max-width-80 hoverable">
                     <span ng-click="clickRename(item.name, false)"><h4>{{item.name}}</h4></span>
                     <div class="details detailBorder">
                         <div class="row">
