@@ -19,12 +19,12 @@
           <tbody>
             <tr>
               <td class="greyMinus">
-                {{ getStorage() | displayFilter }}
-                <sub>{{storageUnit}}</sub>
+                {{ showStorage() | displayFilter }}
+                <sub>{{sUnit}}</sub>
               </td>
               <td>
-                {{ getBandwidth() | displayFilter }}
-                <sub>{{bandwidthUnit}}</sub>
+                {{ showBandwidth() | displayFilter }}
+                <sub>{{bUnit}}</sub>
               </td>
             </tr>
           </tbody>

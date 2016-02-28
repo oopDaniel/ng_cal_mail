@@ -11,20 +11,16 @@
 angular.module('calculatorApp')
     .filter('displayFilter', ['$filter', function ($filter) {
         return function (input) {
-            if ( 0 === input ) {
-                return '- ';
-            } else if ( input > 1024 * 1024 * 10 ) {
-                return $filter('number')(input / 1024 / 1024, 1);
-            } else if ( input > 10240 ) {
-                return $filter('number')(input / 1024, 1);
-            } else if ( input === (input|0) ) {
-                return $filter('number')(input);
+            var num    = parseFloat(input);
+            var numStr = num.toString();
+
+            if ( num > 0 ) {
+                var digit  = numStr.slice( numStr.length - 1, numStr.length );
+                return digit === '0' ?
+                    num :
+                    $filter('number')(num, 1);
             } else {
-                // Remove the last digit if it's zero
-                var tmpNum = $filter('number')(input, 1);
-                var tmpStr = tmpNum.toString();
-                var s = tmpStr.slice( tmpStr.length - 1, tmpStr.length);
-                return s === '0' ? $filter('number')(input, 1) : tmpNum;
+                return '- ';
             }
-        };
+        }
   }]);

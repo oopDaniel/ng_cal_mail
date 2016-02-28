@@ -26,14 +26,12 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
 
 
         $scope.totalStorage = function (obj) {
-            unitConvertFactory.setData(obj);
-            var result = unitConvertFactory.getTotalStorage();
+            var result = unitConvertFactory.getTotalStorage(obj);
             return result[0] + " " + result[1];
         };
 
         $scope.totalBandwidth = function (obj) {
-            unitConvertFactory.setData(obj);
-            var result = unitConvertFactory.getTotalBandwidth();
+            var result = unitConvertFactory.getTotalBandwidth(obj);
             return result[0] + " " + result[1];
         };
 
