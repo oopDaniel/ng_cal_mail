@@ -8,6 +8,7 @@
  * # displayFilter
  * Filter in the calculatorApp.
  */
+
 angular.module('calculatorApp')
     .filter('displayFilter', ['$filter', function ($filter) {
         return function (input) {
@@ -22,5 +23,5 @@ angular.module('calculatorApp')
             } else {
                 return '- ';
             }
-        }
+        };
   }]);

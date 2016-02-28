@@ -10,39 +10,39 @@
 var myApp = angular.module('calculatorApp');
 
 myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
-    function ($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
-        var pj           = localStorageFactory.pj;
-        $scope.pjArr     = pj.projects;
-        $scope.nodata    = !pj.hasData;
-        $scope.filtText  = '';
-        $scope.clickArr  = new Array( pj.projects.length );
+    function($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
+        var pj = localStorageFactory.pj;
+        $scope.pjArr = pj.projects;
+        $scope.nodata = !pj.hasData;
+        $scope.filtText = '';
+        $scope.clickArr = new Array(pj.projects.length);
         $scope.clickArr.fill(false);
 
 
 
-        $scope.select = function (index) {
+        $scope.select = function(index) {
             $scope.clickArr[index] = !$scope.clickArr[index];
         };
 
 
-        $scope.totalStorage = function (obj) {
+        $scope.totalStorage = function(obj) {
             var result = unitConvertFactory.getTotalStorage(obj);
-            return result[0] + " " + result[1];
+            return result[0] + ' ' + result[1];
         };
 
-        $scope.totalBandwidth = function (obj) {
+        $scope.totalBandwidth = function(obj) {
             var result = unitConvertFactory.getTotalBandwidth(obj);
-            return result[0] + " " + result[1];
+            return result[0] + ' ' + result[1];
         };
 
-        $scope.clickRename = function (name) {
-            $scope.modalInstance = $scope.openModal( "rename", "renameCtrl", "sm", true, name );
+        $scope.clickRename = function(name) {
+            $scope.modalInstance = $scope.openModal('rename', 'renameCtrl', 'sm', true, name);
         };
 
 
-        $scope.clickDelete = function (index) {
-            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
-            var id          = pj.projects[index]._id;
+        $scope.clickDelete = function(index) {
+            var deleteModal = $scope.openModal('confirm', 'confirmCtrl', 'sm');
+            var id = pj.projects[index]._id;
 
             deleteModal.result.then(
                 function() {
@@ -54,12 +54,12 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
             );
         };
 
-/*********************************************************************
-                          Redundant
-*********************************************************************/
-        $scope.openModal = function  (template, ctrl, size, isPjName, oldPjName ) {
+        /*********************************************************************
+                                  Redundant
+        *********************************************************************/
+        $scope.openModal = function(template, ctrl, size, isPjName, oldPjName) {
             return $uibModal.open({
-                templateUrl: "views/" + template + ".html",
+                templateUrl: 'views/' + template + '.html',
                 size: size,
                 controller: ctrl,
                 scope: $scope,
@@ -78,8 +78,8 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         };
 
 
-//********************************************************************
-//********************************************************************
+        //********************************************************************
+        //********************************************************************
 
 
 
@@ -106,7 +106,8 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
         //         }
         //     );
         // };
-}]);
+    }
+]);
 
 
 
@@ -119,17 +120,18 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
 
 
 myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
-    function ($scope, $uibModalInstance ) {
+    function($scope, $uibModalInstance) {
 
-        $scope.confirm = function () {
+        $scope.confirm = function() {
             $uibModalInstance.close();
         };
 
-        $scope.cancel = function () {
+        $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
 
-}]);
+    }
+]);
 
 
 
@@ -143,24 +145,25 @@ myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
 
 
 myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'oldPjName', 'oldName', '$uibModalInstance',
-    function ($scope, localStorageFactory, isPjName, oldPjName, oldName, $uibModalInstance) {
-        $scope.pjRename  = isPjName ? oldPjName : oldName;
+    function($scope, localStorageFactory, isPjName, oldPjName, oldName, $uibModalInstance) {
+        $scope.pjRename = isPjName ? oldPjName : oldName;
         $scope.emptyPjName = false;
 
-        $scope.validCheck = function () {
+        $scope.validCheck = function() {
             $scope.emptyPjName = $scope.renameForm.$error.required;
         };
 
-        $scope.renameSubmit = function () {
-            if ( isPjName ) {
+        $scope.renameSubmit = function() {
+            if (isPjName) {
                 localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename);
             } else {
-                localStorageFactory.pj.renameItem( oldPjName, oldName, $scope.pjRename );
+                localStorageFactory.pj.renameItem(oldPjName, oldName, $scope.pjRename);
             }
             $uibModalInstance.close();
         };
 
-}]);
+    }
+]);
 
 
 
@@ -173,16 +176,16 @@ myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'ol
 
 
 myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
-    function ($scope, $state, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
-        $scope.id     = parseInt($stateParams.id);
-        var project   = localStorageFactory.pj.getPj($scope.id);
-        $scope.name   = project.name;
-        $scope.data   = project.data;
+    function($scope, $state, $stateParams, $uibModal, unitConvertFactory, localStorageFactory) {
+        $scope.id = parseInt($stateParams.id);
+        var project = localStorageFactory.pj.getPj($scope.id);
+        $scope.name = project.name;
+        $scope.data = project.data;
         $scope.nodata = project.data.length === 0;
 
-        function displaySetup (onStorage) {
+        function displaySetup(onStorage) {
             var num;
-            if ( onStorage ) {
+            if (onStorage) {
                 num = unitConvertFactory.getStorage(project.storage);
                 $scope.sUnit = num[1];
             } else {
@@ -192,37 +195,37 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
             return num[0];
         }
 
-        $scope.showBandwidth = function () {
-            return displaySetup( false );
+        $scope.showBandwidth = function() {
+            return displaySetup(false);
         };
 
-        $scope.showStorage = function () {
-            return displaySetup( true );
+        $scope.showStorage = function() {
+            return displaySetup(true);
         };
 
 
-        $scope.convert   = function (num, onStorage) {
+        $scope.convert = function(num, onStorage) {
             var result;
-            if ( onStorage ) {
+            if (onStorage) {
                 result = unitConvertFactory.getStorage(num);
             } else {
                 result = unitConvertFactory.getBandwidth(num);
             }
-            return result[0] + " " + result[1];
+            return result[0] + ' ' + result[1];
         };
 
 
 
-        $scope.clickArr  = new Array( project.data.length );
+        $scope.clickArr = new Array(project.data.length);
         $scope.clickArr.fill(false);
 
-        $scope.select = function (index) {
+        $scope.select = function(index) {
             $scope.clickArr[index] = !$scope.clickArr[index];
         };
 
-        $scope.clickDelete = function (index) {
-            var deleteModal = $scope.openModal( "confirm", "confirmCtrl","sm");
-            var id          = project.data[index]._id;
+        $scope.clickDelete = function(index) {
+            var deleteModal = $scope.openModal('confirm', 'confirmCtrl', 'sm');
+            var id = project.data[index]._id;
 
             deleteModal.result.then(
                 function() {
@@ -236,9 +239,9 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
         };
 
 
-        $scope.openModal = function  (template, ctrl, size, isPjName, oldPjName, oldName ) {
+        $scope.openModal = function(template, ctrl, size, isPjName, oldPjName, oldName) {
             return $uibModal.open({
-                templateUrl: "views/" + template + ".html",
+                templateUrl: 'views/' + template + '.html',
                 size: size,
                 controller: ctrl,
                 scope: $scope,
@@ -257,10 +260,10 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
             });
         };
 
-        $scope.clickRename = function (name, isPjName) {
+        $scope.clickRename = function(name, isPjName) {
             $scope.modalInstance = isPjName ?
-                $scope.openModal( "rename", "renameCtrl", "sm", isPjName, name ) :
-                $scope.openModal( "rename", "renameCtrl", "sm", isPjName, project.name, name );
+                $scope.openModal('rename', 'renameCtrl', 'sm', isPjName, name) :
+                $scope.openModal('rename', 'renameCtrl', 'sm', isPjName, project.name, name);
 
             $scope.modalInstance.result.then(
                 function() {
@@ -268,4 +271,5 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
                 });
         };
 
-}]);
+    }
+]);

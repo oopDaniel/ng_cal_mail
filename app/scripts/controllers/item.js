@@ -8,11 +8,11 @@ angular.module('calculatorApp').controller('ItemCtrl',
         $scope.itemid  = parseInt($stateParams.itemid);
         var pj         = localStorageFactory.pj.getPj($scope.id);
         var inf        = localStorageFactory.pj.getItem($scope.id, $scope.itemid);
-        var onNVR      = inf.type === "NVR";
+        var onNVR      = inf.type === 'NVR';
         var data       = inf.data;
         $scope.inf     = inf;
         $scope.onNVR   = onNVR;
-        $scope.dataURL = "views/dataForm.html";
+        $scope.dataURL = 'views/dataForm.html';
         $scope.data    = data;
 
 
@@ -46,7 +46,7 @@ angular.module('calculatorApp').controller('ItemCtrl',
         }
 
         $scope.showStorage = function () {
-            return displaySetup( getStorage(), true ) || "- ";
+            return displaySetup( getStorage(), true ) || '- ';
         };
 
 
@@ -68,7 +68,7 @@ angular.module('calculatorApp').controller('ItemCtrl',
 
         // Fix the display bug in CMS tab
         $scope.hddSizeDisplay = function() {
-            data.HDDsize = data.HDDsize || "1 TB";
+            data.HDDsize = data.HDDsize || '1 TB';
             return data.HDDsize;
         };
 
@@ -99,12 +99,12 @@ angular.module('calculatorApp').controller('ItemCtrl',
 
     $scope.clickRename = function (name) {
         $scope.modalInstance =
-            $scope.openModal( "rename", "renameCtrl", "sm", pj.name , name );
+            $scope.openModal( 'rename', 'renameCtrl', 'sm', pj.name , name );
     };
 
     $scope.openModal = function  (template, ctrl, size, oldPjName, oldName ) {
         return $uibModal.open({
-            templateUrl: "views/" + template + ".html",
+            templateUrl: 'views/' + template + '.html',
             size: size,
             controller: ctrl,
             scope: $scope,

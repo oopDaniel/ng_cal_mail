@@ -40,7 +40,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
             return onNVR ?
                 data.cameras * data.bitRate.data :
                 data.cameras * data.bitRate.data * data.remoteUsers;
-        }
+        };
 
         $scope.showBandwidth = function () {
             return displaySetup( $scope.getBandwidth(), false );
@@ -49,10 +49,10 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.getStorage = function () {
             return onNVR ? $scope.getBandwidth() * 0.125 * // to MB/s
               60 * 60 * 24 / 1024 * data.estDays.data : 0;
-        }
+        };
 
         $scope.showStorage = function () {
-            return displaySetup( $scope.getStorage(), true ) || "- ";
+            return displaySetup( $scope.getStorage(), true ) || '- ';
         };
 
 
