@@ -1,33 +1,35 @@
-<header class="header" ng-controller="HeaderCtrl">
-  <nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        <a
-          class="navbar-brand hidden-xs"
-          ui-sref="app"
-          ng-click="activate(0)">
-          Calculator
-        </a>
-      </div>
-      <div class="centerify">
-        <ul class="nav navbar-nav">
-          <li
-            ng-class="{active:activeArr[0]}"
-            ng-click="activate(0)">
-            <a ui-sref="app">NVR</a>
-          </li>
-          <li
-            ng-class="{active:activeArr[1]}"
-            ng-click="activate(1)">
-            <a ui-sref="app.cms">CMS</a>
-          </li>
-          <li
-            ng-class="{active:activeArr[2]}"
-            ng-click="activate(2)"><a ui-sref="app.project">Projects</a>
-          </li>
-        </ul>
-
-      </div>
-    </div>
-  </nav>
+<header
+  class="header"
+  ng-controller="HeaderCtrl">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a
+                  class="navbar-brand hidden-xs"
+                  ui-sref="app"
+                  ng-click="activate(0)">
+                    Calculator
+                </a>
+            </div>
+            <div class="centerify">
+                <ul class="nav navbar-nav">
+                    <li
+                      ng-class="{active:activeArr[0]}"
+                      ng-click="activate(0)">
+                        <a ui-sref="app">NVR</a>
+                    </li>
+                    <li
+                      ng-class="{active:activeArr[1]}"
+                      ng-click="activate(1)">
+                        <a ui-sref="app.cms">CMS</a>
+                    </li>
+                    <li
+                      ng-class="{active:activeArr[2]}"
+                      ng-click="activate(2)">
+                        <a ui-sref="app.project">Projects</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
