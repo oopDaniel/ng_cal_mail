@@ -6,7 +6,7 @@
       {{alert.msg}}
     </uib-alert>
 </div>
-<div class="jumbotron">
+<div class="jumbotron killTop">
     <div class="row">
         <div class="table-showdigit col-xs-12
                     col-md-6 col-md-offset-3">
@@ -16,7 +16,7 @@
                 <caption
                   class="padding-bottom-2"
                   ng-click="clickRename(inf.name)">
-                    <h3>{{inf.name}}</h3>
+                    <h2>{{inf.name}}</h2>
                 </caption>
                 <thead>
                     <tr>
@@ -52,6 +52,8 @@
       ng-click="saveEdit()">
       <span class="btnfont">Save</span>
     </button>
+</div>
+<div class="savebtn">
     <a
       class='btn btn-block btn-default'
       ui-sref="app.projectdetails({id: id})">

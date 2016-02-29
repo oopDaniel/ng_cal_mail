@@ -136,6 +136,7 @@ $font_detail_color: lighten(grey, 10%);
     .btnfont {
         font-size: 2em;
     }
+    box-shadow: 1px 1px 1px rgba(20%, 20%, 40%, 0.6), 2px 2px 3px rgba(20%, 20%, 40%, 0.4), 3px 3px 5px rgba(20%, 20%, 40%, 0.4);
 }
 
 // padding for container
@@ -199,8 +200,10 @@ $font_detail_color: lighten(grey, 10%);
     background: $theme_color;
     color: white;
     text-align: center;
+    box-shadow: 1px 1px 2px rgba(60%, 70%, 70%, 0.8), 2px 2px 2px rgba(70%, 60%, 60%, 0.8);
     &.cmsBG {
         background: $theme_color2;
+        box-shadow: 1px 1px 2px rgba(20%, 30%, 40%, 0.6), 2px 2px 3px rgba(20%, 20%, 40%, 0.4);
     }
 }
 
@@ -600,6 +603,14 @@ label.css-label {
 
 .reducePadding {
     padding-bottom: 0;
+}
+
+.margin-bottom-1 {
+    margin-bottom: 1em;
+}
+
+.margin-bottom-05 {
+    margin-bottom: 0.5em;
 }
 
 .killTop {
