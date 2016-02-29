@@ -40,7 +40,7 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
 
 
         $scope.saveFile = function() {
-            fileProcessService.saveFile();
+            fileProcessService.saveFile($scope.clickArr);
         };
 
 

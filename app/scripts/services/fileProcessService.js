@@ -44,24 +44,40 @@ angular.module('calculatorApp')
         return commas.join();
     }
 
-    function loadData () {
+    function loadData (ids) {
+        var tmp, arr = [];
         try {
-            return JSON.parse($window.localStorage.projects);
-        } catch(e) {
-            return [];
+            tmp = JSON.parse($window.localStorage.projects);
+        } catch (e) {
+            tmp = [];
         }
+
+        ids.sort();
+
+        for ( var i in ids ) {
+            var index = findByAttr(tmp, '_id', ids[i]);
+            arr = arr.concat(tmp[index]);
+        }
+        return arr;
     }
 
-
+    function findByAttr(arr, attr, value) {
+        for ( var i = 0, l = arr.length; i < l; i++ ) {
+            if ( arr[i][attr] === value ) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
     /***************************
       Need to Convert the Unit?
     ****************************/
 
-    function storedData2Str() {
-        var obj = loadData ();
-        var tmp = '';
+    function storedData2Str(ids) {
+        var obj = loadData (ids),
+            tmp = '';
         for ( var i in obj ) {
             if ( i > 0 ) {
                 tmp += '\n';
@@ -77,11 +93,12 @@ angular.module('calculatorApp')
                 if ( j > 0 ) {
                     tmp += addComma(6);
                 }
-                var inf     = obj[i].data[j];
-                var type    = inf.type;
-                var data    = inf.data;
-                var bitRate = data.bitRate;
-                var estDays = data.estDays;
+                var inf     = obj[i].data[j],
+                    type    = inf.type,
+                    data    = inf.data,
+                    bitRate = data.bitRate,
+                    estDays = data.estDays;
+
                 tmp        += inf._id                   + ',' +
                               inf.name                  + ',' +
                               type                      + ',' +
@@ -118,8 +135,8 @@ angular.module('calculatorApp')
 
 
 
-    this.saveFile = function() {
-        var fileStr = titleStr + storedData2Str(),
+    this.saveFile = function(ids) {
+        var fileStr = titleStr + storedData2Str(ids),
             file    = new Blob([fileStr], {type: 'text/plain;charset=utf-8'});
         saveAs(file, 'data.csv');
     };
