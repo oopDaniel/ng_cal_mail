@@ -1,126 +1,130 @@
-<div class="modal-header" ng-controller="estDayModalCtrl">
-  <div class="modal-body">
-    <div class="myPanel row">
-      <div class="col-xs-6 col-sm-2 col-sm-offset-3
-                  col-sm-pull-1 bigDays vcenter">
-        {{getEstDays()}}
-        <sub>{{getEstDays()>1?'days':'day'}}</sub>
-      </div>
-      <div class="col-xs-5 col-sm-6 vcenter">
-        <div class="row">
-
-          <div class="form-group">
-          <form class="form-horizontal" name="rDayForm" ng-submit="submit()" novalidate="">
-
-          <section class="panelItem" >
-            <label
-              for="rDays"
-              class="col-xs-12 col-sm-5 col-sm-pull-1
-              input-label sub-label-indent">Recording Days</label>
-            <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-              <select
-                ng-model="rDays"
-                ng-change="update()"
-                ng-options="opt for opt in rDaysArr"
-                class="input form-control">
-              </select>
-              <div
-                ng-show="showOtherDuration"
-                ng-class="{ 'has-error' : invalidDays || emptyDays }">
-                <div class="hidden-input input-group">
-                  <input
-                    type="tel"
-                    class="form-control input"
-                    name="myrdays"
-                    pattern="\d{1,3}"
-                    onkeyup="value=value.replace(/[^\d]/g,'')"
-                    placeholder="Enter the days"
-                    maxlength="3"
-                    ng-change="validCheck()"
-                    ng-model="NVRObj.estDays.params.rDays"/>
-                  <div class="input-group-addon my-addon">
-                    Days
-                  </div>
-                </div>
-                <span
-                  ng-show="emptyDays"
-                  class="help-block">
-                  The day is required.
-                </span>
-                <span
-                  ng-show="invalidDays"
-                  class="help-block">
-                  Please enter a valid number.
-                </span>
-              </div>
+<div
+  class="modal-header"
+  ng-controller="estDayModalCtrl">
+    <div class="modal-body">
+        <div class="myPanel row">
+            <div class="col-xs-6 col-sm-2 col-sm-offset-2
+                      col-sm-pull-1 bigDays vcenter">
+                {{getEstDays()}}
+                <sub>{{getEstDays()>1?'days':'day'}}</sub>
             </div>
-            </section>
+            <div class="col-xs-5 col-sm-6 vcenter">
+                <div class="row">
+                    <div class="form-group">
+                        <form
+                          class="form-horizontal"
+                          name="rDayForm"
+                          ng-submit="submit()"
+                          novalidate>
 
 
-            <section class="panelItem">
-            <label
-              for="num_rhours"
-              class="col-xs-12 col-sm-5 col-sm-pull-1
-                     input-label sub-label-indent">
-              Recording hours a day
-            </label>
-            <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-              <div
-              ng-class="{ 'has-error' : invalidHours || emptyHours }">
-                <input
-                  type="tel"
-                  class="form-control input"
-                  name="num_rhours"
-                  id="num_rhours"
-                  pattern="\d{1,2}"
-                  onkeyup="value=value.replace(/[^\d]/g,'')"
-                  placeholder="Enter the hours"
-                  maxlength="2"
-                  ng-model="NVRObj.estDays.params.rHours"
-                  ng-change="validCheck()"/>
-                <span
-                  ng-show="emptyHours"
-                  class="help-block">
-                  The hours are required.
-                </span>
-                <span
-                  ng-show="invalidHours"
-                  class="help-block">
-                  Please enter a valid number.
-                </span>
-              </div>
+                            <section class="panelItem">
+                                <label
+                                  for="rDays"
+                                  class="col-xs-12 col-sm-6 padding-top-01 ">
+                                    Recording Days
+                                </label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <select
+                                      ng-model="rDays"
+                                      ng-change="update()"
+                                      ng-options="opt for opt in rDaysArr"
+                                      class="input form-control">
+                                    </select>
+                                    <div
+                                      ng-show="showOtherDuration"
+                                      ng-class="{ 'has-error' : invalidDays || emptyDays }">
+                                        <div class="hidden-input input-group">
+                                            <input
+                                              type="tel"
+                                              class="form-control input"
+                                              name="myrdays"
+                                              pattern="\d{1,3}"
+                                              onkeyup="value=value.replace(/[^\d]/g,'')"
+                                              placeholder="Enter the days"
+                                              maxlength="3"
+                                              ng-change="validCheck()"
+                                              ng-model="data.estDays.params.rDays" />
+                                            <div class="input-group-addon my-addon">
+                                                Days
+                                            </div>
+                                        </div>
+                                        <span
+                                          ng-show="emptyDays"
+                                          class="help-block">
+                                            The day is required.
+                                        </span>
+                                        <span
+                                          ng-show="invalidDays"
+                                          class="help-block">
+                                            Please enter a valid number.
+                                        </span>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="panelItem">
+                                <label
+                                  for="rHours"
+                                  class="col-xs-12 col-sm-6 padding-top-01 ">
+                                    Recording hours a day
+                                </label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div ng-class="{ 'has-error' : invalidHours || emptyHours }">
+                                        <input
+                                          type="tel"
+                                          class="form-control input"
+                                          name="rHours"
+                                          id="rHours"
+                                          pattern="\d{1,2}"
+                                          onkeyup="value=value.replace(/[^\d]/g,'')"
+                                          placeholder="Enter the hours"
+                                          maxlength="2"
+                                          ng-model="data.estDays.params.rHours"
+                                          ng-change="validCheck()" />
+                                        <span
+                                          ng-show="emptyHours"
+                                          class="help-block">
+                                            The hours are required.
+                                        </span>
+                                        <span
+                                          ng-show="invalidHours"
+                                          class="help-block">
+                                            Please enter a valid number.
+                                        </span>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="panelItem">
+                                <label
+                                  for="motion"
+                                  class="col-xs-12 col-sm-6 padding-top-01 ">
+                                    Motion Recording
+                                </label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="range-div">
+                                        <input
+                                          type="range"
+                                          class="rangebar"
+                                          ng-model="data.estDays.params.motion"
+                                          min="0"
+                                          max="100"
+                                          step="10" />
+                                        <span class="percentage">
+                                            {{data.estDays.params.motion}}%
+                                        </span>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                        </form>
+                    </div> <!-- /form-group -->
+                </div> <!-- /row -->
             </div>
-            </section>
-
-
-            <section class="panelItem">
-            <label
-              for="motion"
-              class="col-xs-12 col-sm-5 col-sm-pull-1
-              input-label sub-label-indent">
-              Motion Recording
-            </label>
-            <div class="col-xs-12 col-sm-5 col-sm-pull-1">
-              <div class="range-div">
-                <input
-                  type="range"
-                  class="rangebar"
-                  ng-model="NVRObj.estDays.params.motion"
-                  min="0"
-                  max="100"
-                  step="10"/>
-                <span class="percentage">
-                  {{NVRObj.estDays.params.motion}}%
-                </span>
-              </div>
-            </div>
-            </section>
-
-          </form>
-          </div>
-
-        </div>
-      </div>
-    </div>  <!-- end myPanel -->
-  </div>  <!-- end modal-body -->
-</div>  <!-- end modal-header -->
+        </div> <!-- /myPanel -->
+    </div> <!-- /modal-body -->
+</div> <!-- /modal-header -->

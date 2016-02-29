@@ -10,159 +10,85 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'localStorageFactory',
-        function ($scope, $filter, formOptionsFactory, localStorageFactory) {
-        $scope.onNVR          = true;  // else on CMS
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'onNVR',
+        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, onNVR) {
+        var data              = onNVR ?
+            new localStorageFactory.NVRObj() :
+            new localStorageFactory.CMSObj();
+        $scope.data           = data;
+        $scope.onNVR          = onNVR;  // else on CMS
         $scope.totalModelSets = 1;
-        $scope.NVRObj         = localStorageFactory.getDefaultNVRObj();
-        $scope.CMSObj         = localStorageFactory.getDefaultCMSObj();
-        $scope.storageUnit    = $scope.NVRObj.display.storageUnit;
-        $scope.bandwidthUnit  = $scope.NVRObj.display.bandwidthUnit;
+        $scope.dataURL        = 'views/dataForm.html';
         $scope.invalidForm    = true;
-    /*****************************************
-     *     Track the current tab
-     */
-        $scope.whereami = function(onNVR) {
-            $scope.onNVR = onNVR;
-        };
+
+
 
     /*****************************************
      *     Display the info of bandwidth and storage
      */
-        $scope.getBandwidth = function() {
-            var bandwidthDisplay;
-            if ( $scope.onNVR ) {
-                bandwidthDisplay = $scope.NVRObj.cameras * $scope.getBitRate();
+
+        function displaySetup (num, onStorage) {
+            var tmp;
+            if ( onStorage ) {
+                tmp = unitConvertFactory.getStorage(num);
+                $scope.sUnit = tmp[1];
             } else {
-                bandwidthDisplay = $scope.CMSObj.cameras * $scope.getBitRate() * $scope.CMSObj.remoteUsers;
+                tmp = unitConvertFactory.getBandwidth(num);
+                $scope.bUnit = tmp[1];
             }
-            unitCheck('bandwidth', bandwidthDisplay);
-            return bandwidthDisplay;
+            return tmp[0];
+        }
+
+        $scope.getBandwidth = function () {
+            return onNVR ?
+                data.cameras * data.bitRate.data :
+                data.cameras * data.bitRate.data * data.remoteUsers;
         };
 
-        $scope.getStorage = function() {
-            var storageDisplay = $scope.onNVR ?
-              $scope.getBandwidth() * 0.125 * // to MB/s
-              60 * 60 * 24 / 1024 * $scope.getEstDays() : 0;
-            unitCheck('storage', storageDisplay);
-            return storageDisplay;
+        $scope.showBandwidth = function () {
+            return displaySetup( $scope.getBandwidth(), false );
         };
+
+        $scope.getStorage = function () {
+            return onNVR ? $scope.getBandwidth() * 0.125 * // to MB/s
+              60 * 60 * 24 / 1024 * data.estDays.data : 0;
+        };
+
+        $scope.showStorage = function () {
+            return displaySetup( $scope.getStorage(), true ) || '- ';
+        };
+
+
 
     /*****************************************
      *     Define the RAID rule and
      *     count the HDDs needed
      */
+
         $scope.getMinHDD = function() {
-            var minHDD = Math.ceil( $scope.getStorage() / $scope.NVRObj.HDDsize / 1024 );
-            switch ( $scope.NVRObj.RAID ) { // RAID Rule
-                case "1":
-                    minHDD *= 2;
-                    break;
-                case "5":
-                    minHDD += 1;
-                    break;
-                case "10":
-                    minHDD += 2;
-                    break;
-                default:
-            }
-            $scope.totalModelSets = Math.ceil( minHDD / 8 );
-            return minHDD > 8 ? 8 : minHDD;
+            var minHDD = optionsFactory.getMinHDD(
+                        $scope.getStorage(),
+                        data.HDDsize,
+                        data.RAID );
+            // Set default value
+            minHDD[1]  = minHDD[1] || 1;
+            minHDD[0]  = minHDD[0] || 1;
+            $scope.totalModelSets = minHDD[1];
+            return minHDD[0];
         };
 
-    /*****************************************
-     *      Checking whether the 'selected' class
-     *      should be applied in flexbox
-     */
-        $scope.RAIDArr = formOptionsFactory.getRAIDArr();
-
-        $scope.showHdd = function() {
-            var tmp = parseInt($scope.hdd);
-            $scope.showOtherHDD = isNaN(tmp);
-            if (!$scope.showOtherHDD)
-                $scope.NVRObj.HDDsize = tmp;
-        };
-
-        $scope.coloringRAID = new Array( $scope.RAIDArr.length );
-        // default RAID type
-        $scope.coloringRAID[ formOptionsFactory.defaultRAIDindex ] = true;
-        // after clicked on a certain type of RAID
-        $scope.updateRAID = function(index, RAIDtype) {
-            $scope.coloringRAID.fill(false);
-            $scope.coloringRAID[index] = true;
-            $scope.NVRObj.RAID = RAIDtype;
-            console.log($scope.NVRObj.RAID);
-        };
-
-    /*****************************************
-     *      Convert the units displayed
-     */
-        var unitCheck = function(index, capacity) {
-            if ( 'storage' === index )
-                $scope.storageUnit =
-                    unitConverter(capacity, true) + 'B';
-            if ( 'bandwidth' === index )
-                $scope.bandwidthUnit =
-                    unitConverter(capacity, false) + 'bps';
-        };
-
-        var unitConverter = function( num, onStorage ) {
-            if ( num > 1024 * 1024 * 10 )
-                 return onStorage ? 'P' : 'T';
-            else if ( num > 10240 )
-                 return onStorage ? 'T' : 'G';
-            else return onStorage ? 'G' : 'M';
+        // Fix the display bug in CMS tab
+        $scope.hddSizeDisplay = function() {
+            data.HDDsize = data.HDDsize || '1 TB';
+            return data.HDDsize;
         };
 
 
-    /***************************************
-     *      Input validation
-     */
-        $scope.hddEmpty         = false;
-        $scope.hddInvalid       = false;
-        $scope.cameraEmpty      = false;
-        $scope.cameraInvalid    = false;
-        $scope.cameraEmptyCMS   = false;
-        $scope.cameraInvalidCMS = false;
-
-        $scope.ValidCheck = function() {
-            if ( $scope.NVRForm.HDDsize.$dirty ) {
-                $scope.hddEmpty =
-                    "" === $scope.NVRObj.HDDsize;
-                $scope.hddInvalid =
-                    $scope.NVRForm.HDDsize.$error.pattern;
-            }
-            if ( $scope.NVRForm.num_cameras.$dirty ) {
-                $scope.cameraEmpty =
-                    $scope.NVRForm.num_cameras.$error.required;
-                $scope.cameraInvalid =
-                    $scope.NVRForm.num_cameras.$error.pattern;
-            }
-            if ( $scope.CMSForm.num_cameras_cms.$dirty ) {
-                $scope.cameraEmptyCMS =
-                    $scope.CMSForm.num_cameras_cms.$error.required;
-                $scope.cameraInvalidCMS =
-                    $scope.CMSForm.num_cameras_cms.$error.pattern;
-            }
-        };
-
-    /********************************************
-     *      Deal with the selection of HDD,
-     *      check if 'other option' was selected.
-     */
-        $scope.HDDArr = formOptionsFactory.gethddSizeArr();
-        $scope.hdd = formOptionsFactory.defaultHdd;
-
-        $scope.showHdd = function() {
-            var tmp = parseInt($scope.hdd);
-            $scope.showOtherHDD = isNaN(tmp);
-            if (!$scope.showOtherHDD)
-                $scope.NVRObj.HDDsize = tmp;
-        };
 
     /********************************************
      *      Communication with the Bit Rate modal
      */
+
         $scope.bRate = 0;
         $scope.getBitRate = function() {
             $scope.$broadcast('parentGetBitRate');
@@ -174,9 +100,11 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         });
 
 
+
     /***************************************************
      *      Communication with the estimated-days modal
      */
+
         $scope.estDays = 0;
         $scope.getEstDays = function() {
             $scope.$broadcast('parentGetEstDays');
@@ -188,44 +116,108 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'formOptionsFactory', 'local
         });
 
 
+
+
     /********************************************
-     *      CMS local user identifier
+     *              Notification
      */
-        $scope.isLocal = true;
-        $scope.selectLocal = function(onLocal) {
-            $scope.isLocal = onLocal;
-        };
+
+    $scope.alerts = [];
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+
+
+    /*****************************************
+     *             File Process
+     */
+        // $scope.saveFile = function() {
+        //     return fileProcessService.saveFile();
+        // };
+
 
   }]);
+
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Form Controller
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// Inherit {$scope.data} from parent controller
+
+
+myApp.controller('formCtrl', ['$scope','optionsFactory',
+    function($scope, optionsFactory) {
+        var data            = $scope.data;
+        $scope.showOtherHDD = false;
+        $scope.hddInput     = '';
+        $scope.HDDArr       = optionsFactory.gethddSizeArr();
+        $scope.hdd          = $scope.HDDArr[ $scope.HDDArr.indexOf(data.HDDsize) ];
+        $scope.RAIDArr      = optionsFactory.getRAIDArr();
+
+        $scope.showHdd = function() {
+            $scope.showOtherHDD = isNaN(parseInt($scope.hdd));
+            if (!$scope.showOtherHDD) {
+                data.HDDsize = $scope.hdd;
+            }
+        };
+
+        $scope.editHdd = function() {
+            data.HDDsize = parseInt($scope.hddInput) + ' TB';
+            $scope.ValidCheck();
+        };
+
+
+        $scope.hddEmpty         = false;
+        $scope.hddInvalid       = false;
+        $scope.cameraEmpty      = false;
+        $scope.cameraInvalid    = false;
+        // Access the form in the child scope 'ng-include'
+        $scope.formHolder = {};
+
+        $scope.ValidCheck = function() {
+            if ( $scope.formHolder.myForm.HDDsize !== undefined &&
+                 $scope.formHolder.myForm.HDDsize.$dirty ) {
+                $scope.hddEmpty =
+                    '' === $scope.hddInput;
+                $scope.hddInvalid =
+                    $scope.formHolder.myForm.HDDsize.$error.pattern;
+            }
+            if ( $scope.formHolder.myForm.cameras.$dirty ) {
+                $scope.cameraEmpty =
+                    $scope.formHolder.myForm.cameras.$error.required;
+                $scope.cameraInvalid =
+                    $scope.formHolder.myForm.cameras.$error.pattern;
+            }
+        };
+
+}]);
+
+
 
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     Bit Rate Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// Inherit {$scope.data} from parent controller
 
 
 myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
-            'bitrateFactory', 'localStorageFactory', function($scope, $uibModal,
-            bitrateFactory, localStorageFactory) {
+            'optionsFactory', function($scope, $uibModal,
+            optionsFactory) {
 
             $scope.bitRateColorFill    = false;
             $scope.bitRateColorFillCMS = false;
 
-            $scope.codecList = bitrateFactory.getCodecList();
-            $scope.qList     = bitrateFactory.getQList();
-            $scope.RSList    = bitrateFactory.getRsList();
-            $scope.FPSList   = bitrateFactory.getFPSList();
-
-        /**
-         *  Update the object data in "localStorageFactory"
-         */
-            $scope.update = function() {
-                if ( $scope.$parent.onNVR )
-                    localStorageFactory.setDefaultNVRObj($scope.NVRObj);
-                else
-                    localStorageFactory.setDefaultCMSObj($scope.CMSObj);
-            };
+            $scope.codecList = optionsFactory.getCodecList();
+            $scope.qList     = optionsFactory.getQList();
+            $scope.RSList    = optionsFactory.getRsList();
+            $scope.FPSList   = optionsFactory.getFPSList();
 
         /**
          *  Counting the bit rate using the data in the object
@@ -233,18 +225,10 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  @return (integer) bitRate
          */
             $scope.getBitRate = function() {
-                var bitRate;
-                if ( $scope.$parent.onNVR ) {
-                    bitRate = bitrateFactory.getBitrate(
-                        $scope.RSList.indexOf( $scope.NVRObj.bitRate.params.resolution ),
-                        $scope.FPSList.indexOf( $scope.NVRObj.bitRate.params.FPS ));
-                    $scope.NVRObj.bitRate.data = bitRate;
-                } else {
-                    bitRate = bitrateFactory.getBitrate(
-                        $scope.RSList.indexOf( $scope.CMSObj.bitRate.params.resolution ),
-                        $scope.FPSList.indexOf( $scope.CMSObj.bitRate.params.FPS ));
-                    $scope.CMSObj.bitRate.data = bitRate;
-                }
+                var bitRate = optionsFactory.getBitRate(
+                                $scope.data.bitRate.params.resolution ,
+                                $scope.data.bitRate.params.FPS );
+                $scope.data.bitRate.data = bitRate;
                 return bitRate;
             };
 
@@ -252,7 +236,7 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  In response to parent's demand of "getBitRate()",
          *  return the result of bit rate counted.
          */
-            $scope.$on('parentGetBitRate', function(e) {
+            $scope.$on('parentGetBitRate', function() {
                 $scope.$emit('childSendBitRate', $scope.getBitRate());
             });
 
@@ -260,24 +244,20 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  Modal handler
          */
             $scope.open = function (size) {
-                var onNVR = $scope.$parent.onNVR;
+                var onNVR = $scope.onNVR;
 
-                $scope.bitRateColorFill    = true;
-                $scope.bitRateColorFillCMS = true;
-
-                var templateStr = onNVR ?
-                    'views/bitRateEstimate.html' :
-                    'views/bitRateEstimateCMS.html';
+                $scope.bitRateColorFill    = onNVR;
+                $scope.bitRateColorFillCMS = !onNVR;
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: templateStr,
+                    templateUrl: 'views/bitRateEstimate.html',
                     size       : size,
                     scope      : $scope
                 });
 
                 // Remove the filled color
                 modalInstance.result.then( null, function () {
-                    $scope.bitRateColorFill    = false;
+                   $scope.bitRateColorFill     = false;
                     $scope.bitRateColorFillCMS = false;
                 });
             };
@@ -288,19 +268,20 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     Estimated-days Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+// Inherit {$scope.data} from parent controller
 
 
 myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
-        'formOptionsFactory', 'localStorageFactory', function($scope, $uibModal,
-        formOptionsFactory, localStorageFactory) {
+        'optionsFactory', function($scope, $uibModal,
+        optionsFactory) {
+
 
         $scope.estDayColorFill   = false;
         $scope.showOtherDuration = false;
 
-        $scope.rDaysArr = formOptionsFactory.getRDaysArr();
+        $scope.rDaysArr = optionsFactory.getRDaysArr();
         // Keep the data in the modal available for display
-        $scope.rDays    = formOptionsFactory.defaultRDays;
+        $scope.rDays    = optionsFactory.defaultRDays;
 
         $scope.invalidHours = false;
         $scope.invalidDays  = false;
@@ -315,13 +296,13 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
                 $scope.invalidDays =
                     $scope.rDayForm.myrdays.$error.pattern;
                 $scope.emptyDays =
-                    "" === $scope.NVRObj.estDays.params.rDays;
+                    '' === $scope.data.estDays.params.rDays;
             }
-            if ( $scope.rDayForm.num_rhours.$dirty ) {
+            if ( $scope.rDayForm.rHours.$dirty ) {
                 $scope.invalidHours =
-                    $scope.rDayForm.num_rhours.$error.pattern;
+                    $scope.rDayForm.rHours.$error.pattern;
                 $scope.emptyHours =
-                    "" === $scope.NVRObj.estDays.params.rHours;
+                    '' === $scope.data.estDays.params.rHours;
             }
         };
 
@@ -336,27 +317,26 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
             // Do the update if getting a number
             if (!$scope.showOtherDuration) {
                 // for cross-controller display
-                formOptionsFactory.defaultRDays = $scope.rDays;
-                // for storage
-                $scope.NVRObj.estDays.params.rDays = tmp;
+                optionsFactory.defaultRDays = $scope.rDays;
+                $scope.data.estDays.params.rDays = tmp;
             }
-            localStorageFactory.setDefaultNVRObj($scope.NVRObj);
         };
 
         $scope.getEstDays = function() {
-            $scope.NVRObj.estDays.params.rHours =
-                $scope.NVRObj.estDays.params.rHours > 24 ?
-                    24 : $scope.NVRObj.estDays.params.rHours;
-            $scope.estDays = $scope.NVRObj.estDays.params.rDays *
-                $scope.NVRObj.estDays.params.motion / 100 *
-                $scope.NVRObj.estDays.params.rHours / 24;
-            return Math.ceil($scope.estDays);
+                $scope.data.estDays.params.rHours =
+                    optionsFactory.hoursFix( $scope.data.estDays.params.rHours );
+                $scope.data.estDays.data = optionsFactory.getEstDays(
+                    $scope.data.estDays.params.rDays,
+                    $scope.data.estDays.params.rHours,
+                    $scope.data.estDays.params.motion
+                    );
+                return $scope.data.estDays.data;
         };
 
         /**
          *  In response to parent's "getEstDays" demand
          */
-        $scope.$on('parentGetEstDays', function(e) {
+        $scope.$on('parentGetEstDays', function() {
             $scope.$emit('childSendEstDays', $scope.getEstDays());
         });
 
@@ -388,25 +368,28 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         Save Controller
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+// Inherit {$scope.data} from parent controller
 
 
 myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
     function($scope, $uibModal, localStorageFactory) {
 
-        $scope.pjArr = localStorageFactory.getPjArr();
+        $scope.pjArr              = localStorageFactory.pj.projects;
 
-        // Only contain '(Create New Project)'
-        $scope.isFirstTimeCreate  = $scope.pjArr.length === 0;
+        $scope.isFirstTimeCreate  = !localStorageFactory.pj.hasData;
         $scope.isAddingNewPj      = false;
 
         $scope.emptyItemName      = true;
         $scope.emptyItemNameClass = false;
         $scope.emptyPjName        = true;
         $scope.emptyPjNameClass   = false;
-        $scope.pj = {
-            pjName:"",
-            itemName:"",
+
+        $scope.overwriteAlert     = [];
+        $scope.saveAgain          = false;
+
+        $scope.pj4form = {
+            pjName:'',
+            itemName:'',
             data:[]
         };
 
@@ -414,7 +397,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
         if ( !$scope.isFirstTimeCreate ) {
             $scope.pjNameOption = $scope.pjArr[0];
         }
-
 
 
     /**
@@ -428,7 +410,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.emptyItemName;
 
             $scope.emptyPjName =
-                "" === $scope.pj.pjName;
+                '' === $scope.pj4form.pjName;
             $scope.emptyPjNameClass =
                 $scope.saveForm.pjName.$dirty &&
                 $scope.emptyPjName;
@@ -442,59 +424,30 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
      *  Update the object data in "localStorageFactory"
      */
         $scope.update = function() {
-            if (null !== $scope.pjNameOption) {
-                    $scope.isAddingNewPj =
-                        $scope.pjNameOption.name === localStorageFactory.defaultNewPjStr;
-            }
+            $scope.isAddingNewPj = $scope.pjNameOption === null;
             $scope.validCheck();
         };
 
 
-        $scope.submit = function () {
+        $scope.submit = function (overwrite) {
             // Refresh the result from the combo box
             if ( !$scope.isAddingNewPj && !$scope.isFirstTimeCreate ) {
-                $scope.pj.pjName = $scope.pjNameOption.name;
+                $scope.pj4form.pjName = $scope.pjNameOption.name;
             }
 
-            // console.log("passed pjName: "+$scope.pj.pjName+typeof($scope.pj.pjName));
-            var index = getPjIndex( $scope.pj.pjName );
-            // console.log(index);
+            $scope.data.display.storage   = $scope.getStorage();
+            $scope.data.display.bandwidth = $scope.getBandwidth();
 
-            if ( $scope.onNVR ) {
-                $scope.NVRObj = refreshDisplay($scope.NVRObj);
-                localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.NVRObj, true );
+            if (!localStorageFactory.pj.addItem( $scope.pj4form.itemName,
+                    $scope.pj4form.pjName, $scope.data, $scope.onNVR, overwrite )){
+                $scope.overwriteAlert.push({ type: 'warning', msg: 'The name already exists!' });
+                $scope.saveAgain = true;
             } else {
-                $scope.NVRObj = refreshDisplay($scope.CMSObj);
-                localStorageFactory.pushPjData( index, $scope.pj.itemName, $scope.CMSObj, false );
+                $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
+                $scope.saveAgain = false;
+                $scope.closeModal();
             }
-
-            localStorageFactory.store();
-            $scope.closeModal();
         };
-
-        var refreshDisplay = function(obj) {
-            obj.display.storage       = $scope.getStorage();
-            obj.display.bandwidth     = $scope.getBandwidth();
-            return obj;
-        };
-
-        var getPjIndex = function( pjName ) {
-            // console.log("pjName: "+pjName+typeof(pjName));
-            // console.log("name == 123 : "+(pjName=="123"));
-            // console.log("index = "+localStorageFactory.getPjIndex(pjName));
-            if ( undefined === localStorageFactory.getPjIndex(pjName) ) {
-                var pj = {
-                    name: pjName,
-                    NVR:[],
-                    CMS:[]
-                };
-                // console.log("This is pj: "+pj);
-                localStorageFactory.pushPj(pj);
-            }
-            // console.log("!!! "+localStorageFactory.getPjIndex(pjName));
-            return localStorageFactory.getPjIndex(pjName);
-        };
-
 
         $scope.openModal = function (size) {
 
@@ -503,8 +456,6 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 size: size,
                 scope: $scope
             });
-
-            // localStorageFactory.loadPj();
         };
 
         $scope.closeModal = function () {

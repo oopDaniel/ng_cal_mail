@@ -1,99 +1,111 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-$fa-font-path: "../bower_components/font-awesome/fonts";
+// $fa-font-path: "../bower_components/font-awesome/fonts/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 @import "font-awesome/scss/font-awesome.scss";
 // endbower
-
 .browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
 }
 
 body {
-  padding: 0;
-  background:#eeeeee;
+    padding: 0;
+    background: #eeeeee;
 }
 
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
+
 .header,
 .marketing,
 .footer {
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
+
 
 /* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
 
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
+.header {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 10px;
+    /* Make the masthead heading the same height as the navigation */
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+        padding-bottom: 19px;
+    }
 }
 
+
 /* Custom page footer */
+
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
 }
 
 .container-narrow > hr {
-  margin: 30px 0;
+    margin: 30px 0;
 }
+
 
 /* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
 
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+    }
 }
+
 
 /* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
 
-  p + h4 {
-    margin-top: 28px;
-  }
+.marketing {
+    margin: 40px 0;
+    p + h4 {
+        margin-top: 28px;
+    }
 }
+
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+    /* Remove the padding we set earlier */
+    .header,
+    .marketing,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
 }
 
+
+
+
 //------------------------------------------------------------
+
+
 
 
 $theme_color: #3F0D3A;
@@ -101,395 +113,528 @@ $theme_color2: #8cb128;
 $table_bgcolor: white;
 $font_detail_color: lighten(grey, 10%);
 
-@mixin add_padding($h: 2em, $w:0, $b:0) {
-  padding: $h $w $b;
+@mixin add_padding($t: 2em, $w:0, $b:0) {
+    padding: $t $w $b;
 }
 
-.unbreak{
-  white-space: nowrap;
+@mixin width_restrict($w:80%) {
+    max-width: $w;
+    margin: 0 auto;
+}
+
+@mixin height-adjust($h) {
+    padding-top: 0;
+    margin-top: 0;
+    height: $h;
+}
+
+
+.savebtn {
+    @include width_restrict(55%);
+    margin-top: 2.5em;
+    margin-bottom: 2em;
+    .btnfont {
+        font-size: 2em;
+    }
+    box-shadow: 1px 1px 1px rgba(20%, 20%, 40%, 0.6), 2px 2px 3px rgba(20%, 20%, 40%, 0.4), 3px 3px 5px rgba(20%, 20%, 40%, 0.4);
 }
 
 // padding for container
 .in-content {
-  @include add_padding(3em,3em);
+    @include add_padding(0, 3em, 1em);
 }
+
 .hidden-input {
-  @include add_padding(1em,0,1em);
-}
-.sub-label-indent {
-  text-indent:1em;
-  @media screen and (max-width: 500px) {
-    text-indent:0;
-  }
+    @include add_padding(1em, 0, 1em);
 }
 
 .vcenter {
-  display: inline-block;
-  vertical-align: middle;
-  float: none;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
 
-.nav-tabs, .nav-pills {
-    text-align:center;
+.nav-tabs,
+.nav-pills {
+    text-align: center;
     > li {
-          float:none;
-    display:inline-block;
-    *display:inline; /* ie7 fix */
-     zoom:1; /* hasLayout ie7 trigger */
+        float: none;
+        display: inline-block;
+        *display: inline;
+        /* ie7 fix */
+        zoom: 1;
+        /* hasLayout ie7 trigger */
     }
 }
 
+.maxwidth {
+    margin: 0 auto;
+    max-width: 100%;
+    @media screen and (min-width: 800px) {
+        max-width: 60%;
+        .recommend {
+            margin: 2em auto;
+            max-width: 90%;
+        }
+    }
+}
 
+.selectItem {
+    background: rgba(1, 1, 1, 0.05);
+}
 
 .icon-centered {
     display: table;
     margin: 0 auto;
-    padding:0 0 0.5em;
+    padding: 0 0 0.5em;
+}
+.pp {
+  background:red;
 }
 .customization {
-  @media screen and (min-width: 800px) {
-    width:68vw;
-    margin: 2em auto;
-  }
-}
-.hd-requirement {
     @media screen and (min-width: 800px) {
-      width:68vw;
-      margin: 2em auto;
+        width: 68vw;
+        margin: 2em auto;
     }
+}
+
+.hd-requirement {
     background: $theme_color;
     color: white;
     text-align: center;
+    box-shadow: 1px 1px 2px rgba(60%, 70%, 70%, 0.8), 2px 2px 2px rgba(70%, 60%, 60%, 0.8);
     &.cmsBG {
-      background: $theme_color2;
+        background: $theme_color2;
+        box-shadow: 1px 1px 2px rgba(20%, 30%, 40%, 0.6), 2px 2px 3px rgba(20%, 20%, 40%, 0.4);
     }
 }
-.padding-bottom {
-  padding-bottom: 2em;
-}
+
+
+
 .highlight {
-  color:$theme_color2;
-  font-size:1.5em;
+    color: $theme_color2;
+    font-size: 1.5em;
+}
+
+.highlightCMS {
+    @extend .highlight;
+    color: white;
 }
 
 .my-addon {
-  background: rgba(255,255,255,0.1);
-  border: 0;
-  border-bottom:0.2em solid $theme_color;
-  font-size: 1.1em;
+    background: rgba(255, 255, 255, 0.1);
+    border: 0;
+    border-bottom: 0.2em solid $theme_color;
+    font-size: 1.1em;
 }
 
 .input {
-  @extend .my-addon;
-  &.cmsBdr {
-     border-bottom:0.2em solid $theme_color2;
-  }
+    @extend .my-addon;
+    &.cmsBdr {
+        border-bottom: 0.2em solid $theme_color2;
+    }
 }
-.input-label {
-  padding-top:0.1em;
-}
+
+
 .filter {
-  text-align: center;
-  > input {
-    @extend .input;
-    min-width:70%;
-    max-width:80%;
-  }
-}
-
-.section {
-  padding: 0.2em;
-  &.section-require {
-    text-align: left;
-  }
-}
-
-.flex {
-  display: -webkit-flex;
-  display: flex;
-  .flex1 {
-    -webkit-flex: 1;
-    flex: 1;
-    background: rgba(1,1,1,0.2);
-    border-style: solid;
     text-align: center;
-    &:hover{
-      background: rgba(1,1,1,0.5);
+    > input {
+        @extend .input;
+        min-width: 70%;
+        max-width: 80%;
     }
-    &.selected {
-      background: $theme_color;
-      opacity: 0.9;
-      color:white;
-      border-color: lighten(black, 10%);
-      &.cmsFlex {
-        background: $theme_color2;
-      }
-    }
-
-  }
 }
+
 
 .table-showdigit {
-  .table {
-    background: $table_bgcolor;
-    box-shadow:2px 2px 2px rgba(20%,20%,40%,0.6),4px 4px 6px rgba(20%,20%,40%,0.4),6px 6px 12px rgba(20%,20%,40%,0.4);
-    .caption, th {
-      text-align: center;
+    .table {
+        background: $table_bgcolor;
+        box-shadow: 2px 2px 2px rgba(20%, 20%, 40%, 0.6), 4px 4px 6px rgba(20%, 20%, 40%, 0.4), 6px 6px 12px rgba(20%, 20%, 40%, 0.4);
+        caption {
+            color: darken($font_detail_color, 30%);
+        }
+        th {
+            text-align: center;
+        }
+        td {
+            font-size: 3em;
+            color: $theme_color;
+            @media screen and (max-width: 415px) and (min-width: 321px) {
+                font-size: 2.4em;
+            }
+            @media screen and (max-width: 320px) {
+                font-size: 2em;
+            }
+        }
+        &.cmsTB td {
+            color: $theme_color2;
+            &.greyMinus {
+                color: $font_detail_color;
+            }
+        }
+        sub {
+            font-size: 0.5em;
+        }
     }
+}
 
-    td {
-      font-size: 3em;
-      color: $theme_color;
-      @media screen and (max-width: 415px) and (min-width: 321px) {
-        font-size:2.4em;
-      }
-      @media screen and (max-width: 320px) {
-        font-size:2em;
-      }
-    }
-    &.cmsTB td{
-      color: $theme_color2;
-      &.greyMinus {
-        color: $font_detail_color;
-      }
-    }
+.selectedModelInput {
+    background: $theme_color;
+    color: white;
+}
+
+.selectedModelInputCMS {
+    @extend .selectedModelInput;
+    background: $theme_color2;
+}
+
+.bigDays {
+    white-space: nowrap;
+    text-align: center;
+    font-size: 3em;
     sub {
-      font-size: 0.5em;
+        font-size: 0.5em;
+        &:before {
+            content: ' ';
+        }
     }
-  }
-}
-.jumbotron {
-  padding-top: 0;
+    @media screen and (max-width: 415px) and (min-width: 321px) {
+        font-size: 2.8em;
+    }
 }
 
-.hr {
-  margin-top:0;
+.nodata {
+    padding: 2em 0 4em;
+    color: grey;
 }
+
+.alert {
+    width: 80%;
+    margin: 0 auto;
+    position: fixed;
+}
+
+
+//------- detail in Pj list --------
 
 .details {
-  color: $font_detail_color;
-  max-width:80%;
-  border-bottom:.2em ridge;
-  padding: .2em
+    color: $font_detail_color;
 }
 
-
-.estdays {
-  background:$theme_color;
-  color:white;
-}
-.estdaysCMS {
-  @extend .estdays;
-  background:$theme_color2;
+.detailBorder {
+    border-bottom: .2em ridge;
+    padding: .2em
 }
 
-.bigDays{
-  @extend .unbreak;
-  text-align: center;
-  font-size:3em;
-  sub {
-    font-size:0.5em;
-    &:before {
-      content:' ';
-    }
-  }
-
-  @media screen and (max-width: 415px) and (min-width: 321px) {
-    font-size:2.8em;
-  }
+.add-color {
+    color: darken($font_detail_color, 20%);
 }
 
-@mixin height-adjust($h) {
-  padding-top: 0;
-  margin-top:0;
-  height:$h;
-}
+//---------- myPanel ------------
 
-.myPanel{
-  height:38vh;
-  background:white;
-  .panelItem {
-    padding:5vh 0;
-  }
-
-  @media screen and (max-width: 320px) {
-    @include height-adjust(80vh);
+.myPanel {
+    height: 38vh;
+    background: white;
     .panelItem {
-      padding:5vh 0;
-      margin-bottom: 14vh;
+        padding: 5vh 0;
     }
-  }
-  @media screen and (max-width: 415px) and (min-width: 321px) {
-    @include height-adjust(60vh);
-    .panelItem {
-      padding:5vh 0;
-      margin-bottom: 8vh;
+    @media screen and (max-width: 320px) {
+        @include height-adjust(80vh);
+        .panelItem {
+            padding: 5vh 0;
+            margin-bottom: 14vh;
+        }
     }
-  }
+    @media screen and (max-width: 415px) and (min-width: 321px) {
+        @include height-adjust(60vh);
+        .panelItem {
+            padding: 5vh 0;
+            margin-bottom: 8vh;
+        }
+    }
 }
 
 .myPanel-bitrate {
-  @extend .myPanel;
-  height:44vh;
-
-  @media screen and (max-width: 320px) {
-    @include height-adjust(80vh);
-    .panelItem {
-      padding:4vh 0;
-      margin-bottom: 10vh;
+    @extend .myPanel;
+    height: 44vh;
+    @media screen and (max-width: 320px) {
+        @include height-adjust(80vh);
+        .panelItem {
+            padding: 4vh 0;
+            margin-bottom: 10vh;
+        }
     }
-  }
-  @media screen and (max-width: 450px) and (min-width: 321px) {
-    @include height-adjust(60vh);
-    .panelItem {
-      padding:4vh 0;
-      margin-bottom: 6vh;
+    @media screen and (max-width: 450px) and (min-width: 321px) {
+        @include height-adjust(60vh);
+        .panelItem {
+            padding: 4vh 0;
+            margin-bottom: 6vh;
+        }
     }
-  }
 }
 
 .myPanel.ng-enter {
-  transition:0.3s linear all;
-  opacity: 0;
+    transition: 0.3s linear all;
+    opacity: 0;
 }
+
 .myPanel.ng-enter.ng-enter-active {
-  opacity: 1;
+    opacity: 1;
 }
+
 .myPanel.ng-leave {
-  transition:0.3s linear all;
-  opacity: 1;
+    transition: 0.3s linear all;
+    opacity: 1;
 }
+
 .myPanel.ng-leave.ng-leave-active {
-  opacity: 0;
+    opacity: 0;
 }
 
 
-
-
-
-
-
-// --------- for Range bar ------------------
-
+// --------- Range bar ------------------
 
 @mixin pseudoRange {
-  position: absolute;
-  top: 3px;
-  width: 2000px;
-  height: 4px;
-  content:"";
-  pointer-events: none;
-  transition:.2s;
+    position: absolute;
+    top: 3px;
+    width: 2000px;
+    height: 4px;
+    content: "";
+    pointer-events: none;
+    transition: .2s;
 }
 
-
-
 @mixin rangebar {
-  -webkit-appearance: none;
-  outline : none;
-  width:10em;
-  height:1em;
-  background:none;
-  overflow:hidden;
-  top:-1%;
-  &::-webkit-slider-thumb {
-    position: relative;
-    transition:.2s;
     -webkit-appearance: none;
-    border-radius:50%;
-    width:10px;
-    height:10px;
-    &:active, &:hover {
-      width:13px;
-      height:13px;
+    outline: none;
+    width: 10em;
+    height: 1em;
+    background: none;
+    overflow: hidden;
+    top: -1%;
+    &::-webkit-slider-thumb {
+        position: relative;
+        transition: .2s;
+        -webkit-appearance: none;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        &:active,
+        &:hover {
+            width: 13px;
+            height: 13px;
+        }
     }
-  }
-  &::-webkit-slider-thumb:before{
-      @include pseudoRange;
-      left:-1200px;
-  }
-  &::-webkit-slider-thumb:after{
-    @include pseudoRange;
-    background:lighten($font_detail_color, 20%);
-    left:10px;
-  }
-  &:active::-webkit-slider-thumb:after,
-  &:hover::-webkit-slider-thumb:after{
-    left:13px;
-  }
-  &::-moz-range-track{
-    height:4px;
-    background:lighten($font_detail_color, 20%);
-    border:none;
-  }
-  &::-moz-range-thumb{
-    width:10px;
-    height:10px;
-    border:none;
-    border-radius: 50%;
-    &:active, &:hover {
-      width:13px;
-      height:13px;
+    &::-webkit-slider-thumb:before {
+        @include pseudoRange;
+        left: -1200px;
     }
-  }
-  &::-moz-range-progress {
-    height:4px;
-  }
-  &::-moz-focus-outer{
-    border:none;
-  }
-
+    &::-webkit-slider-thumb:after {
+        @include pseudoRange;
+        background: lighten($font_detail_color, 20%);
+        left: 10px;
+    }
+    &:active::-webkit-slider-thumb:after,
+    &:hover::-webkit-slider-thumb:after {
+        left: 13px;
+    }
+    &::-moz-range-track {
+        height: 4px;
+        background: lighten($font_detail_color, 20%);
+        border: none;
+    }
+    &::-moz-range-thumb {
+        width: 10px;
+        height: 10px;
+        border: none;
+        border-radius: 50%;
+        &:active,
+        &:hover {
+            width: 13px;
+            height: 13px;
+        }
+    }
+    &::-moz-range-progress {
+        height: 4px;
+    }
+    &::-moz-focus-outer {
+        border: none;
+    }
 }
 
 .rangebar {
-  @include rangebar;
-  &::-webkit-slider-thumb {
-    background:$theme_color;
-  }
-  &::-webkit-slider-thumb:before {
-    background:$theme_color;
-  }
-  &::-moz-range-thumb {
-    background:$theme_color;
-  }
-  &::-moz-range-progress {
-    background:$theme_color;
-  }
-}
-.rangebar-cms {
-  @include rangebar;
-  &::-webkit-slider-thumb {
-    background:$theme_color2;
-  }
-  &::-webkit-slider-thumb:before {
-    background:$theme_color2;
-  }
-  &::-moz-range-thumb {
-    background:$theme_color2;
-  }
-  &::-moz-range-progress {
-    background:$theme_color2;
-  }
+    @include rangebar;
+    &::-webkit-slider-thumb {
+        background: $theme_color;
+    }
+    &::-webkit-slider-thumb:before {
+        background: $theme_color;
+    }
+    &::-moz-range-thumb {
+        background: $theme_color;
+    }
+    &::-moz-range-progress {
+        background: $theme_color;
+    }
 }
 
+.rangebar-cms {
+    @include rangebar;
+    &::-webkit-slider-thumb {
+        background: $theme_color2;
+    }
+    &::-webkit-slider-thumb:before {
+        background: $theme_color2;
+    }
+    &::-moz-range-thumb {
+        background: $theme_color2;
+    }
+    &::-moz-range-progress {
+        background: $theme_color2;
+    }
+}
 
 .range-div {
-  @include add_padding(1em,0);
+    @include add_padding(1em, 0);
 }
 
 
 
+//------------ Checkbox --------------
 
-// .modal {
-//     display: block;
-// }
-// .modal-body:before,
-// .modal-body:after {
-//     display: table;
-//     content: " ";
-// }
-// .modal-header:before,
-// .modal-header:after {
-//     display: table;
-//     content: " ";
-// }
+input[type=checkbox].css-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left: 37px;
+    height: 32px;
+    display: inline-block;
+    line-height: 32px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 32px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -32px;
+}
+
+label.css-label {
+    background-image: url(/images/checkbox.png);
+    user-select: none;
+}
+
+
+
+// --------  Disable collapse in Nav --------
+.navbar-collapse.collapse {
+    display: block!important;
+}
+
+.navbar-nav>li,
+.navbar-nav {
+    float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+    margin-right: -15px !important;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+.icon {
+    font-size: 2.5em;
+}
+
+.icon-pj {
+    font-size: 2em;
+}
+
+
+//---------------- Hover Icon --------------------
+
+
+
+@media screen and (min-width: 1025px) {
+    .show-on-hover {
+        display: none;
+    }
+    .hoverable:hover .show-on-hover {
+        display: inline-block;
+    }
+}
+
+
+//---------------- Adjust Pos ---------------------
+
+.padding-bottom-2 {
+    padding-bottom: 2em;
+}
+
+.padding-bottom-1 {
+    padding-bottom: 1em;
+}
+
+.padding-top-1 {
+    padding-top: 1em;
+}
+
+.padding-top-2 {
+    padding-top: 2em;
+}
+
+.padding-top-3 {
+    padding-top: 3em;
+}
+
+.padding-top-01 {
+    padding-top: 0.1em;
+}
+
+.padding-top-02 {
+    padding-top: 0.2em;
+}
+
+.padding-top-05 {
+    padding-top: 0.5em;
+}
+
+.reducePadding {
+    padding-bottom: 0;
+}
+
+.margin-bottom-1 {
+    margin-bottom: 1em;
+}
+
+.margin-bottom-05 {
+    margin-bottom: 0.5em;
+}
+
+.killTop {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.fixtoppadding {
+    margin-top: 0;
+    padding-top: 0
+}
+
+.max-width-80 {
+    max-width: 80%;
+}

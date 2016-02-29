@@ -1,0 +1,79 @@
+<div
+  class="row hd-requirement"
+  ng-class="{cmsBG:!onNVR}">
+    <h4>Minimin Hardware Requirement</h4>
+
+    <section class="row padding-top-02 text-left">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+
+
+
+            <span class="glyphicon glyphicon-info-sign icon"></span>
+
+
+
+        </div>
+        <div class="col-xs-9 col-sm-8">
+            <div class="row">
+                <label class="col-xs-2 col-xs-offset-2">Model</label>
+                <div class="col-xs-6 col-xs-offset-1">NVR-5016-08HR</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row padding-top-02 text-left">
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1 col-sm-offset-3">
+
+
+          <!-- NULL -->
+
+        </div>
+        <div class="col-xs-9 col-sm-8">
+            <div class="row">
+                <label class="col-xs-2 col-xs-offset-2">OS</label>
+                <div class="col-xs-6 col-xs-offset-1">Windows 7 64bit</div>
+            </div>
+            <div class="row">
+                <label class="col-xs-2 col-xs-offset-2">CPU</label>
+                <div class="col-xs-6 col-xs-offset-1">Intel Core i5</div>
+            </div>
+            <div class="row">
+                <label class="col-xs-2 col-xs-offset-2">RAM</label>
+                <div class="col-xs-6 col-xs-offset-1">8 GB</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row padding-top-02 text-left">
+        <div class="col-xs-1 col-xs-offset-1
+                   col-sm-1 col-sm-offset-3">
+
+
+
+            <span class="glyphicon glyphicon-hdd icon"></span>
+
+
+
+        </div>
+        <div class="col-xs-9 col-sm-8">
+            <div class="row">
+                <label class="col-xs-2 col-xs-offset-2">Network</label>
+                <div class="col-xs-6 col-xs-offset-1">1000 Mbps BASE-T x 2</div>
+            </div>
+            <div class="row">
+                <label class="col-xs-2 col-xs-offset-2">HDDs</label>
+                <div
+                  class="col-xs-6 col-xs-offset-1 padding-bottom-1"
+                  ng-model="minHDD">
+                    {{hddSizeDisplay()}} x
+                    <span ng-class="{true:'highlight', false:'highlightCMS'}[onNVR]">{{ getMinHDD()}} </span>
+                    <span class="text-nowrap">as a set</span>
+                    <br> Totally
+                    <span ng-class="{true:'highlight', false:'highlightCMS'}[onNVR]">{{totalModelSets}}</span>
+                    {{totalModelSets>1?'sets are':'set is'}} needed
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

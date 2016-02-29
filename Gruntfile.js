@@ -16,7 +16,8 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
+    cdnify: 'grunt-google-cdn',
+    replace: 'grunt-text-replace'
   });
 
   // Configurable paths for the application
@@ -235,7 +236,7 @@ module.exports = function (grunt) {
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: './bower_components',
+        importPath: '<%= yeoman.app %>/bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
@@ -422,14 +423,12 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }, {
           expand: true,
-          cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
-        }, {
-          expand: true,
-          cwd: '.',
-          src: 'bower_components/font-awesome/fonts/*',
-          dest: '<%= yeoman.dist %>'
+          cwd: '<%= yeoman.app %>/bower_components/',
+          src: [
+            'bootstrap-sass-official/assets/fonts/bootstrap/*.*',
+            'font-awesome/fonts/*.*'
+            ],
+          dest: '<%= yeoman.dist %>/fonts'
         }]
       },
       styles: {
@@ -455,6 +454,18 @@ module.exports = function (grunt) {
       ]
     },
 
+    // replace the font file path
+    replace: {
+      dist: {
+        src: ['<%= yeoman.dist %>/styles//*.css'],
+        overwrite: true,                 // overwrite matched source files
+        replacements: [{
+          from: '../bower_components/',
+          to: '../fonts/'
+        }]
+      }
+    },
+
     // Test settings
     karma: {
       unit: {
@@ -463,6 +474,8 @@ module.exports = function (grunt) {
       }
     }
   });
+
+
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -490,8 +503,9 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:test',
     'postcss',
-    'connect:test',
-    'karma'
+    'connect:test'
+    // ,
+    // 'karma'
   ]);
 
   grunt.registerTask('build', [
@@ -509,7 +523,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'replace:dist'
   ]);
 
   grunt.registerTask('default', [
