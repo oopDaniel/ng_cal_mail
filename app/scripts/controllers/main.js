@@ -10,8 +10,8 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'onNVR',
-        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, onNVR) {
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'onNVR', 'alertService',
+        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, onNVR, alertService) {
         var data              = onNVR ?
             new localStorageFactory.NVRObj() :
             new localStorageFactory.CMSObj();
@@ -20,8 +20,8 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.totalModelSets = 1;
         $scope.dataURL        = 'views/dataForm.html';
         $scope.invalidForm    = true;
-
-
+// $state.get('app').data.msg.push({ type: 'warning', msg: 'The name already exists!' })
+    alertService.flash({ type: 'warning', msg: 'The name already exists!' })
 
     /*****************************************
      *     Display the info of bandwidth and storage
