@@ -188,9 +188,12 @@ $font_detail_color: lighten(grey, 10%);
     margin: 0 auto;
     padding: 0 0 0.5em;
 }
-.pp {
-  background:red;
+
+.cursor {
+    cursor:pointer;
 }
+
+
 .customization {
     @media screen and (min-width: 800px) {
         width: 68vw;

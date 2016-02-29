@@ -9,8 +9,23 @@
  */
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory', 'fileProcessService',
-    function($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory, fileProcessService) {
+myApp.controller('ProjectCtrl', [
+    '$scope',
+    '$filter',
+    '$uibModal',
+    'unitConvertFactory',
+    'localStorageFactory',
+    'fileProcessService',
+    'alertService',
+    function(
+        $scope,
+        $filter,
+        $uibModal,
+        unitConvertFactory,
+        localStorageFactory,
+        fileProcessService,
+        alertService) {
+
         var pj = localStorageFactory.pj;
         $scope.pjArr = pj.projects;
         $scope.nodata = !pj.hasData;
@@ -40,7 +55,11 @@ myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertF
 
 
         $scope.saveFile = function() {
-            fileProcessService.saveFile($scope.clickArr);
+            if ( 0 === $scope.clickArr.length ) {
+                alertService.flash({ type: 'warning', msg: 'Select a project first' });
+            } else {
+                fileProcessService.saveFile($scope.clickArr);
+            }
         };
 
 
