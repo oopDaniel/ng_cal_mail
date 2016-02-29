@@ -44,16 +44,32 @@ angular.module('calculatorApp')
 
         //////////// Public
             this.renamePj = function(oldName, newName) {
-                var index = getPjIndex(oldName);
+                var indexN = getPjIndex(newName),
+                    index  = getPjIndex(oldName);
+
+                // Name already exists
+                if ( -1 !== indexN ) {
+                    return false;
+                }
+
                 self.projects[index].name = newName;
                 storeData();
+                return true;
             };
 
             this.renameItem = function(oldPjName, oldName, newName) {
-                var indexP = getPjIndex(oldPjName);
-                var index  = findByAttr( self.projects[indexP].data, 'name', oldName );
+                var indexP = getPjIndex(oldPjName),
+                    index  = findByAttr( self.projects[indexP].data, 'name', oldName ),
+                    indexN = findByAttr( self.projects[indexP].data, 'name', newName );
+
+                // Name already exists
+                if ( -1 !== indexN ) {
+                    return false;
+                }
+
                 self.projects[indexP].data[index].name = newName;
                 storeData();
+                return true;
             };
 
             this.addItem = function(itemName, pjName, data, onNVR, overwrite) {

@@ -185,21 +185,31 @@ myApp.controller('renameCtrl', [
 
 
         $scope.pjRename = isPjName ? oldPjName : oldName;
-        $scope.emptyPjName = false;
+        $scope.emptyName = false;
+        $scope.NameExist = false;
+
 
         $scope.validCheck = function() {
-            $scope.emptyPjName = $scope.renameForm.$error.required;
+            $scope.NameExist = false;
+            $scope.emptyName = $scope.renameForm.$error.required;
         };
 
         $scope.renameSubmit = function() {
-            if (isPjName) {
-                localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename);
+            if (isPjName &&
+                localStorageFactory.pj.renamePj(oldPjName, $scope.pjRename) ||
+                !isPjName &&
+                localStorageFactory.pj.renameItem(oldPjName, oldName, $scope.pjRename) ) {
+                    alertService.flash({ type: 'success', msg: 'Successfully renamed!' });
+                    $uibModalInstance.close();
             } else {
-                localStorageFactory.pj.renameItem(oldPjName, oldName, $scope.pjRename);
+                $scope.NameExist = true;
             }
-            alertService.flash({ type: 'success', msg: 'Successfully renamed!' });
-            $uibModalInstance.close();
         };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
 
     }
 ]);

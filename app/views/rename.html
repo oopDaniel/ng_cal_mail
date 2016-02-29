@@ -2,10 +2,9 @@
     <div class="modal-body">
         <form
           name="renameForm"
-          ng-submit="renameSubmit()"
           novalidate>
             <div
-            ng-class="{ 'has-error' : emptyPjName }">
+            ng-class="{ 'has-error' : emptyName || NameExist}">
                 <input
                   type="text"
                   class="form-control input"
@@ -16,22 +15,27 @@
                   ng-model="pjRename"
                   ng-change="validCheck()"/>
                 <span
-                  ng-show="emptyPjName"
+                  ng-show="emptyName"
                   class="help-block">
                     Project Name is required.
+                </span>
+                <span
+                  ng-show="NameExist && !emptyName"
+                  class="help-block">
+                    The name already exists.
                 </span>
             </div>
 
             <div class="hidden-input row">
                 <button
-                  type="submit"
                   class="btn btn-primary col-xs-4 col-xs-offset-1"
-                  ng-disabled="emptyPjName">
+                  ng-click="renameSubmit()"
+                  ng-disabled="emptyName || NameExist">
                     Confirm
                 </button>
                 <button
                   class="btn btn-warning col-xs-4 col-xs-offset-1"
-                  ng-click="closeModal()">
+                  ng-click="cancel()">
                     Cancel
                 </button>
             </div>
