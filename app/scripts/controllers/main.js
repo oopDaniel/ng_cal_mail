@@ -10,9 +10,11 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'fileProcessService', 'onNVR',
-        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, fileProcessService, onNVR) {
-        var data              = onNVR ? new localStorageFactory.NVRObj() : new localStorageFactory.CMSObj();
+myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'onNVR',
+        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, onNVR) {
+        var data              = onNVR ?
+            new localStorageFactory.NVRObj() :
+            new localStorageFactory.CMSObj();
         $scope.data           = data;
         $scope.onNVR          = onNVR;  // else on CMS
         $scope.totalModelSets = 1;
@@ -131,9 +133,9 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
     /*****************************************
      *             File Process
      */
-        $scope.saveFile = function() {
-            return fileProcessService.saveFile();
-        };
+        // $scope.saveFile = function() {
+        //     return fileProcessService.saveFile();
+        // };
 
 
   }]);

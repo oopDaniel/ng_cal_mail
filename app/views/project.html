@@ -5,7 +5,7 @@
                 <h3>Project List</h3>
             </div>
             <div class="col-xs-4 col-xs-pull-1 padding-top-05">
-                <h3><span class="glyphicon glyphicon-paperclip"></span></h3>
+                <h3 ng-click="saveFile()"><span class="glyphicon glyphicon-paperclip"></span></h3>
             </div>
             <!-- <div class="col-xs-3 col-xs-pull-1 details" ng-click="deleteSelect()">Delete selected item</div> -->
             <div class="filter padding-bottom-2">
@@ -31,8 +31,8 @@
               class="project"
               ng-repeat="item in pjArr | orderBy: 'name' | filter: filtText">
                 <div
-                  ng-click="select($index)"
-                  ng-class="{selectItem:clickArr[$index]}"
+                  ng-click="select(item._id)"
+                  ng-class="{selectItem:isSelect(item._id)}"
                   class="max-width-80 hoverable">
                     <span ng-click="clickRename(item.name)"><h4>{{item.name}}</h4></span>
                     <div class="details detailBorder">

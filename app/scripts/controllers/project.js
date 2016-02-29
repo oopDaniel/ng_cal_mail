@@ -9,21 +9,43 @@
  */
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory',
-    function($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory) {
+myApp.controller('ProjectCtrl', ['$scope', '$filter', '$uibModal', 'unitConvertFactory', 'localStorageFactory', 'fileProcessService',
+    function($scope, $filter, $uibModal, unitConvertFactory, localStorageFactory, fileProcessService) {
         var pj = localStorageFactory.pj;
         $scope.pjArr = pj.projects;
         $scope.nodata = !pj.hasData;
         $scope.filtText = '';
-        $scope.clickArr = new Array(pj.projects.length);
-        $scope.clickArr.fill(false);
+        $scope.clickArr = [];
 
+//----------------------------------
 
-
-        $scope.select = function(index) {
-            $scope.clickArr[index] = !$scope.clickArr[index];
+        $scope.select = function(id) {
+            var index = getIndex(id);
+            if ( index >= 0 ) {
+                $scope.clickArr.splice(index, 1);
+            } else {
+                $scope.clickArr[$scope.clickArr.length] = id;
+            }
         };
 
+        $scope.isSelect = function(id) {
+            return getIndex(id) >= 0;
+        };
+
+        function getIndex(val) {
+            return $scope.clickArr.indexOf(val);
+        }
+
+//----------------------------------
+
+
+        $scope.saveFile = function() {
+            fileProcessService.saveFile();
+        };
+
+
+
+//----------------------------------
 
         $scope.totalStorage = function(obj) {
             var result = unitConvertFactory.getTotalStorage(obj);
