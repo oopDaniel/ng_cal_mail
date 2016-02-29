@@ -136,13 +136,13 @@ angular.module('calculatorApp')
             var hdd = parseInt(HDDsize);
             var minHDD = Math.ceil( storage / hdd / 1024 );
             switch ( RAID ) { // RAID Rule
-                case "1":
+                case '1':
                     minHDD *= 2;
                     break;
-                case "5":
+                case '5':
                     minHDD += 1;
                     break;
-                case "10":
+                case '10':
                     minHDD *= 2;
                     if ( minHDD < 4 ) {
                         minHDD *= 2;
