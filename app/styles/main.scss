@@ -188,7 +188,9 @@ $font_detail_color: lighten(grey, 10%);
     margin: 0 auto;
     padding: 0 0 0.5em;
 }
-
+.pp {
+  background:red;
+}
 .customization {
     @media screen and (min-width: 800px) {
         width: 68vw;
@@ -605,6 +607,10 @@ label.css-label {
 
 .padding-top-02 {
     padding-top: 0.2em;
+}
+
+.padding-top-05 {
+    padding-top: 0.5em;
 }
 
 .reducePadding {
