@@ -9,6 +9,7 @@ angular.module('calculatorApp').controller('ItemCtrl', [
     'unitConvertFactory',
     'localStorageFactory',
     'optionsFactory',
+    'alertService',
     function(
         $scope,
         $state,
@@ -16,7 +17,8 @@ angular.module('calculatorApp').controller('ItemCtrl', [
         $uibModal,
         unitConvertFactory,
         localStorageFactory,
-        optionsFactory) {
+        optionsFactory,
+        alertService) {
 
         $scope.id      = parseInt($stateParams.id);
         $scope.itemid  = parseInt($stateParams.itemid);
@@ -107,20 +109,8 @@ angular.module('calculatorApp').controller('ItemCtrl', [
             data.display.bandwidth = getBandwidth();
             if ( localStorageFactory.pj.editItem(
                     $scope.id, $scope.itemid, data) ) {
-                $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
+                alertService.flash({ type: 'success', msg: 'Successfully saved!' });
             }
-        };
-
-
-
-        /*****************************************
-         *            Alert related
-         */
-
-        $scope.alerts = [];
-
-        $scope.closeAlert = function(index) {
-            $scope.alerts.splice(index, 1);
         };
 
 

@@ -20,7 +20,7 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.totalModelSets = 1;
         $scope.dataURL        = 'views/dataForm.html';
         $scope.invalidForm    = true;
-// $state.get('app').data.msg.push({ type: 'warning', msg: 'The name already exists!' })
+
     alertService.flash({ type: 'warning', msg: 'The name already exists!' })
 
     /*****************************************
@@ -114,28 +114,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.$on('childSendEstDays', function(e, data) {
             $scope.estDays = data;
         });
-
-
-
-
-    /********************************************
-     *              Notification
-     */
-
-    $scope.alerts = [];
-
-    $scope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
-    };
-
-
-
-    /*****************************************
-     *             File Process
-     */
-        // $scope.saveFile = function() {
-        //     return fileProcessService.saveFile();
-        // };
 
 
   }]);
@@ -443,7 +421,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.overwriteAlert.push({ type: 'warning', msg: 'The name already exists!' });
                 $scope.saveAgain = true;
             } else {
-                $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
+                alertService.flash({ type: 'success', msg: 'Successfully saved!' })
                 $scope.saveAgain = false;
                 $scope.closeModal();
             }

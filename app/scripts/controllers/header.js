@@ -1,8 +1,10 @@
 'use strict';
 
 
-angular.module('calculatorApp').controller('HeaderCtrl',
-    ['$scope', 'alertService', function ($scope, alertService) {
+angular.module('calculatorApp').controller('HeaderCtrl', [
+  '$scope',
+  'alertService',
+  function ($scope, alertService) {
 
       $scope.activeArr        = [];
       $scope.activeArr.length = 3;
@@ -12,6 +14,7 @@ angular.module('calculatorApp').controller('HeaderCtrl',
           $scope.activeArr[index] = true;
       };
 
+
       $scope.activate(0);
 
 
@@ -19,4 +22,5 @@ angular.module('calculatorApp').controller('HeaderCtrl',
       $scope.closeAlert = function(index) {
           $scope.alerts.splice(index, 1);
       };
+
 }]);
