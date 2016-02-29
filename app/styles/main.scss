@@ -248,7 +248,9 @@ $font_detail_color: lighten(grey, 10%);
     .table {
         background: $table_bgcolor;
         box-shadow: 2px 2px 2px rgba(20%, 20%, 40%, 0.6), 4px 4px 6px rgba(20%, 20%, 40%, 0.4), 6px 6px 12px rgba(20%, 20%, 40%, 0.4);
-        .caption,
+        caption {
+            color: darken($font_detail_color, 30%);
+        }
         th {
             text-align: center;
         }
@@ -273,17 +275,6 @@ $font_detail_color: lighten(grey, 10%);
         }
     }
 }
-
-
-.details {
-    color: $font_detail_color;
-}
-
-.detailBorder {
-    border-bottom: .2em ridge;
-    padding: .2em
-}
-
 
 .selectedModelInput {
     background: $theme_color;
@@ -321,6 +312,21 @@ $font_detail_color: lighten(grey, 10%);
     position: fixed;
 }
 
+
+//------- detail in Pj list --------
+
+.details {
+    color: $font_detail_color;
+}
+
+.detailBorder {
+    border-bottom: .2em ridge;
+    padding: .2em
+}
+
+.add-color {
+    color: darken($font_detail_color, 20%);
+}
 
 //---------- myPanel ------------
 
