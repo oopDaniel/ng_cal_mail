@@ -166,8 +166,24 @@ myApp.controller('confirmCtrl', ['$scope', '$uibModalInstance',
 
 
 
-myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'oldPjName', 'oldName', '$uibModalInstance',
-    function($scope, localStorageFactory, isPjName, oldPjName, oldName, $uibModalInstance) {
+myApp.controller('renameCtrl', [
+    '$scope',
+    'localStorageFactory',
+    'isPjName',
+    'oldPjName',
+    'oldName',
+    '$uibModalInstance',
+    'alertService',
+    function(
+        $scope,
+        localStorageFactory,
+        isPjName,
+        oldPjName,
+        oldName,
+        $uibModalInstance,
+        alertService) {
+
+
         $scope.pjRename = isPjName ? oldPjName : oldName;
         $scope.emptyPjName = false;
 
@@ -181,6 +197,7 @@ myApp.controller('renameCtrl', ['$scope', 'localStorageFactory', 'isPjName', 'ol
             } else {
                 localStorageFactory.pj.renameItem(oldPjName, oldName, $scope.pjRename);
             }
+            alertService.flash({ type: 'success', msg: 'Successfully renamed!' });
             $uibModalInstance.close();
         };
 

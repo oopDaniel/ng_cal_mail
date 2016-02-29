@@ -308,12 +308,23 @@ $font_detail_color: lighten(grey, 10%);
     color: grey;
 }
 
+
+//------- alert --------
 .alert {
     width: 80%;
-    margin: 0 auto;
+    left: 10%;
     position: fixed;
+    z-index: 1;
+    font-size:1.1em;
 }
 
+.alert.ng-leave {
+  transition:0.5s linear all;
+  opacity:1;
+}
+.alert.ng-leave.ng-leave-active {
+  opacity:0;
+}
 
 //------- detail in Pj list --------
 

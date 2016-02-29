@@ -16,7 +16,7 @@ angular.module('calculatorApp')
         function Displayer() {
             var self = this;
 
-            this.countTotalStorage = function(obj) {
+            self.countTotalStorage = function(obj) {
                 if (obj) {
                     var storage = 0;
                     for (var i in obj.data) {
@@ -28,7 +28,7 @@ angular.module('calculatorApp')
                 }
             };
 
-            this.countTotalBandwidth = function(obj) {
+            self.countTotalBandwidth = function(obj) {
                 if (obj) {
                     var bandwidth = 0;
                     for (var i in obj.data) {
@@ -108,4 +108,4 @@ angular.module('calculatorApp')
         };
 
 
-    }]);
+}]);

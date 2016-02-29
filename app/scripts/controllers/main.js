@@ -10,8 +10,23 @@
 
 var myApp = angular.module('calculatorApp');
 
-myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStorageFactory', 'unitConvertFactory', 'onNVR',
-        function ($scope, $filter, optionsFactory, localStorageFactory, unitConvertFactory, onNVR) {
+myApp.controller('MainCtrl', [
+    '$scope',
+    '$filter',
+    'optionsFactory',
+    'localStorageFactory',
+    'unitConvertFactory',
+    'alertService',
+    'onNVR',
+    function (
+        $scope,
+        $filter,
+        optionsFactory,
+        localStorageFactory,
+        unitConvertFactory,
+        alertService,
+        onNVR ) {
+
         var data              = onNVR ?
             new localStorageFactory.NVRObj() :
             new localStorageFactory.CMSObj();
@@ -114,28 +129,6 @@ myApp.controller('MainCtrl', [ '$scope', '$filter', 'optionsFactory', 'localStor
         $scope.$on('childSendEstDays', function(e, data) {
             $scope.estDays = data;
         });
-
-
-
-
-    /********************************************
-     *              Notification
-     */
-
-    $scope.alerts = [];
-
-    $scope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
-    };
-
-
-
-    /*****************************************
-     *             File Process
-     */
-        // $scope.saveFile = function() {
-        //     return fileProcessService.saveFile();
-        // };
 
 
   }]);
@@ -244,10 +237,8 @@ myApp.controller('bRateModalCtrl', ['$scope', '$uibModal',
          *  Modal handler
          */
             $scope.open = function (size) {
-                var onNVR = $scope.onNVR;
-
-                $scope.bitRateColorFill    = onNVR;
-                $scope.bitRateColorFillCMS = !onNVR;
+                $scope.bitRateColorFill    = $scope.onNVR;
+                $scope.bitRateColorFillCMS = !$scope.onNVR;
 
                 var modalInstance = $uibModal.open({
                     templateUrl: 'views/bitRateEstimate.html',
@@ -371,8 +362,17 @@ myApp.controller('estDayModalCtrl', ['$scope', '$uibModal',
 // Inherit {$scope.data} from parent controller
 
 
-myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
-    function($scope, $uibModal, localStorageFactory) {
+myApp.controller('saveModalCtrl', [
+    '$scope',
+    '$uibModal',
+    'localStorageFactory',
+    'alertService',
+    function(
+        $scope,
+        $uibModal,
+        localStorageFactory,
+        alertService) {
+
 
         $scope.pjArr              = localStorageFactory.pj.projects;
 
@@ -443,7 +443,7 @@ myApp.controller('saveModalCtrl', ['$scope', '$uibModal', 'localStorageFactory',
                 $scope.overwriteAlert.push({ type: 'warning', msg: 'The name already exists!' });
                 $scope.saveAgain = true;
             } else {
-                $scope.alerts.push({ type: 'success', msg: 'Successfully saved!' });
+                alertService.flash({ type: 'success', msg: 'Successfully saved!' });
                 $scope.saveAgain = false;
                 $scope.closeModal();
             }
