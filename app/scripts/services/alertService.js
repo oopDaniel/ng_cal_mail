@@ -8,7 +8,7 @@ angular.module('calculatorApp')
 
         self.flash = function(obj) {
             msg.push(obj);
-            $timeout(killFlash, 3000);
+            $timeout(killFlash, 2500);
         };
 
         self.getFlash = function() {
