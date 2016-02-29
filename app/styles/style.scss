@@ -1,0 +1,545 @@
+
+$theme_color: #3F0D3A;
+$theme_color2: #8cb128;
+$table_bgcolor: white;
+$font_detail_color: lighten(grey, 10%);
+
+@mixin add_padding($t: 2em, $w:0, $b:0) {
+    padding: $t $w $b;
+}
+
+@mixin width_restrict($w:80%) {
+    max-width: $w;
+    margin: 0 auto;
+}
+
+@mixin height-adjust($h) {
+    padding-top: 0;
+    margin-top: 0;
+    height: $h;
+}
+
+
+.savebtn {
+    @include width_restrict(55%);
+    margin-top: 2.5em;
+    margin-bottom: 2em;
+    .btnfont {
+        font-size: 2em;
+    }
+    box-shadow: 1px 1px 1px rgba(20%, 20%, 40%, 0.6), 2px 2px 3px rgba(20%, 20%, 40%, 0.4), 3px 3px 5px rgba(20%, 20%, 40%, 0.4);
+}
+
+// padding for container
+.in-content {
+    @include add_padding(0, 3em, 1em);
+}
+
+.hidden-input {
+    @include add_padding(1em, 0, 1em);
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.nav-tabs,
+.nav-pills {
+    text-align: center;
+    > li {
+        float: none;
+        display: inline-block;
+        *display: inline;
+        /* ie7 fix */
+        zoom: 1;
+        /* hasLayout ie7 trigger */
+    }
+}
+
+.maxwidth {
+    margin: 0 auto;
+    max-width: 100%;
+    @media screen and (min-width: 800px) {
+        max-width: 60%;
+        .recommend {
+            margin: 2em auto;
+            max-width: 90%;
+        }
+    }
+}
+
+.selectItem {
+    background: rgba(1, 1, 1, 0.05);
+}
+
+.icon-centered {
+    display: table;
+    margin: 0 auto;
+    padding: 0 0 0.5em;
+}
+
+.cursor {
+    cursor:pointer;
+}
+
+
+.customization {
+    @media screen and (min-width: 800px) {
+        width: 68vw;
+        margin: 2em auto;
+    }
+}
+
+.hd-requirement {
+    background: $theme_color;
+    color: white;
+    text-align: center;
+    box-shadow: 1px 1px 2px rgba(60%, 70%, 70%, 0.8), 2px 2px 2px rgba(70%, 60%, 60%, 0.8);
+    &.cmsBG {
+        background: $theme_color2;
+        box-shadow: 1px 1px 2px rgba(20%, 30%, 40%, 0.6), 2px 2px 3px rgba(20%, 20%, 40%, 0.4);
+    }
+}
+
+
+
+.highlight {
+    color: $theme_color2;
+    font-size: 1.5em;
+}
+
+.highlightCMS {
+    @extend .highlight;
+    color: white;
+}
+
+.my-addon {
+    background: rgba(255, 255, 255, 0.1);
+    border: 0;
+    border-bottom: 0.2em solid $theme_color;
+    font-size: 1.1em;
+}
+
+.input {
+    @extend .my-addon;
+    &.cmsBdr {
+        border-bottom: 0.2em solid $theme_color2;
+    }
+}
+
+
+.filter {
+    text-align: center;
+    > input {
+        @extend .input;
+        min-width: 70%;
+        max-width: 80%;
+    }
+}
+
+
+.table-showdigit {
+    .table {
+        background: $table_bgcolor;
+        box-shadow: 2px 2px 2px rgba(20%, 20%, 40%, 0.6), 4px 4px 6px rgba(20%, 20%, 40%, 0.4), 6px 6px 12px rgba(20%, 20%, 40%, 0.4);
+        caption {
+            color: darken($font_detail_color, 30%);
+        }
+        th {
+            text-align: center;
+        }
+        td {
+            font-size: 3em;
+            color: $theme_color;
+            @media screen and (max-width: 415px) and (min-width: 321px) {
+                font-size: 2.4em;
+            }
+            @media screen and (max-width: 320px) {
+                font-size: 2em;
+            }
+        }
+        &.cmsTB td {
+            color: $theme_color2;
+            &.greyMinus {
+                color: $font_detail_color;
+            }
+        }
+        sub {
+            font-size: 0.5em;
+        }
+    }
+}
+
+.selectedModelInput {
+    background: $theme_color;
+    color: white;
+}
+
+.selectedModelInputCMS {
+    @extend .selectedModelInput;
+    background: $theme_color2;
+}
+
+.bigDays {
+    white-space: nowrap;
+    text-align: center;
+    font-size: 3em;
+    sub {
+        font-size: 0.5em;
+        &:before {
+            content: ' ';
+        }
+    }
+    @media screen and (max-width: 415px) and (min-width: 321px) {
+        font-size: 2.8em;
+    }
+}
+
+.nodata {
+    padding: 2em 0 4em;
+    color: grey;
+}
+
+
+//------- alert --------
+.alert {
+    width: 80%;
+    left: 10%;
+    position: fixed;
+    z-index: 1;
+    font-size:1.1em;
+}
+
+.alert.ng-leave {
+  transition:0.5s linear all;
+  opacity:1;
+}
+.alert.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+//------- detail in Pj list --------
+
+.details {
+    color: $font_detail_color;
+}
+
+.detailBorder {
+    border-bottom: .2em ridge;
+    padding: .2em
+}
+
+.add-color {
+    color: darken($font_detail_color, 20%);
+}
+
+//---------- myPanel ------------
+
+.myPanel {
+    height: 38vh;
+    background: white;
+    .panelItem {
+        padding: 5vh 0;
+    }
+    @media screen and (max-width: 320px) {
+        @include height-adjust(80vh);
+        .panelItem {
+            padding: 5vh 0;
+            margin-bottom: 14vh;
+        }
+    }
+    @media screen and (max-width: 415px) and (min-width: 321px) {
+        @include height-adjust(60vh);
+        .panelItem {
+            padding: 5vh 0;
+            margin-bottom: 8vh;
+        }
+    }
+}
+
+.myPanel-bitrate {
+    @extend .myPanel;
+    height: 44vh;
+    @media screen and (max-width: 320px) {
+        @include height-adjust(80vh);
+        .panelItem {
+            padding: 4vh 0;
+            margin-bottom: 10vh;
+        }
+    }
+    @media screen and (max-width: 450px) and (min-width: 321px) {
+        @include height-adjust(60vh);
+        .panelItem {
+            padding: 4vh 0;
+            margin-bottom: 6vh;
+        }
+    }
+}
+
+.myPanel.ng-enter {
+    transition: 0.3s linear all;
+    opacity: 0;
+}
+
+.myPanel.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.myPanel.ng-leave {
+    transition: 0.3s linear all;
+    opacity: 1;
+}
+
+.myPanel.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+
+// --------- Range bar ------------------
+
+@mixin pseudoRange {
+    position: absolute;
+    top: 3px;
+    width: 2000px;
+    height: 4px;
+    content: "";
+    pointer-events: none;
+    transition: .2s;
+}
+
+@mixin rangebar {
+    -webkit-appearance: none;
+    outline: none;
+    width: 10em;
+    height: 1em;
+    background: none;
+    overflow: hidden;
+    top: -1%;
+    &::-webkit-slider-thumb {
+        position: relative;
+        transition: .2s;
+        -webkit-appearance: none;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        &:active,
+        &:hover {
+            width: 13px;
+            height: 13px;
+        }
+    }
+    &::-webkit-slider-thumb:before {
+        @include pseudoRange;
+        left: -1200px;
+    }
+    &::-webkit-slider-thumb:after {
+        @include pseudoRange;
+        background: lighten($font_detail_color, 20%);
+        left: 10px;
+    }
+    &:active::-webkit-slider-thumb:after,
+    &:hover::-webkit-slider-thumb:after {
+        left: 13px;
+    }
+    &::-moz-range-track {
+        height: 4px;
+        background: lighten($font_detail_color, 20%);
+        border: none;
+    }
+    &::-moz-range-thumb {
+        width: 10px;
+        height: 10px;
+        border: none;
+        border-radius: 50%;
+        &:active,
+        &:hover {
+            width: 13px;
+            height: 13px;
+        }
+    }
+    &::-moz-range-progress {
+        height: 4px;
+    }
+    &::-moz-focus-outer {
+        border: none;
+    }
+}
+
+.rangebar {
+    @include rangebar;
+    &::-webkit-slider-thumb {
+        background: $theme_color;
+    }
+    &::-webkit-slider-thumb:before {
+        background: $theme_color;
+    }
+    &::-moz-range-thumb {
+        background: $theme_color;
+    }
+    &::-moz-range-progress {
+        background: $theme_color;
+    }
+}
+
+.rangebar-cms {
+    @include rangebar;
+    &::-webkit-slider-thumb {
+        background: $theme_color2;
+    }
+    &::-webkit-slider-thumb:before {
+        background: $theme_color2;
+    }
+    &::-moz-range-thumb {
+        background: $theme_color2;
+    }
+    &::-moz-range-progress {
+        background: $theme_color2;
+    }
+}
+
+.range-div {
+    @include add_padding(1em, 0);
+}
+
+
+
+//------------ Checkbox --------------
+
+input[type=checkbox].css-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left: 37px;
+    height: 32px;
+    display: inline-block;
+    line-height: 32px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 32px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -32px;
+}
+
+label.css-label {
+    background-image: url(../images/checkbox.png);
+    user-select: none;
+}
+
+
+
+// --------  Disable collapse in Nav --------
+.navbar-collapse.collapse {
+    display: block!important;
+}
+
+.navbar-nav>li,
+.navbar-nav {
+    float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+    margin-right: -15px !important;
+}
+
+.navbar-right {
+    float: right!important;
+}
+
+.icon {
+    font-size: 2.5em;
+}
+
+.icon-pj {
+    font-size: 2em;
+}
+
+
+//---------------- Hover Icon --------------------
+
+
+
+@media screen and (min-width: 1025px) {
+    .show-on-hover {
+        display: none;
+    }
+    .hoverable:hover .show-on-hover {
+        display: inline-block;
+    }
+}
+
+
+//---------------- Adjust Pos ---------------------
+
+.padding-bottom-2 {
+    padding-bottom: 2em;
+}
+
+.padding-bottom-1 {
+    padding-bottom: 1em;
+}
+
+.padding-top-1 {
+    padding-top: 1em;
+}
+
+.padding-top-2 {
+    padding-top: 2em;
+}
+
+.padding-top-3 {
+    padding-top: 3em;
+}
+
+.padding-top-01 {
+    padding-top: 0.1em;
+}
+
+.padding-top-02 {
+    padding-top: 0.2em;
+}
+
+.padding-top-05 {
+    padding-top: 0.5em;
+}
+
+.reducePadding {
+    padding-bottom: 0;
+}
+
+.margin-bottom-1 {
+    margin-bottom: 1em;
+}
+
+.margin-bottom-05 {
+    margin-bottom: 0.5em;
+}
+
+.killTop {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.fixtoppadding {
+    margin-top: 0;
+    padding-top: 0
+}
+
+.max-width-80 {
+    max-width: 80%;
+}
