@@ -1,26 +1,28 @@
 'use strict';
 
-angular.module('calculatorApp').controller('MailCtrl', ['$scope', function($scope, $cordovaEmailComposer) {
+angular.module('calculatorApp').controller('MailCtrl', ['$scope', '$cordovaEmailComposer', function($scope, $cordovaEmailComposer) {
 
+    var email = {
+        to: 'daniel.chiang@isapsolution.com',
+        cc: '',
+        bcc: [''],
+        attachments: [
+            'file://images/yeoman.png'
+        ],
+        subject: 'Cordova Email Test',
+        body: 'yo'
+    };
 
+    document.addEventListener('deviceready', function() {
 
-        var email = {
-            to: 'daniel.chiang@isapsolution.com',
-            cc: '',
-            bcc: [''],
-            attachments: [
-                'file://images/yeoman.png'
-            ],
-            subject: 'Cordova Email Test',
-            body: 'yo',
-            isHtml: true
-        };
-
-        $scope.sendmail = function() {
-            $cordovaEmailComposer.open(email).then(null, function() {
-                console.log('you\'ve closed the email');
-                // user cancelled email
-            });
-        };
+        $cordovaEmailComposer.isAvailable().then(function() {
+            $scope.sendmail = function() {
+                $cordovaEmailComposer.open(email).then(null, function() {
+                });
+            };
+        }, function() {
+            window.alert('Email is not available now!');
+        });
+    }, false);
 
 }]);
