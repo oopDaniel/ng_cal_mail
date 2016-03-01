@@ -56,7 +56,7 @@ angular.module('calculatorApp')
 
         for ( var i in ids ) {
             var index = findByAttr(tmp, '_id', ids[i]);
-            arr = arr.concat(tmp[index]);
+            arr[arr.length] = tmp[index];
         }
         return arr;
     }
