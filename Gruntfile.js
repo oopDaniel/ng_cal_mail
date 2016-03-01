@@ -429,6 +429,14 @@ module.exports = function (grunt) {
             'font-awesome/fonts/*.*'
             ],
           dest: '<%= yeoman.dist %>/fonts'
+        },
+        {
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts/',
+          src: [
+            'email.js'
+            ],
+          dest: '<%= yeoman.dist %>/scripts'
         }]
       },
       styles: {
