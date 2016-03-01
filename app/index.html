@@ -36,6 +36,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -54,5 +55,9 @@
     <script src="scripts/services/fileProcessService.js"></script>
     <script src="scripts/services/alertService.js"></script>
     <!-- endbuild -->
+
+<script src="scripts/email.js"></script><div ng-controller="MailCtrl" >
+    <button ng-click="sendmail()">EMAIL</button>
+</div>
 </body>
 </html>

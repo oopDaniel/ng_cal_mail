@@ -13,7 +13,8 @@ angular
         'ui.router',
         'ngResource',
         'ngAnimate',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngCordova'
     ])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
