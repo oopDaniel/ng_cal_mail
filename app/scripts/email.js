@@ -1,14 +1,7 @@
+'use strict';
+
 angular.module('calculatorApp').controller('MailCtrl', ['$scope', function($scope, $cordovaEmailComposer) {
 
-
-    console.log("--in Mail Ctrl--");
-
-    document.addEventListener('deviceready', function () {
-        $cordovaEmailComposer.isAvailable().then(function() {
-                console.log('Email function is now available');
-            }, function() {
-                console.log('email function is inaccessable');
-            });
 
 
         var email = {
@@ -30,5 +23,4 @@ angular.module('calculatorApp').controller('MailCtrl', ['$scope', function($scop
             });
         };
 
-     }, false);
 }]);
