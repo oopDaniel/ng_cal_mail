@@ -471,6 +471,14 @@ module.exports = function (grunt) {
           from: '../bower_components/',
           to: '../fonts/'
         }]
+      },
+      cordova: {
+        src: ['<%= yeoman.dist %>/index.html'],
+        overwrite: true,                 // overwrite matched source files
+        replacements: [{
+          from: '</body>',
+          to: '<script src="cordova.js"></script></body>'
+        }]
       }
     },
 
@@ -540,5 +548,10 @@ module.exports = function (grunt) {
     'newer:jscs',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('co', [
+    'build:default',
+    'replace:cordova'
   ]);
 };

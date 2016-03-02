@@ -131,12 +131,6 @@ angular.module('calculatorApp')
 // var fs = require('fs')
 //
 
-
-    // var myStr = "Project ID,Project Name,Total Storage,Total Bandwidth,NVR Count,CMS Count,Item ID,Item Name,Type,Storage,Bandwidth,Cameras,Bit Rate,Codec,Quality,Resolution,FPS,Estimated Days,Recording Days,Recording Hours,Motion(%),RAID Type,HDD Size,Local User,Remote Users\n1,321,47740824.56250001,289212.19,2,1,,,,,,,,,,,,,,,,,,,\n,,,,,,1,123,NVR,104287.5,988.8,160,6.18,H.264,Medium,Full HD (1920 x 1080),30,10,30,16,50,5,3 TB,true\n,,,,,,2,CSV,CMS,0,5932.799999999999,160,6.18,H.264,Medium,Full HD (1920 x 1080),30,,,,,,,false,6\n,,,,,,3,PB,NVR,47636537.06250001,282290.59,29999,9.41,H.264,Medium,3MP,30,16,30,16,80,1,2 TB,false\n3,Hello,10428.749999999998,98.88,1,0,,,,,,,,,,,,,,,,,,,\n,,,,,,1,g,NVR,10428.749999999998,98.88,16,6.18,H.264,Medium,Full HD (1920 x 1080),30,10,30,16,50,5,3 TB,false";
-
-
-
-
     this.saveFile = function(ids) {
         var fileStr = titleStr + storedData2Str(ids),
             file    = new Blob([fileStr], {type: 'text/plain;charset=utf-8'});
