@@ -359,12 +359,6 @@ myApp.controller('MailCtrl', [
         fileProcessService,
         $cordovaEmailComposer) {
 
-        // $scope.foo = function() {
-        //     console.log(fileProcessService.saveFile($scope.clickArr));
-        // };
-
-
-    var base64 = 'base64:file.csv//'+fileProcessService.saveFile($scope.clickArr);
 
     var email = {
         to: 'daniel.chiang@isapsolution.com',
@@ -372,9 +366,9 @@ myApp.controller('MailCtrl', [
         bcc: [''],
         attachments:
             [
-                base64
+                fileProcessService.mailFileStr($scope.clickArr)
             ],
-            // fileProcessService.saveFile($scope.clickArr),
+            // fileProcessService.mailFileStr($scope.clickArr),
         // [
         //     'file://images/yeoman.png'
         // ],

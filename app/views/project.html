@@ -5,8 +5,16 @@
                 <h3>Project List</h3>
             </div>
             <div class="col-xs-4 col-xs-pull-1 padding-top-05">
-                <h3 ng-click="saveFile()">
+                <h3
+                  class="hidden-xs hidden-sm"
+                  ng-click="saveFile()">
                     <span class="glyphicon glyphicon-paperclip cursor"></span>
+                </h3>
+                <h3
+                  class="hidden-lg hidden-md"
+                  ng-controller="MailCtrl"
+                  ng-click="sendmail()">
+                    <span class="glyphicon glyphicon-envelope cursor"></span>
                 </h3>
             </div>
             <!-- <div class="col-xs-3 col-xs-pull-1 details" ng-click="deleteSelect()">Delete selected item</div> -->
@@ -74,8 +82,5 @@
                 </div> <!-- /max-width-80 -->
             </div> <!-- /ng-repeat -->
         </section>
-        <div ng-controller="MailCtrl" >
-            <button ng-click="sendmail()">EMAIL</button>
-        </div>
     </div>
 </div>
