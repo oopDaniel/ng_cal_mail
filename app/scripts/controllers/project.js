@@ -363,12 +363,18 @@ myApp.controller('MailCtrl', [
         //     console.log(fileProcessService.saveFile($scope.clickArr));
         // };
 
+
+    var base64 = 'base64:file.csv//'+fileProcessService.saveFile($scope.clickArr);
+
     var email = {
         to: 'daniel.chiang@isapsolution.com',
         cc: '',
         bcc: [''],
         attachments:
-            fileProcessService.saveFile($scope.clickArr),
+            [
+                base64
+            ],
+            // fileProcessService.saveFile($scope.clickArr),
         // [
         //     'file://images/yeoman.png'
         // ],
