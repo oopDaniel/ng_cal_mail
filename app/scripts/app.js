@@ -22,6 +22,11 @@ angular.element(document).ready(function () {
      document.addEventListener('deviceready', function () {
        console.log('Deviceready event has fired, bootstrapping AngularJS.');
        angular.bootstrap(document.body, ['calculatorApp']);
+
+       document.getElementsByTagName('header')[0].setAttribute('ng-controller','HeaderCtrl');
+
+
+
      }, false);
    } else {
      console.log('Running in browser, bootstrapping AngularJS now.');

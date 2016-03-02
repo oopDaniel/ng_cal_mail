@@ -32,6 +32,9 @@ myApp.controller('ProjectCtrl', [
         $scope.filtText = '';
         $scope.clickArr = [];
 
+
+        window.alert('pjCtrl!');
+        console.log('pjCtrl!')
 //----------------------------------
 
         $scope.select = function(id) {

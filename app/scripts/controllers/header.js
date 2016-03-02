@@ -4,7 +4,12 @@
 angular.module('calculatorApp').controller('HeaderCtrl', [
   '$scope',
   'alertService',
-  function ($scope, alertService) {
+  '$interval',
+  function ($scope, alertService,
+        $interval) {
+
+    window.alert('headerCtrl!');
+    console.log('headerCtrl!')
 
       $scope.activeArr        = [];
       $scope.activeArr.length = 3;
@@ -22,5 +27,14 @@ angular.module('calculatorApp').controller('HeaderCtrl', [
       $scope.closeAlert = function(index) {
           $scope.alerts.splice(index, 1);
       };
+
+
+
+
+      var i = 0;
+      var stopTime = $interval(function(){
+          console.log(i+'s');
+          window.alert(i+'s');
+              i++;}, 2000);
 
 }]);

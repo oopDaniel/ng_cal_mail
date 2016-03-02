@@ -31,7 +31,8 @@ angular.module('calculatorApp').controller('ItemCtrl', [
         $scope.dataURL = 'views/dataForm.html';
         $scope.data    = data;
 
-
+        window.alert('itemCtrl!');
+        console.log('itemCtrl!')
 
         /*****************************************
          *     Display the info of bandwidth and storage

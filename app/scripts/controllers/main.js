@@ -37,6 +37,8 @@ myApp.controller('MainCtrl', [
         $scope.dataURL        = 'views/dataForm.html';
         $scope.invalidForm    = true;
 
+        window.alert('mainCtrl!');
+        console.log('mainCtrl!');
 
 
     /*****************************************
