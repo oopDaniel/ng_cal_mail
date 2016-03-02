@@ -71,5 +71,5 @@ angular.module('calculatorApp')
         })
 
         ;
-        $urlRouterProvider.otherwise('/project');
+        $urlRouterProvider.otherwise('/');
     });
