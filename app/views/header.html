@@ -1,6 +1,5 @@
 <header
-  class="header"
-  ng-controller="HeaderCtrl">
+  class="header">
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -15,18 +14,21 @@
                 <ul class="nav navbar-nav">
                     <li
                       ng-class="{active:activeArr[0]}"
-                      ng-click="activate(0)">
-                        <a ui-sref="app">NVR</a>
+                      ng-click="activate(0)"
+                      ui-sref="app">
+                        <a>NVR</a>
                     </li>
                     <li
                       ng-class="{active:activeArr[1]}"
-                      ng-click="activate(1)">
-                        <a ui-sref="app.cms">CMS</a>
+                      ng-click="activate(1)"
+                      ui-sref="app.cms">
+                        <a>CMS</a>
                     </li>
                     <li
                       ng-class="{active:activeArr[2]}"
-                      ng-click="activate(2)">
-                        <a ui-sref="app.project">Projects</a>
+                      ng-click="activate(2)"
+                      ui-sref="app.project">
+                        <a>Projects</a>
                     </li>
                 </ul>
             </div>
