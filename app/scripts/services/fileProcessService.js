@@ -138,7 +138,9 @@ angular.module('calculatorApp')
     this.saveFile = function(ids) {
         var fileStr = titleStr + storedData2Str(ids),
             file    = new Blob([fileStr], {type: 'text/plain;charset=utf-8'});
-        saveAs(file, 'data.csv');
+        var base64  = btoa(fileStr);
+        return base64;
+        // saveAs(file, 'data.csv');
     };
 
 

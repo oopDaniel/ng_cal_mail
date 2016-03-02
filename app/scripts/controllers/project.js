@@ -352,18 +352,26 @@ myApp.controller('ProjectDetailCtrl', ['$scope', '$state', '$stateParams', '$uib
 
 myApp.controller('MailCtrl', [
     '$scope',
+    'fileProcessService',
     '$cordovaEmailComposer',
     function(
         $scope,
+        fileProcessService,
         $cordovaEmailComposer) {
+
+        // $scope.foo = function() {
+        //     console.log(fileProcessService.saveFile($scope.clickArr));
+        // };
 
     var email = {
         to: 'daniel.chiang@isapsolution.com',
         cc: '',
         bcc: [''],
-        attachments: [
-            'file://images/yeoman.png'
-        ],
+        attachments:
+            fileProcessService.saveFile($scope.clickArr),
+        // [
+        //     'file://images/yeoman.png'
+        // ],
         subject: 'Cordova Email Test',
         body: 'yo'
     };
