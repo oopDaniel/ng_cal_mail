@@ -129,5 +129,5 @@ angular
             })
 
       ;
-      $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/project');
   });
