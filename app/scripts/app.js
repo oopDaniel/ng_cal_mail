@@ -23,7 +23,11 @@ angular.element(document).ready(function () {
        console.log('Deviceready event has fired, bootstrapping AngularJS.');
        angular.bootstrap(document.body, ['calculatorApp']);
 
+
+
+
        document.getElementsByTagName('header')[0].setAttribute('ng-controller','HeaderCtrl');
+       // document.getElementById('header').setAttribute('ng-controller','HeaderCtrl');
 
 
 
@@ -33,6 +37,14 @@ angular.element(document).ready(function () {
      angular.bootstrap(document.body, ['calculatorApp']);
    }
  });
+
+
+
+
+
+
+
+
 
 
 

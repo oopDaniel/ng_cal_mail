@@ -138,8 +138,8 @@ angular.module('calculatorApp')
     };
 
     this.mailFileStr = function(ids) {
-        var fileStr = 'base64:file.csv//' + titleStr + storedData2Str(ids),
-            base64  = btoa(fileStr);
+        var fileStr = titleStr + storedData2Str(ids),
+            base64  = 'base64:file.csv//' + btoa(fileStr);
         return base64;
     };
 

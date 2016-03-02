@@ -9,7 +9,7 @@ angular.module('calculatorApp').controller('HeaderCtrl', [
         $interval) {
 
     window.alert('headerCtrl!');
-    console.log('headerCtrl!')
+    console.log('headerCtrl!');
 
       $scope.activeArr        = [];
       $scope.activeArr.length = 3;

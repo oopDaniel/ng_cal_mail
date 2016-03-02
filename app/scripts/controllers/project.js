@@ -32,9 +32,6 @@ myApp.controller('ProjectCtrl', [
         $scope.filtText = '';
         $scope.clickArr = [];
 
-
-        window.alert('pjCtrl!');
-        console.log('pjCtrl!')
 //----------------------------------
 
         $scope.select = function(id) {
@@ -367,14 +364,6 @@ myApp.controller('MailCtrl', [
         to: 'daniel.chiang@isapsolution.com',
         cc: '',
         bcc: [''],
-        attachments:
-            [
-                fileProcessService.mailFileStr($scope.clickArr)
-            ],
-            // fileProcessService.mailFileStr($scope.clickArr),
-        // [
-        //     'file://images/yeoman.png'
-        // ],
         subject: 'Cordova Email Test',
         body: 'yo'
     };
@@ -383,8 +372,13 @@ myApp.controller('MailCtrl', [
 
         $cordovaEmailComposer.isAvailable().then(function() {
             $scope.sendmail = function() {
-                $cordovaEmailComposer.open(email).then(null, function() {
-                });
+                if ( $scope.clickArr.length < 0 ) {
+                    window.alert('Select a project first!');
+                } else {
+                    email.attachments = [ fileProcessService.mailFileStr($scope.clickArr) ];
+                    $cordovaEmailComposer.open(email).then(null, function() {
+                    });
+                }
             };
         }, function() {
             window.alert('Email is not available now!');
