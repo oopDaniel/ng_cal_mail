@@ -23,7 +23,6 @@ myApp.controller('ProjectCtrl', [
         var pj = storageFactory.pj;
         $scope.pjArr = pj.projects;
         $scope.nodata = !pj.hasData;
-        console.log(pj.hasData);
         $scope.clickArr = [];
 
 
@@ -72,6 +71,17 @@ myApp.controller('MailCtrl', [
         subject: 'Cordova Email Test',
         body: 'yo'
     };
+
+
+    // $scope.sendmail = function() {
+    //             if ( $scope.clickArr.length < 0 ) {
+    //                 window.alert('Select a project first!');
+    //             } else {
+    //                 console.log(fileProcessService.mailFileStr($scope.clickArr));
+
+    //             }
+    //         };
+
 
     document.addEventListener('deviceready', function() {
 

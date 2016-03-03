@@ -36,17 +36,11 @@ angular.module('MyApp')
         var obj = loadData (ids),
             tmp = '';
         for ( var i in obj ) {
-            // if ( i > 0 ) {
-            //     tmp += '\n';
-            // }
-            // tmp     += 'id: ' + obj[i]._id + ', name: ' +
-            //            obj[i].name + '\n' ;
-            // tmp     +=
-
-            if (typeof target[k] !== 'function') {
-                    console.log("Key is " + k + ", value is" + target[k]);
+            for ( var k in obj[i] ) {
+                if (typeof obj[i][k] !== 'function') {
+                    tmp += k + ': ' + obj[i][k] + ', ';
                }
-
+           }
         }
         return tmp;
     }
