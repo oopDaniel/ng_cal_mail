@@ -2,6 +2,8 @@
 
 angular.module('MyApp')
     .config(function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
+
         $stateProvider
             .state('app', {
                 url: '/',
@@ -51,5 +53,4 @@ angular.module('MyApp')
         })
 
         ;
-        $urlRouterProvider.otherwise('/');
     });

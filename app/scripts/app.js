@@ -24,10 +24,6 @@ angular.element(document).ready(function () {
        console.log('Deviceready event has fired, bootstrapping AngularJS.');
        angular.bootstrap(document.body, ['MyApp']);
 
-       // ---------- Ugly code start ---------
-       // document.getElementsByTagName('header')[0].setAttribute('ng-controller','HeaderCtrl');
-       // document.getElementById('header').setAttribute('ng-controller','HeaderCtrl');
-       // ---------- Ends ugly code ----------
 
      }, false);
    } else {

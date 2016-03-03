@@ -6,28 +6,25 @@
                 <a
                   class="navbar-brand hidden-xs"
                   ui-sref="app"
-                  ng-click="activate(0)">
+                  ui-sref-active-eq="active">
                     My App
                 </a>
             </div>
             <div class="centerify">
                 <ul class="nav navbar-nav">
                     <li
-                      ng-class="{active:activeArr[0]}"
-                      ng-click="activate(0)"
-                      ui-sref="app">
+                      ui-sref="app"
+                      ui-sref-active-eq="active">
                         <a>Add/Sub</a>
                     </li>
                     <li
-                      ng-class="{active:activeArr[1]}"
-                      ng-click="activate(1)"
-                      ui-sref="app.md">
+                      ui-sref="app.md"
+                      ui-sref-active-eq="active">
                         <a>Mul/Div</a>
                     </li>
                     <li
-                      ng-class="{active:activeArr[2]}"
-                      ng-click="activate(2)"
-                      ui-sref="app.list">
+                      ui-sref="app.list"
+                      ui-sref-active-eq="active">
                         <a>List</a>
                     </li>
                 </ul>
