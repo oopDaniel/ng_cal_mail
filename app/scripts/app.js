@@ -24,10 +24,16 @@ angular.element(document).ready(function () {
        angular.bootstrap(document.body, ['MyApp']);
 
 
-       // ---- Here is extremely ugly code ----
-       document.getElementsByTagName('header')[0].setAttribute('ng-controller','HeaderCtrl');
+
+
+       // ---- Extremely ugly code start ----
+
+       // document.getElementsByTagName('header')[0].setAttribute('ng-controller','HeaderCtrl');
        // document.getElementById('header').setAttribute('ng-controller','HeaderCtrl');
-       // ----------- End ugly part -----------
+
+       // ---------- Ends ugly part ----------
+
+
 
 
      }, false);
