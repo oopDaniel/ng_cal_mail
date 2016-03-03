@@ -8,19 +8,17 @@
                   ng-class="{cmsTB:!onNVR}">
                     <thead>
                         <tr>
-                            <th>Total Storage</th>
-                            <th>Total Bandwidth</th>
+                            <th>Add</th>
+                            <th>Subtract</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="greyMinus">
-                                {{ showStorage() | displayFilter }}
-                                <sub>{{sUnit}}</sub>
+                            <td >
+                                {{ showAdd() }}
                             </td>
                             <td>
-                                {{ showBandwidth() | displayFilter }}
-                                <sub>{{bUnit}}</sub>
+                                {{ showSub() }}
                             </td>
                         </tr>
                     </tbody>
@@ -30,26 +28,22 @@
     </div> <!-- /jumbotron -->
 
 
-    <!-- ----------------------------- -->
 
 
     <div
-      class="maxwidth"
       ng-include="dataURL"
       ng-controller="formCtrl">
     </div>
 
 
-    <!-- ----------------------------- -->
 
 
     <div
-      class="savebtn"
-      ng-controller="saveModalCtrl">
+      ng-controller="saveCtrl">
         <button
           class='btn btn-block btn-default'
-          ng-click="openModal()">
-          <span class="btnfont">Save</span>
+          ng-click="flash()">
+          <span>Save</span>
         </button>
     </div>
 </div> <!-- /MainCtrl -->

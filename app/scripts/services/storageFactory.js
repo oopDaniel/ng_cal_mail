@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('calculatorApp')
-    .service('localStorageFactory', ['$window', function($window) {
+angular.module('MyApp')
+    .service('storageFactory', ['$window', function($window) {
 
 
     /*****************************************

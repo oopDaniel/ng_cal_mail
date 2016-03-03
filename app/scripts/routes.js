@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('calculatorApp')
+angular.module('MyApp')
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
@@ -14,7 +14,7 @@ angular.module('calculatorApp')
                         templateUrl: 'views/main.html',
                         controller: 'MainCtrl',
                         resolve: {
-                            onNVR: function() {
+                            isData1: function() {
                                 return true;
                             }
                         }
@@ -25,14 +25,14 @@ angular.module('calculatorApp')
                 }
             })
 
-        .state('app.cms', {
-            url: 'cms',
+        .state('app.item1', {
+            url: 'item1',
             views: {
                 'content@': {
                     templateUrl: 'views/main.html',
                     controller: 'MainCtrl',
                     resolve: {
-                        onNVR: function() {
+                       isData1: function() {
                             return false;
                         }
                     }
@@ -40,8 +40,8 @@ angular.module('calculatorApp')
             }
         })
 
-        .state('app.project', {
-            url: 'project',
+        .state('app.item2', {
+            url: 'item2',
             views: {
                 'content@': {
                     templateUrl: 'views/project.html',
@@ -59,17 +59,6 @@ angular.module('calculatorApp')
                 }
             }
         })
-
-        .state('app.item', {
-            url: 'project/:id/:itemid',
-            views: {
-                'content@': {
-                    templateUrl: 'views/item.html',
-                    controller: 'ItemCtrl'
-                }
-            }
-        })
-
         ;
         $urlRouterProvider.otherwise('/');
     });

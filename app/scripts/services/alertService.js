@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('calculatorApp')
+angular.module('MyApp')
     .service('alertService', ['$timeout', function($timeout) {
 
         var self = this,
@@ -8,7 +8,7 @@ angular.module('calculatorApp')
 
         self.flash = function(obj) {
             msg.push(obj);
-            $timeout(killFlash, 2000);
+            $timeout(killFlash, 1500);
         };
 
         self.getFlash = function() {
