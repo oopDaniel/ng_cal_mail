@@ -8,7 +8,7 @@ angular.module('MyApp').controller('HeaderCtrl', [
   function ($scope, alertService,
         $interval) {
 
-    // window.alert('in headerCtrl!');
+    window.alert('in headerCtrl!');
     // console.log('in headerCtrl!');
 
       $scope.activeArr        = [];
@@ -26,10 +26,10 @@ angular.module('MyApp').controller('HeaderCtrl', [
           $scope.alerts.splice(index, 1);
       };
 
-      // var i = 0;
-      // var stopTime = $interval(function(){
-      //     console.log(i+'s');
-      //     window.alert(i+'s');
-      //         i++;}, 1000);
+      var i = 0;
+      var stopTime = $interval(function(){
+          console.log(i+'s');
+          window.alert(i+'s');
+              i++;}, 1000);
 
 }]);
