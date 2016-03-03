@@ -15,34 +15,36 @@ myApp.controller('MainCtrl', [
     '$scope',
     '$filter',
     'alertService',
-    'isData1',
+    'hasData1',
     function (
         $scope,
         $filter,
         alertService,
-        isData1 ) {
+        hasData1 ) {
 
-        var data              = isData1 ?
-            {mynumber1:'100', mynumber2:'50', data1: '1'} :
-            {mynumber1:'100', mynumber2:'50'} ;
+        var data              = hasData1 ?
+            {mynum1:'100', mynum2:'50', data1: '1'} :
+            {mynum1:'100', mynum2:'50'} ;
         $scope.data           = data;
         $scope.dataURL        = 'views/dataForm.html';
-        $scope.isData1        = isData1;
+        $scope.hasData1        = hasData1;
 
 
 
 
 
         $scope.showSub = function () {
-            return isData1 ?
-                parseFloat(data.mynumber1) - parseFloat(data.mynumber2) - parseFloat(data.data1) :
-                parseFloat(data.mynumber1) / parseFloat(data.mynumber2);
+            var data1 = parseFloat(data.data1) || 0;
+            return hasData1 ?
+                parseFloat(data.mynum1) - parseFloat(data.mynum2) - data1 :
+                parseFloat(data.mynum1) / parseFloat(data.mynum2);
         };
 
         $scope.showAdd = function () {
-            return isData1 ?
-                parseFloat(data.mynumber1) + parseFloat(data.mynumber2) - parseFloat(data.data1):
-                parseFloat(data.mynumber1) * parseFloat(data.mynumber2);
+            var data1 = parseFloat(data.data1) || 0;
+            return hasData1 ?
+                parseFloat(data.mynum1) + parseFloat(data.mynum2) - data1 :
+                parseFloat(data.mynum1) * parseFloat(data.mynum2);
         };
 
 
@@ -57,12 +59,6 @@ myApp.controller('MainCtrl', [
 // *******************************************************************
 
 
-
-
-
-
-
-
 myApp.controller('formCtrl', ['$scope',
     function($scope) {
 
@@ -75,20 +71,20 @@ myApp.controller('formCtrl', ['$scope',
         $scope.formHolder = {};
 
         $scope.ValidCheck = function() {
-            if ( $scope.formHolder.myForm.mynumber1 !== undefined &&
-                 $scope.formHolder.myForm.mynumber1.$dirty ) {
+            if ( $scope.formHolder.myForm.mynum1 !== undefined &&
+                 $scope.formHolder.myForm.mynum1.$dirty ) {
                 $scope.emptyN1 =
-                    $scope.formHolder.myForm.mynumber1.$error.required;
+                    $scope.formHolder.myForm.mynum1.$error.required;
                 $scope.badN1 =
-                    $scope.formHolder.myForm.mynumber1.$error.pattern;
+                    $scope.formHolder.myForm.mynum1.$error.pattern;
             }
 
-            if ( $scope.formHolder.myForm.mynumber2 !== undefined &&
-                 $scope.formHolder.myForm.mynumber2.$dirty ) {
+            if ( $scope.formHolder.myForm.mynum2 !== undefined &&
+                 $scope.formHolder.myForm.mynum2.$dirty ) {
                 $scope.emptyN2 =
-                    $scope.formHolder.myForm.mynumber2.$error.required;
+                    $scope.formHolder.myForm.mynum2.$error.required;
                 $scope.badN2 =
-                    $scope.formHolder.myForm.mynumber2.$error.pattern;
+                    $scope.formHolder.myForm.mynum2.$error.pattern;
             }
 
         };
@@ -96,16 +92,7 @@ myApp.controller('formCtrl', ['$scope',
 }]);
 
 
-
-
-
-
 //*************************************************
-
-
-
-
-
 
 
 myApp.controller('saveCtrl', [
@@ -120,79 +107,36 @@ myApp.controller('saveCtrl', [
         alertService) {
 
 
-        $scope.pjArr              = storageFactory.pj.projects;
-
-        $scope.isFirstTimeCreate  = !storageFactory.pj.hasData;
-        $scope.isAddingNewPj      = false;
-
-        $scope.emptyItemName      = true;
-        $scope.emptyItemNameClass = false;
-        $scope.emptyPjName        = true;
-        $scope.emptyPjNameClass   = false;
-
-        $scope.overwriteAlert     = [];
-        $scope.saveAgain          = false;
-
-        $scope.pj4form = {
-            pjName:'',
-            itemName:'',
-            data:[]
-        };
-
-        // Set default value
-        if ( !$scope.isFirstTimeCreate ) {
-            $scope.pjNameOption = $scope.pjArr[0];
-        }
+        $scope.pjArr       = storageFactory.pj.projects;
+        $scope.emptyName   = false;
+        $scope.pjname      = '';
+        var data           = $scope.data
 
 
     /**
      *  Input validation
      */
         $scope.validCheck = function() {
-            $scope.emptyItemName =
-                $scope.saveForm.itemName.$error.required;
-            $scope.emptyItemNameClass =
-                $scope.saveForm.itemName.$dirty &&
-                $scope.emptyItemName;
-
-            $scope.emptyPjName =
-                '' === $scope.pj4form.pjName;
-            $scope.emptyPjNameClass =
+            $scope.emptyName =
                 $scope.saveForm.pjName.$dirty &&
-                $scope.emptyPjName;
-
-            $scope.$parent.invalidForm =
-                $scope.emptyItemName ||
-                $scope.emptyPjName && $scope.isAddingNewPj;
-        };
-
-    /**
-     *  Update the object data in "localStorageFactory"
-     */
-        $scope.update = function() {
-            $scope.isAddingNewPj = $scope.pjNameOption === null;
-            $scope.validCheck();
+                '' === $scope.pjName;
         };
 
 
-        $scope.submit = function (overwrite) {
+
+        $scope.submit = function () {
             // Refresh the result from the combo box
-            if ( !$scope.isAddingNewPj && !$scope.isFirstTimeCreate ) {
-                $scope.pj4form.pjName = $scope.pjNameOption.name;
-            }
 
-            $scope.data.display.storage   = $scope.getStorage();
-            $scope.data.display.bandwidth = $scope.getBandwidth();
+            data.sum   = $scope.showAdd();
+            data.diff  = $scope.showSub();
 
-            if (!localStorageFactory.pj.addItem( $scope.pj4form.itemName,
-                    $scope.pj4form.pjName, $scope.data, $scope.onNVR, overwrite )){
-                $scope.overwriteAlert.push({ type: 'warning', msg: 'The name already exists!' });
-                $scope.saveAgain = true;
+            if (localStorageFactory.pj.addItem(
+                $scope.pjname, data, $scope.hasData1 ) ) {
+                    alertService.flash({ type: 'success', msg: 'Successfully saved!' });
             } else {
-                alertService.flash({ type: 'success', msg: 'Successfully saved!' });
-                $scope.saveAgain = false;
-                $scope.closeModal();
+                    alertService.flash({ type: 'danger', msg: 'Failed!' });
             }
+            $scope.closeModal();
         };
 
         $scope.openModal = function (size) {
@@ -200,6 +144,7 @@ myApp.controller('saveCtrl', [
             $scope.modalInstance = $uibModal.open({
                 templateUrl: 'views/save.html',
                 size: size,
+                // controller: saveCtrl,
                 scope: $scope
             });
         };

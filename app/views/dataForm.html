@@ -14,7 +14,7 @@
                       class="row form-group"
                       ng-class="{ 'has-error' : emptyN1 || badN1 }">
                         <label
-                          for="mynumber1"
+                          for="mynum1"
                           class="col-xs-6 col-sm-2
                             col-sm-offset-3">
                             Numbers
@@ -23,14 +23,14 @@
                             <input
                               type="tel"
                               class="form-control"
-                              id="mynumber1"
-                              name="mynumber1"
+                              id="mynum1"
+                              name="mynum1"
                               pattern="\d{1,5}"
                               maxlength="5"
                               onkeyup="value=value.replace(/[^\d]/g,'')"
                               placeholder="Enter the number"
                               required
-                              ng-model="data.mynumber1"
+                              ng-model="data.mynum1"
                               ng-change="ValidCheck()" />
                             <span
                               class="help-block"
@@ -53,7 +53,7 @@
                       class="row form-group"
                       ng-class="{ 'has-error' : emptyN2 || badN2 }">
                         <label
-                          for="mynumber2"
+                          for="mynum2"
                           class="col-xs-6 col-sm-2
                             col-sm-offset-3">
                             Number2
@@ -62,14 +62,14 @@
                             <input
                               type="tel"
                               class="form-control"
-                              id="mynumber2"
-                              name="mynumber2"
+                              id="mynum2"
+                              name="mynum2"
                               pattern="\d{1,5}"
                               maxlength="5"
                               onkeyup="value=value.replace(/[^\d]/g,'')"
                               placeholder="Enter the number"
                               required
-                              ng-model="data.mynumber2"
+                              ng-model="data.mynum2"
                               ng-change="ValidCheck()" />
                             <span
                               class="help-block"
@@ -93,7 +93,7 @@
 
 
 
-        <div ng-if="isData1">
+        <div ng-if="hasData1">
             <section class="col-xs-12">
                 <div class="row">
                     <div class="col-xs-12 col-sm-1 col-sm-push-2">
@@ -139,7 +139,7 @@
                     </div>
                 </div> <!-- /row -->
             </section>
-        </div> <!-- /ng-if:isdata1 -->
+        </div> <!-- /ng-if:hasData1 -->
 
 
     </form>

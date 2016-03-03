@@ -14,7 +14,7 @@ angular.module('MyApp')
                         templateUrl: 'views/main.html',
                         controller: 'MainCtrl',
                         resolve: {
-                            isData1: function() {
+                            hasData1: function() {
                                 return true;
                             }
                         }
@@ -32,7 +32,7 @@ angular.module('MyApp')
                     templateUrl: 'views/main.html',
                     controller: 'MainCtrl',
                     resolve: {
-                       isData1: function() {
+                       hasData1: function() {
                             return false;
                         }
                     }

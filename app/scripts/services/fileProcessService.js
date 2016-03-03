@@ -1,48 +1,9 @@
 'use strict';
 
-angular.module('calculatorApp')
+angular.module('MyApp')
   .service('fileProcessService', ['$window', function($window) {
 
-    var title = [
-      'Project ID',
-      'Project Name',
-      'Total Storage',
-      'Total Bandwidth',
-      'NVR Count',
-      'CMS Count',
-      'Item ID',
-      'Item Name',
-      'Type',
-      'Storage',
-      'Bandwidth',
-      'Cameras',
-      'Bit Rate',
-      'Codec',
-      'Quality',
-      'Resolution',
-      'FPS',
-      'Estimated Days',
-      'Recording Days',
-      'Recording Hours',
-      'Motion(%)',
-      'RAID Type',
-      'HDD Size',
-      'Local User',
-      'Remote Users'
-    ];
 
-    var titleStr  = title.join() + '\n';
-
-
-
-
-
-
-    function addComma(len) {
-        var commas    = [];
-        commas.length = len + 1;  // length = (25+1) for displaying 25 commas
-        return commas.join();
-    }
 
     function loadData (ids) {
         var tmp, arr = [];
@@ -71,10 +32,6 @@ angular.module('calculatorApp')
     }
 
 
-    /***************************
-      Need to Convert the Unit?
-    ****************************/
-
     function storedData2Str(ids) {
         var obj = loadData (ids),
             tmp = '';
@@ -82,17 +39,10 @@ angular.module('calculatorApp')
             if ( i > 0 ) {
                 tmp += '\n';
             }
-            tmp     += obj[i]._id       + ',' +
-                       obj[i].name      + ',' +
-                       obj[i].storage   + ',' +
-                       obj[i].bandwidth + ',' +
-                       obj[i].count.NVR + ',' +
-                       obj[i].count.CMS;
-            tmp     += addComma(19) + '\n' + addComma(6);
+            tmp     += 'id: ' + obj[i]._id + ', name: ' +
+                       obj[i].name + '\n' ;
             for ( var j in obj[i].data ) {
-                if ( j > 0 ) {
-                    tmp += addComma(6);
-                }
+
                 var inf     = obj[i].data[j],
                     type    = inf.type,
                     data    = inf.data,
@@ -128,18 +78,9 @@ angular.module('calculatorApp')
         return tmp;
     }
 
-// var fs = require('fs')
-//
-
-    this.saveFile = function(ids) {
-        var fileStr = titleStr + storedData2Str(ids),
-            file    = new Blob([fileStr], {type: 'text/plain;charset=utf-8'});
-        saveAs(file, 'data.csv');
-    };
-
     this.mailFileStr = function(ids) {
         var fileStr = titleStr + storedData2Str(ids),
-            base64  = 'base64:file.csv//' + btoa(fileStr);
+            base64  = 'base64:file.txt//' + btoa(fileStr);
         return base64;
     };
 

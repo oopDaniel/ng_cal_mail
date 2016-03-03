@@ -1,0 +1,62 @@
+<div ng-controller="saveCtrl">
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group">
+                <form
+                  class="form-horizontal"
+                  name="saveForm"
+                  novalidate="">
+
+                    <section>
+                        <label
+                          for="pjName"
+                          class="col-xs-12 col-sm-5 col-sm-push-2">
+                            Project Name
+                        </label>
+                        <div class="col-xs-12 col-sm-5 col-sm-push-1">
+                            <div ng-class="{ 'has-error' : emptyName }">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="pjName"
+                                  id="pjName"
+                                  placeholder="Enter the project name"
+                                  maxlength="20"
+                                  required
+                                  ng-model="pjname"
+                                  ng-change="validCheck()" />
+                                <span
+                                  ng-show="emptyName"
+                                  class="help-block">
+                                    The name is required.
+                                </span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-xs-push-5">
+
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                              ng-click="submit()"
+                              ng-disabled="$parent.invalidForm">
+                                Save
+                            </button>
+
+                            <a
+                              class="btn btn-warning"
+                              ng-click="closeModal()">
+                                Cancel
+                            </a>
+
+                        </div>
+                    </div> <!-- /row -->
+
+                </form>
+            </div> <!-- /form-group -->
+        </div> <!-- /myPanel -->
+    </div> <!-- /modal-body -->
+</div> <!-- /ng-controller -->

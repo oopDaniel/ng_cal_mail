@@ -9,17 +9,10 @@
                 <h3
                   ng-controller="MailCtrl"
                   ng-click="sendmail()">
-                    <span class="glyphicon glyphicon-envelope"></span>
+                    <span class="glyphicon glyphicon-envelope">email</span>
                 </h3>
             </div>
-            <div>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Type to filter by project name"
-                  ng-model="filtText.name"
-                  maxlength="10" />
-            </div>
+
         </section>
 
 
@@ -27,24 +20,24 @@
 
             <div
               ng-if="nodata">
-                <h4>There is no available data now!</h4>
+                <h4>No data now!</h4>
             </div>
 
             <div
               class="project"
-              ng-repeat="item in pjArr | orderBy: 'name' | filter: filtText">
+              ng-repeat="item in pjArr | orderBy: 'name'">
                 <div
                   ng-click="select(item._id)"
                   ng-class="{selectItem:isSelect(item._id)}">
-                    <span ng-click="clickRename(item.name)"><h4>{{item.name}}</h4></span>
+                    <span><h4>{{item.name}}</h4></span>
                     <div>
                         <div class="row">
                             <div class="col-xs-8">
-                                <span ng-show="item.count.NVR">NVR: {{item.count.NVR}}</span>
-                                <span ng-show="item.count.NVR && item.count.CMS">, </span>
-                                <span ng-show="item.count.CMS">CMS: {{item.count.CMS}}</span>
-                                <br>Total Storage: {{totalStorage(item)}}
-                                <br>Total Bandwidth: {{totalBandwidth(item)}}
+                                <span ng-show="item.mynum1">N1: {{item.mynum1}}</span>
+                                <span ng-show="item.mynum1 && item.mynum2">, </span>
+                                <span ng-show="item.mynum2">N2: {{item.mynum2}}</span>
+                                <br>Sum: {{totalStorage(item)}}
+                                <br>Diff: {{totalBandwidth(item)}}
                             </div>
 
 
