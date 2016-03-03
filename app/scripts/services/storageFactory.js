@@ -44,19 +44,21 @@ angular.module('MyApp')
 
         //////////// Public
 
-            this.addItem = function( pjName, data, hasData1 ) {
+            this.addItem = function( pjName, data, hasOffset ) {
                 var index = findByAttr( self.projects, 'name', pjName );
                 if ( index === -1 ) {
                     index = newPjIndex(pjName);
                 }
                 var pj = self.projects[index];
-                var id = getNextId( pj, '_id');
 
-                pj.mynum1 = data.mynum1,
-                pj.mynum2 = data.mynum2,
-                pj.sum    = data.sum,
-                pj.diff   = data.diff
+                pj.mynum1 = data.mynum1;
+                pj.mynum2 = data.mynum2;
+                pj.sum    = data.sum;
+                pj.diff   = data.diff;
 
+                if ( hasOffset ) {
+                    pj.offset  = data.offset;
+                }
                 storeData();
                 return true;
             };

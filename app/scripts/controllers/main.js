@@ -15,35 +15,35 @@ myApp.controller('MainCtrl', [
     '$scope',
     '$filter',
     'alertService',
-    'hasData1',
+    'hasOffset',
     function (
         $scope,
         $filter,
         alertService,
-        hasData1 ) {
+        hasOffset ) {
 
-        var data              = hasData1 ?
-            {mynum1:'100', mynum2:'50', data1: '1'} :
+        var data              = hasOffset ?
+            {mynum1:'100', mynum2:'50', offset: '1'} :
             {mynum1:'100', mynum2:'50'} ;
         $scope.data           = data;
         $scope.dataURL        = 'views/dataForm.html';
-        $scope.hasData1        = hasData1;
+        $scope.hasOffset        = hasOffset;
 
 
 
 
 
         $scope.showSub = function () {
-            var data1 = parseFloat(data.data1) || 0;
-            return hasData1 ?
-                parseFloat(data.mynum1) - parseFloat(data.mynum2) - data1 :
+            var offset = parseFloat(data.offset) || 0;
+            return hasOffset ?
+                parseFloat(data.mynum1) - parseFloat(data.mynum2) - offset :
                 parseFloat(data.mynum1) / parseFloat(data.mynum2);
         };
 
         $scope.showAdd = function () {
-            var data1 = parseFloat(data.data1) || 0;
-            return hasData1 ?
-                parseFloat(data.mynum1) + parseFloat(data.mynum2) - data1 :
+            var offset = parseFloat(data.offset) || 0;
+            return hasOffset ?
+                parseFloat(data.mynum1) + parseFloat(data.mynum2) - offset :
                 parseFloat(data.mynum1) * parseFloat(data.mynum2);
         };
 
@@ -110,7 +110,7 @@ myApp.controller('saveCtrl', [
         $scope.pjArr       = storageFactory.pj.projects;
         $scope.emptyName   = false;
         $scope.pjname      = '';
-        var data           = $scope.data
+        var data           = $scope.data;
 
 
     /**
@@ -131,7 +131,7 @@ myApp.controller('saveCtrl', [
             data.diff  = $scope.showSub();
 
             if (storageFactory.pj.addItem(
-                $scope.pjname, data, $scope.hasData1 ) ) {
+                $scope.pjname, data, $scope.hasOffset ) ) {
                     alertService.flash({ type: 'success', msg: 'Successfully saved!' });
             } else {
                     alertService.flash({ type: 'danger', msg: 'Failed!' });

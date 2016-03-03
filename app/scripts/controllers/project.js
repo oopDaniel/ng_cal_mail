@@ -23,7 +23,7 @@ myApp.controller('ProjectCtrl', [
         var pj = storageFactory.pj;
         $scope.pjArr = pj.projects;
         $scope.nodata = !pj.hasData;
-        console.log(pj.hasData)
+        console.log(pj.hasData);
         $scope.clickArr = [];
 
 

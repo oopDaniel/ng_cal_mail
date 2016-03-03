@@ -14,7 +14,7 @@ angular.module('MyApp')
                         templateUrl: 'views/main.html',
                         controller: 'MainCtrl',
                         resolve: {
-                            hasData1: function() {
+                            hasOffset: function() {
                                 return true;
                             }
                         }
@@ -32,7 +32,7 @@ angular.module('MyApp')
                     templateUrl: 'views/main.html',
                     controller: 'MainCtrl',
                     resolve: {
-                       hasData1: function() {
+                       hasOffset: function() {
                             return false;
                         }
                     }

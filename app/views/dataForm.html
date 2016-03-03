@@ -93,7 +93,7 @@
 
 
 
-        <div ng-if="hasData1">
+        <div ng-if="hasOffset">
             <section class="col-xs-12">
                 <div class="row">
                     <div class="col-xs-12 col-sm-1 col-sm-push-2">
@@ -104,23 +104,23 @@
                         class="row form-group"
                         ng-class="{ 'has-error' : emptyD1 || badD1 }">
                           <label
-                            for="data1"
+                            for="offset"
                             class="col-xs-6 col-sm-2
                               col-sm-offset-3">
-                              Data1
+                              Offset
                           </label>
                           <div class="col-xs-6 col-sm-4 col-sm-offset-1">
                               <input
                                 type="tel"
                                 class="form-control"
-                                id="data1"
-                                name="data1"
+                                id="offset"
+                                name="offset"
                                 pattern="\d{1,5}"
                                 maxlength="5"
                                 onkeyup="value=value.replace(/[^\d]/g,'')"
                                 placeholder="Enter the number"
                                 required
-                                ng-model="data.data1"
+                                ng-model="data.offset"
                                 ng-change="ValidCheck()" />
                               <span
                                 class="help-block"
@@ -139,7 +139,7 @@
                     </div>
                 </div> <!-- /row -->
             </section>
-        </div> <!-- /ng-if:hasData1 -->
+        </div> <!-- /ng-if:hasOffset -->
 
 
     </form>

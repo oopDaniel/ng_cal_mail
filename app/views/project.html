@@ -36,14 +36,15 @@
                                 <span ng-show="item.mynum1">N1: {{item.mynum1}}</span>
                                 <span ng-show="item.mynum1 && item.mynum2">, </span>
                                 <span ng-show="item.mynum2">N2: {{item.mynum2}}</span>
-                                <br>Sum: {{item.sum}}
-                                <br>Diff: {{item.diff}}
+                                <br>{{item.offset !== undefined ? 'Add: ': 'Mul: '}}{{item.sum}}
+                                <br>{{item.offset !== undefined ? 'Sub: ': 'Div: ' }}{{item.diff}}
                             </div>
 
 
                         </div>
                     </div> <!-- /detail -->
                 </div> <!-- /max-width-80 -->
+                <hr>
             </div> <!-- /ng-repeat -->
         </section>
     </div>
