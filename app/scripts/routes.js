@@ -25,8 +25,8 @@ angular.module('MyApp')
                 }
             })
 
-        .state('app.item1', {
-            url: 'item1',
+        .state('app.md', {
+            url: 'md',
             views: {
                 'content@': {
                     templateUrl: 'views/main.html',
@@ -40,8 +40,8 @@ angular.module('MyApp')
             }
         })
 
-        .state('app.item2', {
-            url: 'item2',
+        .state('app.list', {
+            url: 'list',
             views: {
                 'content@': {
                     templateUrl: 'views/project.html',
@@ -50,15 +50,6 @@ angular.module('MyApp')
             }
         })
 
-        .state('app.projectdetails', {
-            url: 'project/:id',
-            views: {
-                'content@': {
-                    templateUrl: 'views/projectDetail.html',
-                    controller: 'ProjectDetailCtrl'
-                }
-            }
-        })
         ;
         $urlRouterProvider.otherwise('/');
     });

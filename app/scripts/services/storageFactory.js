@@ -47,18 +47,16 @@ angular.module('MyApp')
             this.addItem = function( pjName, data, hasData1 ) {
                 var index = findByAttr( self.projects, 'name', pjName );
                 if ( index === -1 ) {
-                    index = getPjIndex(pjName);
+                    index = newPjIndex(pjName);
                 }
-                var pj  = self.projects[index];
-                var id = getNextId(pj, '_id');
-                var item = {
-                    mynum1 : data.mynum1,
-                    mynum2 : data.mynum2,
-                    sum    : data.sum,
-                    diff   : data.diff
-                };
-                pj.push(item);
-                pj._id = id;
+                var pj = self.projects[index];
+                var id = getNextId( pj, '_id');
+
+                pj.mynum1 = data.mynum1,
+                pj.mynum2 = data.mynum2,
+                pj.sum    = data.sum,
+                pj.diff   = data.diff
+
                 storeData();
                 return true;
             };

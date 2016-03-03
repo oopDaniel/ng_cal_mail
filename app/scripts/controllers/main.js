@@ -130,7 +130,7 @@ myApp.controller('saveCtrl', [
             data.sum   = $scope.showAdd();
             data.diff  = $scope.showSub();
 
-            if (localStorageFactory.pj.addItem(
+            if (storageFactory.pj.addItem(
                 $scope.pjname, data, $scope.hasData1 ) ) {
                     alertService.flash({ type: 'success', msg: 'Successfully saved!' });
             } else {

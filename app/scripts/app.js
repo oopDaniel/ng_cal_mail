@@ -41,7 +41,6 @@ angular.element(document).ready(function () {
 angular
     .module('MyApp', [
         'ui.router',
-        'ngResource',
         'ui.bootstrap',
         'ngCordova'
     ]);

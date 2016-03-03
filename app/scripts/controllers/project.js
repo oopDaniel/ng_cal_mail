@@ -23,10 +23,9 @@ myApp.controller('ProjectCtrl', [
         var pj = storageFactory.pj;
         $scope.pjArr = pj.projects;
         $scope.nodata = !pj.hasData;
-        $scope.filtText = '';
+        console.log(pj.hasData)
         $scope.clickArr = [];
 
-//----------------------------------
 
         $scope.select = function(id) {
             var index = getIndex(id);
@@ -44,27 +43,6 @@ myApp.controller('ProjectCtrl', [
         function getIndex(val) {
             return $scope.clickArr.indexOf(val);
         }
-
-
-        $scope.openModal = function(template, ctrl, size, isPjName, oldPjName) {
-            return $uibModal.open({
-                templateUrl: 'views/' + template + '.html',
-                size: size,
-                controller: ctrl,
-                scope: $scope,
-                resolve: {
-                    isPjName: function() {
-                        return isPjName;
-                    },
-                    oldPjName: function() {
-                        return oldPjName;
-                    },
-                    oldName: function() {
-                        return '';
-                    }
-                }
-            });
-        };
 
     }
 ]);
