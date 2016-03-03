@@ -425,18 +425,9 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.app %>/bower_components/',
           src: [
-            'bootstrap-sass-official/assets/fonts/bootstrap/*.*',
-            'font-awesome/fonts/*.*'
+            'bootstrap-sass-official/assets/fonts/bootstrap/*.*'
             ],
           dest: '<%= yeoman.dist %>/fonts'
-        },
-        {
-          expand: true,
-          cwd: '<%= yeoman.app %>/scripts/',
-          src: [
-            'email.js'
-            ],
-          dest: '<%= yeoman.dist %>/scripts'
         }]
       },
       styles: {

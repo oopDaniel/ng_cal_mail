@@ -26,12 +26,12 @@ angular.element(document).ready(function () {
 
 
 
-       // ---- Extremely ugly code start ----
+       // ---------- Ugly code start ---------
 
        // document.getElementsByTagName('header')[0].setAttribute('ng-controller','HeaderCtrl');
        // document.getElementById('header').setAttribute('ng-controller','HeaderCtrl');
 
-       // ---------- Ends ugly part ----------
+       // ---------- Ends ugly code ----------
 
 
 
